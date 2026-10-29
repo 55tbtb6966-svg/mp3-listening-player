@@ -89,9 +89,7 @@ if('mediaSession' in navigator){
   play:()=>mediaPlay(),
   pause:()=>audio.pause(),
   nexttrack:()=>mediaChapter(1),
-  previoustrack:()=>mediaChapter(-1),
-  seekforward:()=>mediaChapter(1),
-  seekbackward:()=>mediaChapter(-1)
+  previoustrack:()=>mediaChapter(-1)
  };
  for(const [name,handler] of Object.entries(actions)){
   try{navigator.mediaSession.setActionHandler(name,handler)}catch(e){}
