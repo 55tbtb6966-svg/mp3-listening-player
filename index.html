@@ -94,6 +94,36 @@
 .source-details[open]>summary::after{transform:rotate(180deg)}
 .source-details[open]>summary{border-bottom:1px solid #dbe3ef}
 .source-details-content{padding:2px 12px 12px}
+
+/* User-selectable dark appearance; playback and waveform rendering are unchanged. */
+.themeoption{display:flex;align-items:center;gap:10px;padding:11px 12px;background:#f3f6fb;border:1px solid #dbe3ef;border-radius:12px;font-size:14px;font-weight:600;cursor:pointer}
+.themeoption input{width:20px;height:20px;accent-color:#2059d4;flex:none}
+.themehint{font-size:12px;color:#64748b;line-height:1.5;margin:6px 3px 0}
+body.dark-mode{color-scheme:dark;background:#0c1320;color:#e4eaf5}
+body.dark-mode main{background:#172233;box-shadow:0 4px 22px #02050a80}
+body.dark-mode .top{background:#172233;border-color:#33455e}
+body.dark-mode button:not(.play):not(.chapterrepeat .on):not(.activeAB),body.dark-mode .navigation-buttons button,body.dark-mode .five-controls .rew{background:#263a54;color:#e1ecff;border-color:#46607d}
+body.dark-mode button:disabled{opacity:.45}
+body.dark-mode .play,body.dark-mode .chapterrepeat button.on,body.dark-mode .activeAB{background:#386cdd;color:#fff}
+body.dark-mode .slot.active,body.dark-mode .chapter.selected{background:#294777;color:#fff;outline-color:#85aaff;border-color:#85aaff}
+body.dark-mode .slot small,body.dark-mode .chapterhelp,body.dark-mode .smallhint,body.dark-mode .note,body.dark-mode .abstate,body.dark-mode .reorderbar span,body.dark-mode .trackendhint,body.dark-mode .navigation-group-title small,body.dark-mode .wakehint,body.dark-mode .pitchhint,body.dark-mode .themehint{color:#b5c4d9}
+body.dark-mode .slot:not(.active),body.dark-mode .chapter:not(.selected){background:#263a54;color:#e4eaf5;border-color:#415b7b}
+body.dark-mode .section,body.dark-mode .speedsection{color:#e4eaf5}
+body.dark-mode .status,body.dark-mode .navigation-group,body.dark-mode .trackendsettings,body.dark-mode .ab,body.dark-mode .source-details,body.dark-mode .advanced-settings{background:#202f44;border-color:#405570;color:#e4eaf5}
+body.dark-mode .status.error{background:#542b31;color:#ffb7b7}
+body.dark-mode .fileactions .pick{background:#2b405b;color:#d7e7fb;border-color:#55718c}
+body.dark-mode .clearall{background:#4a3038;color:#ffd6d6;border-color:#82515c}
+body.dark-mode .trackmodebtn{background:#2b405b;color:#e4eaf5;border-color:#55718c}
+body.dark-mode .navigation-group-title,body.dark-mode .trackendtitle{color:#e3edfb}
+body.dark-mode .source-details>summary,body.dark-mode .advanced-settings>summary{color:#e4eaf5}
+body.dark-mode .source-details[open]>summary,body.dark-mode .advanced-settings[open]>summary{border-color:#405570}
+body.dark-mode .chapteropts select,body.dark-mode .prefrow select,body.dark-mode .speedrow select{background:#263a54;color:#e4eaf5;border-color:#55718c}
+body.dark-mode .wakeoption,body.dark-mode .themeoption{background:#273a53;color:#e4eaf5;border-color:#405570}
+body.dark-mode .waveoption,body.dark-mode .pitchoption{color:#e4eaf5}
+body.dark-mode .chaptertick{background:#a9b9d0}
+body.dark-mode .chaptertick.current{background:#8cb1ff}
+body.dark-mode #seek{accent-color:#8cb1ff}
+body.dark-mode input[type=checkbox]{accent-color:#75a2ff}
 </style></head><body><main><h1>🎧 English Listening Player</h1><section class="section"><h2>音源の切り替え（最大6つ）</h2><div class="slots" id="slots"><button class="slot active" data-slot="0"><small>1</small><span>未選択</span></button><button class="slot" data-slot="1"><small>2</small><span>未選択</span></button><button class="slot" data-slot="2"><small>3</small><span>未選択</span></button><button class="slot" data-slot="3"><small>4</small><span>未選択</span></button><button class="slot" data-slot="4"><small>5</small><span>未選択</span></button><button class="slot" data-slot="5"><small>6</small><span>未選択</span></button></div><details class="source-details"><summary>⚙ 音源の詳細設定</summary><div class="source-details-content"><div class="reorderbar"><span>選択中の音源を並び替え</span><button id="moveUp" type="button">◀ 1つ前へ</button><button id="moveDown" type="button">1つ後へ ▶</button></div><div class="fileactions"><label class="pick">📁 MP3を選択（最大6つ一括）<input id="file" type="file" multiple accept=".mp3,.m4a,audio/mpeg,audio/mp4,audio/*" aria-label="MP3ファイルを選択"></label><button id="clearAll" type="button" class="clearall">全解除</button></div><div id="status" class="status" role="status" aria-live="polite">最大6音源。音源をタップすると切り替えのみ行い、一時停止します。</div><div class="trackendsettings"><div class="trackendtitle">音源全体の再生モード</div><div class="trackmode-row"><button type="button" id="trackEndMode" class="trackmodebtn" aria-label="音源全体の再生モードを切り替え" title="再生モードを切り替え">🔂 1音源リピート</button><p class="trackendhint" id="trackModeHint" aria-live="polite">現在のMP3を先頭から繰り返します。</p></div><p class="trackendhint trackmode-priority">A-B・チャプターリピートが有効ならそちらを優先。</p></div></div></details></section><div class="top"><div class="now" id="now">MP3を選択してください</div><div class="playrow five-controls" aria-label="再生と移動の操作"><button id="trackBack" class="rew track-side" disabled aria-label="前の音源">⏮<span>前の音源</span></button><button id="back" class="rew" disabled aria-label="前のチャプター">◀<span>前のチャプター</span></button><button id="play" class="play" disabled aria-label="再生または一時停止">▶ 再生</button><button id="half" class="rew" disabled aria-label="次のチャプター">▶<span>次のチャプター</span></button><button id="trackForward" class="rew track-side" disabled aria-label="次の音源">⏭<span>次の音源</span></button></div><div class="chapters"><div id="chapterbar" class="chapterbar" aria-label="チャプター一覧"><span class="chapterhelp">音源を読み込むと無音区間から自動生成します</span></div><div class="chapterhelp" id="chapterstatus">番号と開始時刻を表示。シークバー操作時はチャプター一覧が追従します。チャプター選択後は一覧を固定し、再生中のチャプターが欄外に出たら中央へ自動移動します。</div></div><div class="seekwrap"><div id="chapterTicks" class="chapterticks" aria-hidden="true"></div><input id="seek" type="range" min="0" max="100" step="0.01" value="0" disabled aria-label="再生位置"></div><div class="times"><span id="current">0:00.0</span><span id="duration">0:00.0</span></div><div id="waveBox" class="wavebox"><canvas id="waveform" width="640" height="90" aria-label="音量インジケーター（再生中の音量で棒が上下します）" role="img"></canvas></div></div>
 
 <section class="section repeatsettings"><div class="chapterrepeat"><button id="repeatChapter" disabled aria-pressed="false">🔁 チャプターリピート OFF</button></div></section><div class="navigation-switches" aria-label="音源とチャプターの移動">
@@ -106,8 +136,24 @@
 <section class="section controlprefs"><h2>再生ボタン左右2個ずつの設定</h2><div class="prefrow four-prefs"><label>左端 <select id="trackLeftAction" aria-label="左端ボタンの動作"></select></label><label>再生の左 <select id="leftJump" aria-label="再生ボタン左の動作"></select></label><label>再生の右 <select id="rightJump" aria-label="再生ボタン右の動作"></select></label><label>右端 <select id="trackRightAction" aria-label="右端ボタンの動作"></select></label></div><div class="chapterhelp">音源切り替えは一時停止、チャプター移動はその位置から再生します。</div></section>
 <section class="section pitchsettings"><h2>ピッチ補正</h2><label class="pitchoption"><input type="checkbox" id="preservePitch" checked> 声の高さを維持（ピッチ補正）</label><div class="pitchhint" id="pitchHint" aria-live="polite"></div></section>
 <section class="section"><label class="waveoption"><input id="showWaveform" type="checkbox" checked>音量インジケーターを表示する</label></section>
-<section class="section"><label class="wakeoption"><input id="keepAwake" type="checkbox" checked>再生中は画面を消さない</label><div class="wakehint" id="wakeStatus">ON：再生中のみ画面の自動ロックを防ぎます（対応ブラウザのみ）。</div></section></div></details></main><audio id="audio" preload="metadata" playsinline></audio><script>
-(()=>{'use strict';const $=s=>document.querySelector(s),audio=$('#audio'),fileInput=$('#file'),status=$('#status'),play=$('#play'),seek=$('#seek'),speed=$('#speed');const preservePitchCheckbox=$('#preservePitch'),pitchHint=$('#pitchHint');const pitchProps=['preservesPitch','webkitPreservesPitch','mozPreservesPitch'].filter(p=>p in audio);function applyPitchSetting(){if(!pitchProps.length){preservePitchCheckbox.disabled=true;pitchHint.textContent='このブラウザではピッチ補正の設定を変更できません。';return}for(const prop of pitchProps){try{audio[prop]=preservePitchCheckbox.checked}catch(e){}}}preservePitchCheckbox.addEventListener('change',applyPitchSetting);applyPitchSetting();const jumpValues=['trackPrev','chapterPrev',-10,-5,-3,-2,-1,-0.5,0.5,1,2,3,5,10,'chapterNext','trackNext'];
+<section class="section"><label class="wakeoption"><input id="keepAwake" type="checkbox" checked>再生中は画面を消さない</label><div class="wakehint" id="wakeStatus">ON：再生中のみ画面の自動ロックを防ぎます（対応ブラウザのみ）。</div></section><section class="section theme-settings"><label class="themeoption"><input id="darkMode" type="checkbox"> ダークモード</label><div class="themehint">OFF：ノーマル ／ ON：ダーク（表示設定のみ記憶）</div></section></div></details></main><audio id="audio" preload="metadata" playsinline></audio><script>
+(()=>{'use strict';
+// Keep only the small theme preference; never store MP3 audio.
+const darkModeToggle=document.getElementById('darkMode');
+const themeMeta=document.querySelector('meta[name="theme-color"]');
+function applyTheme(isDark){
+ document.body.classList.toggle('dark-mode',isDark);
+ darkModeToggle.checked=isDark;
+ if(themeMeta)themeMeta.setAttribute('content',isDark?'#0c1320':'#f5f7fb');
+}
+let savedTheme=false;
+try{savedTheme=localStorage.getItem('elp-dark-mode')==='1'}catch(e){}
+applyTheme(savedTheme);
+darkModeToggle.addEventListener('change',()=>{
+ applyTheme(darkModeToggle.checked);
+ try{localStorage.setItem('elp-dark-mode',darkModeToggle.checked?'1':'0')}catch(e){}
+});
+const $=s=>document.querySelector(s),audio=$('#audio'),fileInput=$('#file'),status=$('#status'),play=$('#play'),seek=$('#seek'),speed=$('#speed');const preservePitchCheckbox=$('#preservePitch'),pitchHint=$('#pitchHint');const pitchProps=['preservesPitch','webkitPreservesPitch','mozPreservesPitch'].filter(p=>p in audio);function applyPitchSetting(){if(!pitchProps.length){preservePitchCheckbox.disabled=true;pitchHint.textContent='このブラウザではピッチ補正の設定を変更できません。';return}for(const prop of pitchProps){try{audio[prop]=preservePitchCheckbox.checked}catch(e){}}}preservePitchCheckbox.addEventListener('change',applyPitchSetting);applyPitchSetting();const jumpValues=['trackPrev','chapterPrev',-10,-5,-3,-2,-1,-0.5,0.5,1,2,3,5,10,'chapterNext','trackNext'];
 const controlIds=['trackLeftAction','leftJump','rightJump','trackRightAction'];
 const controlButtons=['trackBack','back','half','trackForward'];
 const controlDefaults=['trackPrev','chapterPrev','chapterNext','trackNext'];
