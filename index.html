@@ -105,7 +105,10 @@ body.dark-mode .top{background:#172233;border-color:#33455e}
 body.dark-mode button:not(.play):not(.chapterrepeat .on):not(.activeAB),body.dark-mode .navigation-buttons button,body.dark-mode .five-controls .rew{background:#263a54;color:#e1ecff;border-color:#46607d}
 body.dark-mode button:disabled{opacity:.45}
 body.dark-mode .play,body.dark-mode .chapterrepeat button.on,body.dark-mode .activeAB{background:#386cdd;color:#fff}
-body.dark-mode .slot.active,body.dark-mode .chapter.selected{background:#294777;color:#fff;outline-color:#85aaff;border-color:#85aaff}
+body.dark-mode .slot.active{background:#294777;color:#fff;outline-color:#85aaff;border-color:#85aaff}
+body.dark-mode .chapter.selected{background:#2357b5;color:#ffffff;border:2px solid #c2dcff;box-shadow:0 0 0 2px #67acff,0 0 12px #3a8dff66}
+body.dark-mode .chapter.selected strong{color:#fff;font-weight:800}
+body.dark-mode .chapter.selected small{color:#eff6ff}
 body.dark-mode .slot small,body.dark-mode .chapterhelp,body.dark-mode .smallhint,body.dark-mode .note,body.dark-mode .abstate,body.dark-mode .reorderbar span,body.dark-mode .trackendhint,body.dark-mode .navigation-group-title small,body.dark-mode .wakehint,body.dark-mode .pitchhint,body.dark-mode .themehint{color:#b5c4d9}
 body.dark-mode .slot:not(.active),body.dark-mode .chapter:not(.selected){background:#263a54;color:#e4eaf5;border-color:#415b7b}
 body.dark-mode .section,body.dark-mode .speedsection{color:#e4eaf5}
@@ -409,11 +412,17 @@ window.addEventListener('pagehide',releaseWake);
 // A single audio element is retained across all six slots so OS media controls
 // continue to address the currently selected recording.
 function mediaPlay(){if(!ready)return;audio.play().catch(e=>msg('再生できません: '+e.message,true))}
-function mediaChapter(direction){
- if(!ready)return;
- chapterMove(direction);
- // Keep navigation useful even when playback was previously paused.
- mediaPlay();
+function mediaChapterOrTrack(direction){
+ // External controls: while playing, move between chapters.
+ // While paused, choose an adjacent loaded source without starting playback.
+ if(!audio.paused && !audio.ended && ready){
+  chapterMove(direction);
+  mediaPlay();
+  return;
+ }
+ const target=adjacentLoadedSlot(direction);
+ if(target<0)return;
+ loadSlot(target,false,false);
 }
 function updateMediaSession(){
  if(!('mediaSession' in navigator))return;
@@ -428,10 +437,10 @@ if('mediaSession' in navigator){
  const actions={
   play:()=>mediaPlay(),
   pause:()=>audio.pause(),
-  nexttrack:()=>mediaChapter(1),
-  previoustrack:()=>mediaChapter(-1),
-  seekforward:()=>mediaChapter(1),
-  seekbackward:()=>mediaChapter(-1)
+  nexttrack:()=>mediaChapterOrTrack(1),
+  previoustrack:()=>mediaChapterOrTrack(-1),
+  seekforward:()=>mediaChapterOrTrack(1),
+  seekbackward:()=>mediaChapterOrTrack(-1)
  };
  for(const [name,handler] of Object.entries(actions)){
   try{navigator.mediaSession.setActionHandler(name,handler)}catch(e){}
