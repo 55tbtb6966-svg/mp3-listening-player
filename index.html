@@ -212,6 +212,12 @@ body.dark-mode .advanced-content #analyze{
  color:#e1ecff;
  box-shadow:none;
 }
+
+.indicator-tap-option{display:flex;align-items:center;gap:9px;margin-top:12px;font-size:13px;font-weight:600;color:#425677;cursor:pointer}
+.indicator-tap-option input{width:18px;height:18px;accent-color:#2059d4;flex:none}
+.wavebox.tap-change-enabled{cursor:pointer;touch-action:manipulation;-webkit-tap-highlight-color:transparent}
+.wavebox.tap-change-enabled:focus-visible{outline:2px solid #74a8ff;outline-offset:3px}
+body.dark-mode .indicator-tap-option{color:#dbe6f8}
 </style></head><body><main><h1>🎧 English Listening Player</h1><section class="section"><h2>音源の切り替え（最大12個）</h2><p id="selectedLessonLabel" class="selected-lesson-label" hidden aria-live="polite"></p><div class="slots" id="slots"><button class="slot active" data-slot="0"><small>1</small><span>未選択</span></button><button class="slot" data-slot="1"><small>2</small><span>未選択</span></button><button class="slot" data-slot="2"><small>3</small><span>未選択</span></button><button class="slot" data-slot="3"><small>4</small><span>未選択</span></button><button class="slot" data-slot="4"><small>5</small><span>未選択</span></button><button class="slot" data-slot="5"><small>6</small><span>未選択</span></button><button class="slot" data-slot="6"><small>7</small><span>未選択</span></button><button class="slot" data-slot="7"><small>8</small><span>未選択</span></button><button class="slot" data-slot="8"><small>9</small><span>未選択</span></button><button class="slot" data-slot="9"><small>10</small><span>未選択</span></button><button class="slot" data-slot="10"><small>11</small><span>未選択</span></button><button class="slot" data-slot="11"><small>12</small><span>未選択</span></button></div><details class="source-details"><summary>⚙ 音源の詳細設定 <span class="source-caption">タップして開く</span></summary><div class="source-details-content"><div class="reorderbar"><span>選択中の音源を並び替え</span><button id="moveUp" type="button">◀ 1つ前へ</button><button id="moveDown" type="button">1つ後へ ▶</button></div><div class="fileactions"><label class="pick">📁 MP3を選択（最大12個一括）<input id="file" type="file" multiple accept=".mp3,.m4a,audio/mpeg,audio/mp4,audio/*" aria-label="MP3ファイルを選択"></label><button id="clearAll" type="button" class="clearall">全解除</button></div><div class="lesson-import">
   <label class="folder-pick">📂 English MP3／教材フォルダを選択
     <input id="lessonFolder" type="file" webkitdirectory directory multiple aria-label="教材フォルダを選択">
@@ -250,6 +256,7 @@ body.dark-mode .advanced-content #analyze{
 <option value="pulse">マルチカラーネオン（流れる）</option>
 <option value="pulseMono">単色ネオン（流れる・グリーン）</option>
 </select></label>
+<label class="indicator-tap-option"><input id="tapChangeIndicator" type="checkbox" checked> インジケーターをタップしてデザインを切り替える</label>
 <p class="indicator-help">レトロ・波形・流れるネオンのカラー／単色表示を選択できます。波形は音量データに基づく演出表示です。</p>
 </section>
 <section class="section settings-card"><label class="wakeoption"><input id="keepAwake" type="checkbox" checked>再生中は画面を消さない</label><div class="wakehint" id="wakeStatus">ON：再生中のみ画面の自動ロックを防ぎます（対応ブラウザのみ）。</div></section><section class="section theme-settings settings-card"><label class="themeoption"><input id="darkMode" type="checkbox"> ダークモード</label><div class="themehint">OFF：ノーマル ／ ON：ダーク（表示設定のみ記憶）</div></section></div></details><p class="note">音源はこのページ内でのみ読み込み、サーバーへ送信しません。ブラウザを閉じると音源は保持されません。iPhoneでは「ファイル」アプリから選択してください。複数選択できない場合は1つずつ追加できます。左右のボタンは初期設定で前後の英文へ移動します。設定から秒数指定にも変更できます。Windows: Space＝再生/停止、←＝1秒戻る、Shift＋←＝0.5秒戻る、A/B＝区間指定。</p></main><audio id="audio" preload="metadata" playsinline></audio><script>
@@ -436,9 +443,36 @@ const waveCanvas=$('#waveform'),waveBox=$('#waveBox'),waveToggle=$('#showWavefor
 let meterFrame=0,meterLastFrame=0;
 const meterPeaks=new Float32Array(22);
 const indicatorStyle=$('#indicatorStyle');
+const tapChangeIndicator=$('#tapChangeIndicator');
+const indicatorStyles=['retro','retroColor','scope','scopeMono','pulse','pulseMono'];
+function updateIndicatorTapState(){
+ waveBox.classList.toggle('tap-change-enabled',tapChangeIndicator.checked);
+ waveBox.setAttribute('role',tapChangeIndicator.checked?'button':'group');
+ waveBox.setAttribute('tabindex',tapChangeIndicator.checked?'0':'-1');
+ waveBox.setAttribute('aria-label',tapChangeIndicator.checked?'音量インジケーター。タップすると次のデザインに切り替わります':'音量インジケーター');
+ waveCanvas.setAttribute('aria-label',tapChangeIndicator.checked?'再生中の音量に応じて動くインジケーター（タップで表示切り替え）':'再生中の音量に応じて動くインジケーター');
+}
+try{const savedTap=localStorage.getItem('elp-indicator-tap-change');if(savedTap==='0')tapChangeIndicator.checked=false;}catch(e){}
+tapChangeIndicator.addEventListener('change',()=>{
+ try{localStorage.setItem('elp-indicator-tap-change',tapChangeIndicator.checked?'1':'0')}catch(e){}
+ updateIndicatorTapState();
+});
+function cycleIndicatorStyle(){
+ if(!tapChangeIndicator.checked)return;
+ const current=indicatorStyles.indexOf(indicatorStyle.value);
+ indicatorStyle.value=indicatorStyles[(current+1)%indicatorStyles.length];
+ indicatorStyle.dispatchEvent(new Event('change'));
+}
+waveBox.addEventListener('click',cycleIndicatorStyle);
+waveBox.addEventListener('keydown',e=>{
+ if(tapChangeIndicator.checked&&(e.key==='Enter'||e.key===' ')){
+  e.preventDefault();cycleIndicatorStyle();
+ }
+});
+updateIndicatorTapState();
 try{
  const savedStyle=localStorage.getItem('elp-indicator-style');
- if(['retro','retroColor','scope','scopeMono','pulse','pulseMono'].includes(savedStyle))indicatorStyle.value=savedStyle;
+ if(indicatorStyles.includes(savedStyle))indicatorStyle.value=savedStyle;
 }catch(e){}
 indicatorStyle.addEventListener('change',()=>{
  try{localStorage.setItem('elp-indicator-style',indicatorStyle.value)}catch(e){}
