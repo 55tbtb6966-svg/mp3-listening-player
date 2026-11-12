@@ -441,7 +441,7 @@ function changeTrackFromButton(direction){
  loadSlot(target,false,wasPlaying);
 }
 function draw(){document.querySelector('#moveUp').disabled=active===0||!tracks[active];document.querySelector('#moveDown').disabled=active===tracks.length-1||!tracks[active];slots.forEach((b,i)=>{b.classList.toggle('active',i===active);b.querySelector('span').textContent=tracks[i]?.name||'未選択';b.title=tracks[i]?.name||'音源 '+(i+1)});$('#now').textContent=currentTrack()?`音源 ${active+1}：${currentTrack().name}`:`音源 ${active+1}：未選択`;$('#current').textContent=fmt(audio.currentTime);$('#duration').textContent=fmt(audio.duration);seek.max=Number.isFinite(audio.duration)?String(audio.duration):'0';if(document.activeElement!==seek)seek.value=String(audio.currentTime||0);play.textContent=audio.paused?'▶ 再生':'Ⅱ 停止';buttons();updateTrackSwitches();maybeDrawChapters();drawWaveform()}
-function storePosition(){const t=currentTrack();if(t&&ready&&Number.isFinite(audio.currentTime))t.position=audio.currentTime}function loadSlot(i,skipStore=false,autoPlay=false){if(i<0||i>=tracks.length)return;if(!skipStore)storePosition();audio.pause();if(pendingLoaded)audio.removeEventListener('loadedmetadata',pendingLoaded);if(pendingError)audio.removeEventListener('error',pendingError);pendingLoaded=null;pendingError=null;active=i;ready=false;lastChapterDraw=-1;lastFollowedChapter=-1;chapterFollow=true;analysisId++;const token=++loadId;audio.removeAttribute('src');audio.load();const t=currentTrack();draw();if(!t){maybeDrawChapters(true);msg(`音源 ${i+1} は未選択です。下の「MP3を追加・入れ替え」から選んでください。`);return}maybeDrawChapters(true);$('#chapterstatus').textContent=t.chapters?'チャプターを復元しました':'無音区間を解析します';msg('読み込み中: '+t.name);audio.src=t.url;audio.defaultPlaybackRate=Number(speed.value);audio.playbackRate=Number(speed.value);applyPitchSetting();audio.load();const loaded=()=>{if(token!==loadId)return;audio.playbackRate=Number(speed.value);applyPitchSetting();ready=true;try{audio.currentTime=Math.min(t.position||0,Number.isFinite(audio.duration)?audio.duration:0)}catch(e){}draw();maybeDrawChapters(true);msg((autoPlay?'読み込み完了（自動再生）: ':'読み込み完了（一時停止中）: ')+t.name);if(!t.chapters)analyzeTrack(t,token);if(autoPlay){audio.play().catch(e=>msg('次の音源を自動再生できません: '+e.message,true))}};const failed=()=>{if(token!==loadId)return;ready=false;draw();msg('読み込みに失敗しました。音源が端末にダウンロードされているか確認してください。',true)};pendingLoaded=loaded;pendingError=failed;audio.addEventListener('loadedmetadata',loaded,{once:true});audio.addEventListener('error',failed,{once:true});}function moveTrack(direction){
+function storePosition(){const t=currentTrack();if(t&&ready&&Number.isFinite(audio.currentTime))t.position=audio.currentTime}function loadSlot(i,skipStore=false,autoPlay=false){if(i<0||i>=tracks.length)return;if(!skipStore)storePosition();audio.pause();if(pendingLoaded)audio.removeEventListener('loadedmetadata',pendingLoaded);if(pendingError)audio.removeEventListener('error',pendingError);pendingLoaded=null;pendingError=null;active=i;ready=false;lastChapterDraw=-1;lastFollowedChapter=-1;chapterFollow=true;analysisId++;const token=++loadId;audio.removeAttribute('src');audio.load();const t=currentTrack();draw();updateMediaSession();if(!t){maybeDrawChapters(true);msg(`音源 ${i+1} は未選択です。下の「MP3を追加・入れ替え」から選んでください。`);return}maybeDrawChapters(true);$('#chapterstatus').textContent=t.chapters?'チャプターを復元しました':'無音区間を解析します';msg('読み込み中: '+t.name);audio.src=t.url;audio.defaultPlaybackRate=Number(speed.value);audio.playbackRate=Number(speed.value);applyPitchSetting();audio.load();const loaded=()=>{if(token!==loadId)return;audio.playbackRate=Number(speed.value);applyPitchSetting();ready=true;try{audio.currentTime=Math.min(t.position||0,Number.isFinite(audio.duration)?audio.duration:0)}catch(e){}draw();maybeDrawChapters(true);msg((autoPlay?'読み込み完了（自動再生）: ':'読み込み完了（一時停止中）: ')+t.name);if(!t.chapters)analyzeTrack(t,token);if(autoPlay){audio.play().catch(e=>msg('次の音源を自動再生できません: '+e.message,true))}};const failed=()=>{if(token!==loadId)return;ready=false;draw();msg('読み込みに失敗しました。音源が端末にダウンロードされているか確認してください。',true)};pendingLoaded=loaded;pendingError=failed;audio.addEventListener('loadedmetadata',loaded,{once:true});audio.addEventListener('error',failed,{once:true});}function moveTrack(direction){
  const target=active+direction;
  if(target<0||target>=tracks.length||!tracks[active])return;
  storePosition();
@@ -450,6 +450,7 @@ function storePosition(){const t=currentTrack();if(t&&ready&&Number.isFinite(aud
  active=target;
  lastChapterDraw=-1;lastFollowedChapter=-1;
  draw();maybeDrawChapters(true);
+ updateMediaSession();
  rememberCurrentLesson();
  msg(`音源を${target+1}番に移動しました。再生位置とチャプター設定は保持しています。`);
 }
@@ -581,8 +582,12 @@ function updateMediaSession(){
  if(!('mediaSession' in navigator))return;
  const t=currentTrack();
  try{
-  // Keep private file names off the lock screen.
-  navigator.mediaSession.metadata=new MediaMetadata({title:'English Listening Player',artist:t?'音源 '+(active+1):'MP3',album:'Listening Practice'});
+  // Display the currently selected local file name on iOS lock screen and external media displays.
+  navigator.mediaSession.metadata=new MediaMetadata({
+   title:t?.name||'English Listening Player',
+   artist:'English Listening Player',
+   album:t?.lesson||'English Listening'
+  });
   navigator.mediaSession.playbackState=!ready?'none':audio.paused?'paused':'playing';
  }catch(e){}
 }
@@ -599,7 +604,7 @@ if('mediaSession' in navigator){
   try{navigator.mediaSession.setActionHandler(name,handler)}catch(e){}
  }
  ['play','pause','loadedmetadata','emptied'].forEach(event=>audio.addEventListener(event,updateMediaSession));
- // Track selection changes are reflected without exposing the MP3 filename.
+ // Track selection changes are reflected in the MP3 filename.
  document.querySelectorAll('[data-slot]').forEach(button=>button.addEventListener('click',()=>queueMicrotask(updateMediaSession)));
  fileInput.addEventListener('change',()=>queueMicrotask(updateMediaSession));
  updateMediaSession();
