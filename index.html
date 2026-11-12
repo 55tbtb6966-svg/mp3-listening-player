@@ -137,7 +137,30 @@ body.dark-mode .framed-setting{background:#202f44;border-color:#405570;color:#e4
 .framed-setting > h2,
 .framed-setting .speedrow label strong,
 .section.ab > h2{font-size:15px;font-weight:700;line-height:1.45}
-</style></head><body><main><h1>🎧 English Listening Player</h1><section class="section"><h2>音源の切り替え（最大6つ）</h2><div class="slots" id="slots"><button class="slot active" data-slot="0"><small>1</small><span>未選択</span></button><button class="slot" data-slot="1"><small>2</small><span>未選択</span></button><button class="slot" data-slot="2"><small>3</small><span>未選択</span></button><button class="slot" data-slot="3"><small>4</small><span>未選択</span></button><button class="slot" data-slot="4"><small>5</small><span>未選択</span></button><button class="slot" data-slot="5"><small>6</small><span>未選択</span></button></div><details class="source-details"><summary>⚙ 音源の詳細設定</summary><div class="source-details-content"><div class="reorderbar"><span>選択中の音源を並び替え</span><button id="moveUp" type="button">◀ 1つ前へ</button><button id="moveDown" type="button">1つ後へ ▶</button></div><div class="fileactions"><label class="pick">📁 MP3を選択（最大6つ一括）<input id="file" type="file" multiple accept=".mp3,.m4a,audio/mpeg,audio/mp4,audio/*" aria-label="MP3ファイルを選択"></label><button id="clearAll" type="button" class="clearall">全解除</button></div><div id="status" class="status" role="status" aria-live="polite">最大6音源。音源をタップすると切り替えのみ行い、一時停止します。</div><div class="trackendsettings"><div class="trackendtitle">音源全体の再生モード</div><div class="trackmode-row"><button type="button" id="trackEndMode" class="trackmodebtn" aria-label="音源全体の再生モードを切り替え" title="再生モードを切り替え">🔂 1音源リピート</button><p class="trackendhint" id="trackModeHint" aria-live="polite">現在のMP3を先頭から繰り返します。</p></div><p class="trackendhint trackmode-priority">A-B・チャプターリピートが有効ならそちらを優先。</p></div></div></details></section><div class="top"><div class="now" id="now">MP3を選択してください</div><div class="playrow five-controls" aria-label="再生と移動の操作"><button id="trackBack" class="rew track-side" disabled aria-label="前の音源">⏮<span>前の音源</span></button><button id="back" class="rew" disabled aria-label="前のチャプター">◀<span>前のチャプター</span></button><button id="play" class="play" disabled aria-label="再生または一時停止">▶ 再生</button><button id="half" class="rew" disabled aria-label="次のチャプター">▶<span>次のチャプター</span></button><button id="trackForward" class="rew track-side" disabled aria-label="次の音源">⏭<span>次の音源</span></button></div><div class="chapters"><div id="chapterbar" class="chapterbar" aria-label="チャプター一覧"><span class="chapterhelp">音源を読み込むと無音区間から自動生成します</span></div><div class="chapterhelp" id="chapterstatus">番号と開始時刻を表示。シークバー操作時はチャプター一覧が追従します。チャプター選択後は一覧を固定し、再生中のチャプターが欄外に出たら中央へ自動移動します。</div></div><div class="seekwrap"><div id="chapterTicks" class="chapterticks" aria-hidden="true"></div><input id="seek" type="range" min="0" max="100" step="0.01" value="0" disabled aria-label="再生位置"></div><div class="times"><span id="current">0:00.0</span><span id="duration">0:00.0</span></div><div id="waveBox" class="wavebox"><canvas id="waveform" width="640" height="90" aria-label="音量インジケーター（再生中の音量で棒が上下します）" role="img"></canvas></div></div>
+
+.lesson-import{margin:12px 0 8px;padding:11px;background:#f3f6fb;border:1px solid #dbe3ef;border-radius:12px}
+.folder-pick{display:block;position:relative;overflow:hidden;cursor:pointer;background:#e8effb;border:1px solid #b8cbe5;border-radius:9px;padding:11px;text-align:center;color:#28446e;font-size:14px;font-weight:650}
+.folder-pick input{position:absolute;inset:0;width:100%;height:100%;opacity:0;cursor:pointer}
+.lesson-select-label{display:flex;gap:9px;align-items:center;margin-top:10px;font-weight:600;font-size:13px}
+.lesson-select-label select{min-width:0;flex:1;padding:9px;border-radius:9px;border:1px solid #bac9db;background:#fff;color:#27384d;font-size:15px}
+.lesson-help{font-size:12px;line-height:1.6;color:#64748b;margin:8px 0 0}
+.memory-reset-row{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+.memory-reset-row button{flex:1 1 180px;min-height:44px;font-size:13px}
+.memory-reset-row .reset-all{color:#9d3232;border:1px solid #d7a2a2;background:#fff4f4}
+body.dark-mode .lesson-import{background:#202d42;border-color:#425574}
+body.dark-mode .folder-pick{background:#2d415e;color:#edf5ff;border-color:#7092bd}
+body.dark-mode .lesson-select-label select{background:#17253a;color:#edf5ff;border-color:#617b9a}
+body.dark-mode .lesson-help{color:#b0bfd3}
+body.dark-mode .memory-reset-row .reset-all{background:#462b33;color:#ffe7e7;border-color:#9c6472}
+</style></head><body><main><h1>🎧 English Listening Player</h1><section class="section"><h2>音源の切り替え（最大10つ）</h2><div class="slots" id="slots"><button class="slot active" data-slot="0"><small>1</small><span>未選択</span></button><button class="slot" data-slot="1"><small>2</small><span>未選択</span></button><button class="slot" data-slot="2"><small>3</small><span>未選択</span></button><button class="slot" data-slot="3"><small>4</small><span>未選択</span></button><button class="slot" data-slot="4"><small>5</small><span>未選択</span></button><button class="slot" data-slot="5"><small>6</small><span>未選択</span></button><button class="slot" data-slot="6"><small>7</small><span>未選択</span></button><button class="slot" data-slot="7"><small>8</small><span>未選択</span></button><button class="slot" data-slot="8"><small>9</small><span>未選択</span></button><button class="slot" data-slot="9"><small>10</small><span>未選択</span></button></div><details class="source-details"><summary>⚙ 音源の詳細設定</summary><div class="source-details-content"><div class="reorderbar"><span>選択中の音源を並び替え</span><button id="moveUp" type="button">◀ 1つ前へ</button><button id="moveDown" type="button">1つ後へ ▶</button></div><div class="fileactions"><label class="pick">📁 MP3を選択（最大10つ一括）<input id="file" type="file" multiple accept=".mp3,.m4a,audio/mpeg,audio/mp4,audio/*" aria-label="MP3ファイルを選択"></label><button id="clearAll" type="button" class="clearall">全解除</button></div><div class="lesson-import">
+  <label class="folder-pick">📂 English MP3／教材フォルダを選択
+    <input id="lessonFolder" type="file" webkitdirectory directory multiple aria-label="教材フォルダを選択">
+  </label>
+  <label class="lesson-select-label">教材
+    <select id="lessonChoice" disabled><option value="">フォルダを選択してください</option></select>
+  </label>
+  <p class="lesson-help">「English MP3」を選ぶと、教材A・教材Bなどを切り替えられます。教材Aだけを直接選ぶこともできます。各教材の直下のMP3だけを読み込み、「未使用」などの下位フォルダは除外します。保存するのは並び順だけで、MP3本体は保存しません。</p>
+</div><div id="status" class="status" role="status" aria-live="polite">最大10音源。音源のタップは切り替えのみで、自動再生しません。</div><div class="trackendsettings"><div class="trackendtitle">音源全体の再生モード</div><div class="trackmode-row"><button type="button" id="trackEndMode" class="trackmodebtn" aria-label="音源全体の再生モードを切り替え" title="再生モードを切り替え">🔂 1音源リピート</button><p class="trackendhint" id="trackModeHint" aria-live="polite">現在のMP3を先頭から繰り返します。</p></div><p class="trackendhint trackmode-priority">A-B・チャプターリピートが有効ならそちらを優先。</p></div></div></details></section><div class="top"><div class="now" id="now">MP3を選択してください</div><div class="playrow five-controls" aria-label="再生と移動の操作"><button id="trackBack" class="rew track-side" disabled aria-label="前の音源">⏮<span>前の音源</span></button><button id="back" class="rew" disabled aria-label="前のチャプター">◀<span>前のチャプター</span></button><button id="play" class="play" disabled aria-label="再生または一時停止">▶ 再生</button><button id="half" class="rew" disabled aria-label="次のチャプター">▶<span>次のチャプター</span></button><button id="trackForward" class="rew track-side" disabled aria-label="次の音源">⏭<span>次の音源</span></button></div><div class="chapters"><div id="chapterbar" class="chapterbar" aria-label="チャプター一覧"><span class="chapterhelp">音源を読み込むと無音区間から自動生成します</span></div><div class="chapterhelp" id="chapterstatus">番号と開始時刻を表示。シークバー操作時はチャプター一覧が追従します。チャプター選択後は一覧を固定し、再生中のチャプターが欄外に出たら中央へ自動移動します。</div></div><div class="seekwrap"><div id="chapterTicks" class="chapterticks" aria-hidden="true"></div><input id="seek" type="range" min="0" max="100" step="0.01" value="0" disabled aria-label="再生位置"></div><div class="times"><span id="current">0:00.0</span><span id="duration">0:00.0</span></div><div id="waveBox" class="wavebox"><canvas id="waveform" width="640" height="90" aria-label="音量インジケーター（再生中の音量で棒が上下します）" role="img"></canvas></div></div>
 
 <section class="section repeatsettings"><div class="chapterrepeat"><button id="repeatChapter" disabled aria-pressed="false">🔁 チャプターリピート OFF</button></div></section><div class="navigation-switches" aria-label="音源とチャプターの移動">
   <div class="navigation-group"><div class="navigation-group-title">チャプターを移動 <small>（前：1回で先頭・素早く2回で前へ）</small></div>
@@ -145,7 +168,12 @@ body.dark-mode .framed-setting{background:#202f44;border-color:#405570;color:#e4
 <div class="navigation-group"><div class="navigation-group-title">音源を切り替え</div>
   <div class="navigation-buttons"><button id="prevTrack" type="button" aria-label="前の音源、または現在の音源の先頭へ">⏮ <span>前の音源</span></button><button id="nextTrack" type="button" aria-label="次の音源へ">⏭ <span>次の音源</span></button></div></div>
 </div><section class="section framed-setting"><h2>細かい巻き戻し・早送り</h2><div class="grid"><button data-jump="-0.5" disabled>−0.5秒</button><button data-jump="-1" disabled>−1秒</button><button data-jump="-2" disabled>−2秒</button><button data-jump="-3" disabled>−3秒</button><button data-jump="-5" disabled>−5秒</button><button data-jump="1" disabled>＋1秒</button></div></section><section class="section speedsection framed-setting"><div class="speedrow"><label for="speed"><strong>再生速度</strong></label><select id="speed"><option value="0.5">0.5×</option><option value="0.75">0.75×</option><option value="0.9">0.9×</option><option value="1" selected>1.0×</option><option value="1.1">1.1×</option><option value="1.25">1.25×</option><option value="1.5">1.5×</option><option value="2">2.0×</option></select></div></section>
-<section class="section ab"><h2>🔁 A–B区間リピート</h2><div class="grid"><button id="setA" disabled>ここをAに</button><button id="setB" disabled>ここをBに</button><button id="clearAB" disabled>解除</button></div><div class="abstate">開始 A：<strong id="atime">未設定</strong>　終了 B：<strong id="btime">未設定</strong></div><div class="grid"><button id="toggleAB" disabled>リピート OFF</button><button id="gotoA" disabled>Aから再生</button><button id="clearPoints" disabled>A・Bを消去</button></div><div class="abstate" id="abstate">音源ごとにA・B位置を保持します。</div></section><p class="note">音源はこのページ内でのみ読み込み、サーバーへ送信しません。ブラウザを閉じると音源は保持されません。iPhoneでは「ファイル」アプリから選択してください。複数選択できない場合は1つずつ追加できます。左右のボタンは初期設定で前後の英文へ移動します。設定から秒数指定にも変更できます。Windows: Space＝再生/停止、←＝1秒戻る、Shift＋←＝0.5秒戻る、A/B＝区間指定。</p><details class="advanced-settings"><summary>⚙ 詳細設定 <span class="advanced-caption">タップして開く</span></summary><div class="advanced-content"><section class="section chaptersettings"><div class="chapteropts"><strong>チャプター</strong><label>無音判定 <select id="silence"><option value="0.35">0.35秒</option><option value="0.5" selected>0.5秒</option><option value="0.8">0.8秒</option><option value="1.2">1.2秒</option></select></label><button id="analyze" type="button">再解析</button></div></section>
+<section class="section ab"><h2>🔁 A–B区間リピート</h2><div class="grid"><button id="setA" disabled>ここをAに</button><button id="setB" disabled>ここをBに</button><button id="clearAB" disabled>解除</button></div><div class="abstate">開始 A：<strong id="atime">未設定</strong>　終了 B：<strong id="btime">未設定</strong></div><div class="grid"><button id="toggleAB" disabled>リピート OFF</button><button id="gotoA" disabled>Aから再生</button><button id="clearPoints" disabled>A・Bを消去</button></div><div class="abstate" id="abstate">音源ごとにA・B位置を保持します。</div></section><p class="note">音源はこのページ内でのみ読み込み、サーバーへ送信しません。ブラウザを閉じると音源は保持されません。iPhoneでは「ファイル」アプリから選択してください。複数選択できない場合は1つずつ追加できます。左右のボタンは初期設定で前後の英文へ移動します。設定から秒数指定にも変更できます。Windows: Space＝再生/停止、←＝1秒戻る、Shift＋←＝0.5秒戻る、A/B＝区間指定。</p><details class="advanced-settings"><summary>⚙ 詳細設定 <span class="advanced-caption">タップして開く</span></summary><div class="advanced-content"><section class="section lesson-memory-settings">
+<h2>音源の記憶管理</h2>
+<p class="lesson-help">教材ごとの音源名・並び順だけを端末に記憶します。MP3本体やiCloud上のファイルは変更しません。</p>
+<div class="memory-reset-row"><button type="button" id="resetCurrentLesson">現在の教材の記憶をリセット</button><button type="button" id="resetAllLessons" class="reset-all">全教材の記憶をリセット</button></div>
+<p class="lesson-help">確認後に記憶情報を削除します。現在読み込んでいる音声は再生を継続できます。</p>
+</section><section class="section chaptersettings"><div class="chapteropts"><strong>チャプター</strong><label>無音判定 <select id="silence"><option value="0.35">0.35秒</option><option value="0.5" selected>0.5秒</option><option value="0.8">0.8秒</option><option value="1.2">1.2秒</option></select></label><button id="analyze" type="button">再解析</button></div></section>
 <section class="section controlprefs"><h2>再生ボタン左右2個ずつの設定</h2><div class="prefrow four-prefs"><label>左端 <select id="trackLeftAction" aria-label="左端ボタンの動作"></select></label><label>再生の左 <select id="leftJump" aria-label="再生ボタン左の動作"></select></label><label>再生の右 <select id="rightJump" aria-label="再生ボタン右の動作"></select></label><label>右端 <select id="trackRightAction" aria-label="右端ボタンの動作"></select></label></div><div class="chapterhelp">音源切り替えは一時停止、チャプター移動はその位置から再生します。</div></section>
 <section class="section pitchsettings"><h2>ピッチ補正</h2><label class="pitchoption"><input type="checkbox" id="preservePitch" checked> 声の高さを維持（ピッチ補正）</label><div class="pitchhint" id="pitchHint" aria-live="polite"></div></section>
 <section class="section"><label class="waveoption"><input id="showWaveform" type="checkbox" checked>音量インジケーターを表示する</label></section>
@@ -176,7 +204,107 @@ const controlSelects=controlIds.map(id=>$('#'+id));
 controlSelects.forEach((select,i)=>{for(const n of jumpValues){const opt=document.createElement('option');opt.value=String(n);opt.textContent=jumpLabel(n);select.appendChild(opt)}select.value=controlDefaults[i]});
 function updateSideLabels(){controlSelects.forEach((select,i)=>{const b=$('#'+controlButtons[i]),[symbol,label]=shortLabel(select.value);b.replaceChildren(document.createTextNode(symbol));const sp=document.createElement('span');sp.textContent=label;b.appendChild(sp);b.setAttribute('aria-label',jumpLabel(select.value));b.title=jumpLabel(select.value)})}
 controlSelects.forEach(select=>select.addEventListener('change',()=>{updateSideLabels();updatePrimaryControls()}));updateSideLabels();
-const tracks=Array(6).fill(null),slots=[...document.querySelectorAll('[data-slot]')];let active=0,ready=false,loadId=0,analysisId=0;let pendingLoaded=null,pendingError=null;let chapterLoopGuard=false;let chapterFollow=true;let lastFollowedChapter=-1;const fmt=n=>Number.isFinite(n)?`${Math.floor(n/60)}:${String(Math.floor(n%60)).padStart(2,'0')}.${Math.floor((n%1)*10)}`:'0:00.0';const currentTrack=()=>tracks[active];function msg(t,error=false){status.textContent=t;status.classList.toggle('error',error)}function buttons(){const t=currentTrack();document.querySelectorAll('button[disabled],button[data-jump],#setA,#setB,#clearAB,#clearPoints,#gotoA,#toggleAB').forEach(b=>{if(!b.classList.contains('slot'))b.disabled=!ready});seek.disabled=!ready;const valid=t&&t.A!==null&&t.B!==null&&t.B>t.A;$('#toggleAB').disabled=!ready||!valid;$('#gotoA').disabled=!ready||!t||t.A===null;$('#clearPoints').disabled=!ready||!t||(t.A===null&&t.B===null);$('#clearAB').disabled=!ready||!t||!t.repeat;$('#atime').textContent=t&&t.A!==null?fmt(t.A):'未設定';$('#btime').textContent=t&&t.B!==null?fmt(t.B):'未設定';$('#toggleAB').textContent=t&&t.repeat?'リピート ON':'リピート OFF';$('#toggleAB').classList.toggle('activeAB',!!(t&&t.repeat));$('#abstate').textContent=t&&t.repeat?'A〜Bを繰り返し再生中':valid?'区間設定済み（リピートOFF）':'音源ごとにA・B位置を保持します。'}function drawChapters(){const t=currentTrack(),bar=$('#chapterbar');const previousScroll=bar.scrollLeft;bar.replaceChildren();const chapters=t?.chapters||[];if(!chapters.length){const span=document.createElement('span');span.className='chapterhelp';span.textContent=t?'解析待ち、または無音区間が見つかりません':'音源を選択してください';bar.append(span)}else{const pos=audio.currentTime||0;let selected=0;chapters.forEach((c,i)=>{if(c<=pos+0.05)selected=i});if(t.chapterRepeat&&Number.isInteger(t.selectedChapter))selected=Math.min(t.selectedChapter,chapters.length-1);chapters.forEach((c,i)=>{const b=document.createElement('button');b.className='chapter'+(i===selected?' selected':'');b.innerHTML='<strong>'+(i+1)+'</strong><small>'+fmt(c)+'</small>';b.title='チャプター '+(i+1)+' / '+fmt(c);b.onclick=()=>{if(!ready)return;chapterFollow=false;t.selectedChapter=i;audio.currentTime=c;draw();const p=audio.play();if(p&&p.catch)p.catch(e=>msg('再生できません: '+e.message,true))};bar.append(b)});bar.scrollLeft=previousScroll}$('#repeatChapter').disabled=!ready||!chapters.length;$('#repeatChapter').textContent=t?.chapterRepeat?'🔁 チャプターリピート ON':'🔁 チャプターリピート OFF';$('#repeatChapter').classList.toggle('on',!!t?.chapterRepeat);$('#repeatChapter').setAttribute('aria-pressed',String(!!t?.chapterRepeat));$('#prevChapter').disabled=!ready||chapters.length<2;$('#nextChapter').disabled=!ready||chapters.length<2;updatePrimaryControls()}
+const LESSON_MEMORY_KEY='elp-lesson-order-v1';
+let lessonFiles=new Map(), selectedLesson=null;
+function readLessonMemory(){
+ try{const parsed=JSON.parse(localStorage.getItem(LESSON_MEMORY_KEY)||'{}');return parsed&&typeof parsed==='object'&&!Array.isArray(parsed)?parsed:{}}catch(e){return {}}
+}
+let lessonMemory=readLessonMemory();
+function saveLessonMemory(){
+ try{localStorage.setItem(LESSON_MEMORY_KEY,JSON.stringify(lessonMemory))}catch(e){msg('順番の保存に失敗しました。ブラウザの保存容量や設定を確認してください。',true)}
+}
+function lessonFileKey(f){
+ // Folder selection supplies a path, but file names alone suffice inside an individual lesson.
+ return (f.webkitRelativePath||f.name).split('/').pop();
+}
+function rememberCurrentLesson(){
+ if(!selectedLesson)return;
+ const previous=Array.isArray(lessonMemory[selectedLesson])?lessonMemory[selectedLesson]:[];
+ const current=tracks.filter(t=>t&&t.lesson===selectedLesson).map(t=>t.fileKey||t.name);
+ // Retain absent files' relative ordering for future re-import from the unused folder.
+ const extras=previous.filter(key=>!current.includes(key));
+ lessonMemory[selectedLesson]=[...current,...extras];
+ saveLessonMemory();
+}
+function clearLoadedTracks(){
+ audio.pause();analysisId++;loadId++;
+ if(pendingLoaded)audio.removeEventListener('loadedmetadata',pendingLoaded);
+ if(pendingError)audio.removeEventListener('error',pendingError);
+ pendingLoaded=null;pendingError=null;
+ audio.removeAttribute('src');audio.load();
+ tracks.forEach((t,i)=>{if(t)URL.revokeObjectURL(t.url);tracks[i]=null});
+ active=0;ready=false;chapterFollow=true;lastFollowedChapter=-1;lastChapterDraw=-1;
+ draw();maybeDrawChapters(true);
+}
+function populateLessonChoices(){
+ const select=$('#lessonChoice');
+ const old=select.value;
+ select.replaceChildren();
+ for(const name of lessonFiles.keys()){const opt=document.createElement('option');opt.value=name;opt.textContent=name;select.appendChild(opt)}
+ select.disabled=lessonFiles.size===0;
+ if(lessonFiles.has(old))select.value=old;
+ else if(lessonFiles.size)select.value=lessonFiles.keys().next().value;
+}
+function loadLesson(name){
+ const files=lessonFiles.get(name);
+ if(!files)return;
+ if(selectedLesson)rememberCurrentLesson();
+ selectedLesson=name;
+ const stored=Array.isArray(lessonMemory[name])?lessonMemory[name]:[];
+ const orderIndex=new Map(stored.map((key,i)=>[key,i]));
+ const sorted=[...files].sort((a,b)=>{
+  const ai=orderIndex.has(lessonFileKey(a))?orderIndex.get(lessonFileKey(a)):Infinity;
+  const bi=orderIndex.has(lessonFileKey(b))?orderIndex.get(lessonFileKey(b)):Infinity;
+  return ai-bi||a.name.localeCompare(b.name,'ja',{numeric:true});
+ });
+ clearLoadedTracks();
+ const chosen=sorted.slice(0,tracks.length);
+ chosen.forEach((f,i)=>{
+  tracks[i]={name:f.name,url:URL.createObjectURL(f),position:0,A:null,B:null,repeat:false,chapterRepeat:false,selectedChapter:0,chapters:null,chapterEnds:[],file:f,lesson:name,fileKey:lessonFileKey(f)};
+ });
+ $('#lessonChoice').value=name;
+ if(chosen.length)loadSlot(0,true,false);else draw();
+ rememberCurrentLesson();
+ msg(`${name}：${chosen.length}音源を読み込みました${sorted.length>tracks.length?`（先頭${tracks.length}件／全${sorted.length}件）`:''}。未使用フォルダ内は除外しています。`);
+}
+$('#lessonFolder').addEventListener('change',event=>{
+ const list=[...(event.target.files||[])];event.target.value='';
+ if(!list.length)return;
+ const grouped=new Map();
+ for(const f of list){
+  if(!/\.mp3$/i.test(f.name))continue;
+  const parts=(f.webkitRelativePath||'').split('/').filter(Boolean);
+  // Root folder / lesson / audio.mp3 is the preferred layout.
+  // If picking an individual lesson folder, direct MP3s belong to that folder.
+  let lesson, direct=false;
+  if(parts.length===2){lesson=parts[0];direct=true}
+  else if(parts.length===3){lesson=parts[1];direct=true}
+  if(!direct)continue; // Ignore unused subfolders and deeper nested MP3s.
+  if(!grouped.has(lesson))grouped.set(lesson,[]);
+  grouped.get(lesson).push(f);
+ }
+ if(!grouped.size){msg('選択したフォルダの直下（または教材フォルダ直下）にMP3が見つかりません。',true);return}
+ if(selectedLesson)rememberCurrentLesson();
+ lessonFiles=grouped;selectedLesson=null;
+ populateLessonChoices();
+ loadLesson($('#lessonChoice').value);
+});
+$('#lessonChoice').addEventListener('change',e=>loadLesson(e.target.value));
+$('#resetCurrentLesson').addEventListener('click',()=>{
+ if(!selectedLesson){msg('先に教材フォルダを選択してください。',true);return}
+ if(!confirm(`「${selectedLesson}」の並び順とファイル情報の記憶を削除しますか？\n現在の音声とiCloud上のMP3は変更しません。`))return;
+ const resetName=selectedLesson;
+ delete lessonMemory[resetName];saveLessonMemory();
+ // Keep the audio loaded but do not write back the old ordering on the next lesson switch.
+ selectedLesson=null;
+ msg(`「${resetName}」の記憶を削除しました。次のフォルダ読み込みから新しい順番で開始します。`);
+});
+$('#resetAllLessons').addEventListener('click',()=>{
+ if(!confirm('全教材の並び順とファイル情報の記憶を削除しますか？\n現在の音声とiCloud上のMP3は変更しません。'))return;
+ lessonMemory={};selectedLesson=null;try{localStorage.removeItem(LESSON_MEMORY_KEY)}catch(e){}
+ msg('全教材の記憶を削除しました。音声ファイルには変更ありません。');
+});
+const tracks=Array(10).fill(null),slots=[...document.querySelectorAll('[data-slot]')];let active=0,ready=false,loadId=0,analysisId=0;let pendingLoaded=null,pendingError=null;let chapterLoopGuard=false;let chapterFollow=true;let lastFollowedChapter=-1;const fmt=n=>Number.isFinite(n)?`${Math.floor(n/60)}:${String(Math.floor(n%60)).padStart(2,'0')}.${Math.floor((n%1)*10)}`:'0:00.0';const currentTrack=()=>tracks[active];function msg(t,error=false){status.textContent=t;status.classList.toggle('error',error)}function buttons(){const t=currentTrack();document.querySelectorAll('button[disabled],button[data-jump],#setA,#setB,#clearAB,#clearPoints,#gotoA,#toggleAB').forEach(b=>{if(!b.classList.contains('slot'))b.disabled=!ready});seek.disabled=!ready;const valid=t&&t.A!==null&&t.B!==null&&t.B>t.A;$('#toggleAB').disabled=!ready||!valid;$('#gotoA').disabled=!ready||!t||t.A===null;$('#clearPoints').disabled=!ready||!t||(t.A===null&&t.B===null);$('#clearAB').disabled=!ready||!t||!t.repeat;$('#atime').textContent=t&&t.A!==null?fmt(t.A):'未設定';$('#btime').textContent=t&&t.B!==null?fmt(t.B):'未設定';$('#toggleAB').textContent=t&&t.repeat?'リピート ON':'リピート OFF';$('#toggleAB').classList.toggle('activeAB',!!(t&&t.repeat));$('#abstate').textContent=t&&t.repeat?'A〜Bを繰り返し再生中':valid?'区間設定済み（リピートOFF）':'音源ごとにA・B位置を保持します。'}function drawChapters(){const t=currentTrack(),bar=$('#chapterbar');const previousScroll=bar.scrollLeft;bar.replaceChildren();const chapters=t?.chapters||[];if(!chapters.length){const span=document.createElement('span');span.className='chapterhelp';span.textContent=t?'解析待ち、または無音区間が見つかりません':'音源を選択してください';bar.append(span)}else{const pos=audio.currentTime||0;let selected=0;chapters.forEach((c,i)=>{if(c<=pos+0.05)selected=i});if(t.chapterRepeat&&Number.isInteger(t.selectedChapter))selected=Math.min(t.selectedChapter,chapters.length-1);chapters.forEach((c,i)=>{const b=document.createElement('button');b.className='chapter'+(i===selected?' selected':'');b.innerHTML='<strong>'+(i+1)+'</strong><small>'+fmt(c)+'</small>';b.title='チャプター '+(i+1)+' / '+fmt(c);b.onclick=()=>{if(!ready)return;chapterFollow=false;t.selectedChapter=i;audio.currentTime=c;draw();const p=audio.play();if(p&&p.catch)p.catch(e=>msg('再生できません: '+e.message,true))};bar.append(b)});bar.scrollLeft=previousScroll}$('#repeatChapter').disabled=!ready||!chapters.length;$('#repeatChapter').textContent=t?.chapterRepeat?'🔁 チャプターリピート ON':'🔁 チャプターリピート OFF';$('#repeatChapter').classList.toggle('on',!!t?.chapterRepeat);$('#repeatChapter').setAttribute('aria-pressed',String(!!t?.chapterRepeat));$('#prevChapter').disabled=!ready||chapters.length<2;$('#nextChapter').disabled=!ready||chapters.length<2;updatePrimaryControls()}
 let lastChapterDraw=-1;
 function drawChapterTicks(){
  const el=$('#chapterTicks'),t=currentTrack(),cs=t?.chapters||[];
@@ -299,7 +427,7 @@ function changeTrackFromButton(direction){
  loadSlot(target,false,wasPlaying);
 }
 function draw(){document.querySelector('#moveUp').disabled=active===0||!tracks[active];document.querySelector('#moveDown').disabled=active===5||!tracks[active];slots.forEach((b,i)=>{b.classList.toggle('active',i===active);b.querySelector('span').textContent=tracks[i]?.name||'未選択';b.title=tracks[i]?.name||'音源 '+(i+1)});$('#now').textContent=currentTrack()?`音源 ${active+1}：${currentTrack().name}`:`音源 ${active+1}：未選択`;$('#current').textContent=fmt(audio.currentTime);$('#duration').textContent=fmt(audio.duration);seek.max=Number.isFinite(audio.duration)?String(audio.duration):'0';if(document.activeElement!==seek)seek.value=String(audio.currentTime||0);play.textContent=audio.paused?'▶ 再生':'Ⅱ 停止';buttons();updateTrackSwitches();maybeDrawChapters();drawWaveform()}
-function storePosition(){const t=currentTrack();if(t&&ready&&Number.isFinite(audio.currentTime))t.position=audio.currentTime}function loadSlot(i,skipStore=false,autoPlay=false){if(i<0||i>5)return;if(!skipStore)storePosition();audio.pause();if(pendingLoaded)audio.removeEventListener('loadedmetadata',pendingLoaded);if(pendingError)audio.removeEventListener('error',pendingError);pendingLoaded=null;pendingError=null;active=i;ready=false;lastChapterDraw=-1;lastFollowedChapter=-1;chapterFollow=true;analysisId++;const token=++loadId;audio.removeAttribute('src');audio.load();const t=currentTrack();draw();if(!t){maybeDrawChapters(true);msg(`音源 ${i+1} は未選択です。下の「MP3を追加・入れ替え」から選んでください。`);return}maybeDrawChapters(true);$('#chapterstatus').textContent=t.chapters?'チャプターを復元しました':'無音区間を解析します';msg('読み込み中: '+t.name);audio.src=t.url;audio.defaultPlaybackRate=Number(speed.value);audio.playbackRate=Number(speed.value);applyPitchSetting();audio.load();const loaded=()=>{if(token!==loadId)return;audio.playbackRate=Number(speed.value);applyPitchSetting();ready=true;try{audio.currentTime=Math.min(t.position||0,Number.isFinite(audio.duration)?audio.duration:0)}catch(e){}draw();maybeDrawChapters(true);msg((autoPlay?'読み込み完了（自動再生）: ':'読み込み完了（一時停止中）: ')+t.name);if(!t.chapters)analyzeTrack(t,token);if(autoPlay){audio.play().catch(e=>msg('次の音源を自動再生できません: '+e.message,true))}};const failed=()=>{if(token!==loadId)return;ready=false;draw();msg('読み込みに失敗しました。音源が端末にダウンロードされているか確認してください。',true)};pendingLoaded=loaded;pendingError=failed;audio.addEventListener('loadedmetadata',loaded,{once:true});audio.addEventListener('error',failed,{once:true});}function moveTrack(direction){
+function storePosition(){const t=currentTrack();if(t&&ready&&Number.isFinite(audio.currentTime))t.position=audio.currentTime}function loadSlot(i,skipStore=false,autoPlay=false){if(i<0||i>=tracks.length)return;if(!skipStore)storePosition();audio.pause();if(pendingLoaded)audio.removeEventListener('loadedmetadata',pendingLoaded);if(pendingError)audio.removeEventListener('error',pendingError);pendingLoaded=null;pendingError=null;active=i;ready=false;lastChapterDraw=-1;lastFollowedChapter=-1;chapterFollow=true;analysisId++;const token=++loadId;audio.removeAttribute('src');audio.load();const t=currentTrack();draw();if(!t){maybeDrawChapters(true);msg(`音源 ${i+1} は未選択です。下の「MP3を追加・入れ替え」から選んでください。`);return}maybeDrawChapters(true);$('#chapterstatus').textContent=t.chapters?'チャプターを復元しました':'無音区間を解析します';msg('読み込み中: '+t.name);audio.src=t.url;audio.defaultPlaybackRate=Number(speed.value);audio.playbackRate=Number(speed.value);applyPitchSetting();audio.load();const loaded=()=>{if(token!==loadId)return;audio.playbackRate=Number(speed.value);applyPitchSetting();ready=true;try{audio.currentTime=Math.min(t.position||0,Number.isFinite(audio.duration)?audio.duration:0)}catch(e){}draw();maybeDrawChapters(true);msg((autoPlay?'読み込み完了（自動再生）: ':'読み込み完了（一時停止中）: ')+t.name);if(!t.chapters)analyzeTrack(t,token);if(autoPlay){audio.play().catch(e=>msg('次の音源を自動再生できません: '+e.message,true))}};const failed=()=>{if(token!==loadId)return;ready=false;draw();msg('読み込みに失敗しました。音源が端末にダウンロードされているか確認してください。',true)};pendingLoaded=loaded;pendingError=failed;audio.addEventListener('loadedmetadata',loaded,{once:true});audio.addEventListener('error',failed,{once:true});}function moveTrack(direction){
  const target=active+direction;
  if(target<0||target>=tracks.length||!tracks[active])return;
  storePosition();
@@ -308,12 +436,13 @@ function storePosition(){const t=currentTrack();if(t&&ready&&Number.isFinite(aud
  active=target;
  lastChapterDraw=-1;lastFollowedChapter=-1;
  draw();maybeDrawChapters(true);
+ rememberCurrentLesson();
  msg(`音源を${target+1}番に移動しました。再生位置とチャプター設定は保持しています。`);
 }
 $('#moveUp').onclick=()=>moveTrack(-1);
 $('#moveDown').onclick=()=>moveTrack(1);
-slots.forEach((b,i)=>b.onclick=()=>loadSlot(i,false,false));fileInput.addEventListener('change',()=>{const files=[...(fileInput.files||[])];fileInput.value='';if(!files.length)return;const valid=files.filter(f=>f.type.startsWith('audio/')||/\.(mp3|m4a|aac|wav|ogg)$/i.test(f.name));if(!valid.length){msg('対応する音声ファイルを選択してください。',true);return}const empty=tracks.map((t,i)=>t?null:i).filter(i=>i!==null);const targets=empty.length?empty:tracks.map((_,i)=>(active+i)%6);let added=0;for(const f of valid.slice(0,Math.min(6,targets.length))){const i=targets[added];if(tracks[i])URL.revokeObjectURL(tracks[i].url);tracks[i]={name:f.name,url:URL.createObjectURL(f),position:0,A:null,B:null,repeat:false,chapterRepeat:false,selectedChapter:0,chapters:null,chapterEnds:[],file:f};added++}if(added){const target=targets[0];loadSlot(target,true);msg(`${added}件読み込みました。音源をタップすると一時停止で切り替わります。`)}if(valid.length>added)msg(`${added}件読み込みました。空き枠が不足したため残り${valid.length-added}件は読み込んでいません。`)});
-$('#clearAll').onclick=()=>{audio.pause();analysisId++;loadId++;if(pendingLoaded)audio.removeEventListener('loadedmetadata',pendingLoaded);if(pendingError)audio.removeEventListener('error',pendingError);pendingLoaded=null;pendingError=null;audio.removeAttribute('src');audio.load();tracks.forEach((t,i)=>{if(t)URL.revokeObjectURL(t.url);tracks[i]=null});active=0;ready=false;chapterFollow=true;lastFollowedChapter=-1;lastChapterDraw=-1;draw();maybeDrawChapters(true);msg('全6音源を解除しました。端末のMP3ファイルは削除していません。')};
+slots.forEach((b,i)=>b.onclick=()=>loadSlot(i,false,false));fileInput.addEventListener('change',()=>{const files=[...(fileInput.files||[])];fileInput.value='';if(selectedLesson){rememberCurrentLesson();selectedLesson=null;$('#lessonChoice').value='';}if(!files.length)return;const valid=files.filter(f=>f.type.startsWith('audio/')||/\.(mp3|m4a|aac|wav|ogg)$/i.test(f.name));if(!valid.length){msg('対応する音声ファイルを選択してください。',true);return}const empty=tracks.map((t,i)=>t?null:i).filter(i=>i!==null);const targets=empty.length?empty:tracks.map((_,i)=>(active+i)%tracks.length);let added=0;for(const f of valid.slice(0,Math.min(tracks.length,targets.length))){const i=targets[added];if(tracks[i])URL.revokeObjectURL(tracks[i].url);tracks[i]={name:f.name,url:URL.createObjectURL(f),position:0,A:null,B:null,repeat:false,chapterRepeat:false,selectedChapter:0,chapters:null,chapterEnds:[],file:f};added++}if(added){const target=targets[0];loadSlot(target,true);msg(`${added}件読み込みました。音源をタップすると一時停止で切り替わります。`)}if(valid.length>added)msg(`${added}件読み込みました。空き枠が不足したため残り${valid.length-added}件は読み込んでいません。`)});
+$('#clearAll').onclick=()=>{audio.pause();analysisId++;loadId++;if(pendingLoaded)audio.removeEventListener('loadedmetadata',pendingLoaded);if(pendingError)audio.removeEventListener('error',pendingError);pendingLoaded=null;pendingError=null;audio.removeAttribute('src');audio.load();tracks.forEach((t,i)=>{if(t)URL.revokeObjectURL(t.url);tracks[i]=null});active=0;ready=false;chapterFollow=true;lastFollowedChapter=-1;lastChapterDraw=-1;draw();maybeDrawChapters(true);msg('全10音源を解除しました。端末のMP3ファイルは削除していません。')};
 
 function jump(n){if(!ready)return;try{const t=currentTrack();let next=Math.max(0,Math.min(Number.isFinite(audio.duration)?audio.duration:Infinity,audio.currentTime+n));if(t?.repeat&&t.A!==null&&t.B!==null&&next<t.A)next=t.A;audio.currentTime=next;draw()}catch(e){msg('移動できません: '+e.message,true)}}async function analyzeTrack(t,token){const task=++analysisId;const note=$('#chapterstatus');note.textContent='音声を解析中…（長い音源は時間がかかります）';try{const ctx=new (window.AudioContext||window.webkitAudioContext)();let buffer;try{const bytes=await t.file.arrayBuffer();buffer=await ctx.decodeAudioData(bytes)}finally{await ctx.close().catch(()=>{})}if(task!==analysisId||token!==loadId||currentTrack()!==t)return;const minSilence=Number($('#silence').value),rate=buffer.sampleRate,step=Math.max(1,Math.floor(rate*.01)),count=Math.ceil(buffer.length/step),channels=Math.min(buffer.numberOfChannels,2),levels=new Float32Array(count);let peak=0;for(let k=0;k<count;k++){let sum=0,n=0;const start=k*step,end=Math.min(start+step,buffer.length);for(let ch=0;ch<channels;ch++){const data=buffer.getChannelData(ch);for(let j=start;j<end;j+=4){sum+=data[j]*data[j];n++}}const v=Math.sqrt(sum/Math.max(1,n));levels[k]=v;if(v>peak)peak=v}// Only small amplitude summaries are retained, never the decoded audio.
 // Store only a compact ~0.18s volume summary for the decorative level meter.
