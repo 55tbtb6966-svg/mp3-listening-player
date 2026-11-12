@@ -188,29 +188,29 @@ body.dark-mode .indicator-design select{background:#1b2c43;color:#f4f8ff;border-
 body.dark-mode .indicator-help{color:#b9c8da}
 
 /* Bigger illuminated screen only for the new waveform; retro bars keep their compact size. */
-.wavebox[data-indicator-style="scope"],#waveBox[data-indicator-style="scope"]{height:100px}
-#waveBox[data-indicator-style="scope"] #waveform{height:100px}
+#waveBox[data-indicator-style="scope"],#waveBox[data-indicator-style="scopeMono"]{height:100px}
+#waveBox[data-indicator-style="scope"] #waveform,#waveBox[data-indicator-style="scopeMono"] #waveform{height:100px}
 #waveBox[data-indicator-style="pulse"]{height:76px}
 #waveBox[data-indicator-style="pulse"] #waveform{height:76px}
 
-/* Clearly outlined buttons in the rounded detailed-settings cards. */
+/* Reset / re-analyze use the same border and button color as the neighboring settings. */
 .advanced-content #resetCurrentLesson,
 .advanced-content #analyze{
- border:1.5px solid #91a8c7;
- border-radius:11px;
- background:#eef3fb;
- color:#224166;
- box-shadow:0 1px 2px rgba(20,44,79,.08);
+ border:1px solid #d8e2ef;
+ border-radius:13px;
+ background:#e8eef8;
+ color:#18345b;
+ box-shadow:none;
 }
 .advanced-content #resetCurrentLesson:focus-visible,
-.advanced-content #analyze:focus-visible{outline:3px solid #80aef5;outline-offset:2px}
+.advanced-content #analyze:focus-visible{outline:3px solid #88aaf6;outline-offset:2px}
 body.dark-mode .advanced-content #resetCurrentLesson,
 body.dark-mode .advanced-content #analyze{
- border:1.5px solid #8aaad6;
- border-radius:11px;
- background:#2e4768;
- color:#eff6ff;
- box-shadow:0 1px 2px rgba(0,0,0,.28);
+ border:1px solid #526b89;
+ border-radius:13px;
+ background:#263a54;
+ color:#e1ecff;
+ box-shadow:none;
 }
 </style></head><body><main><h1>🎧 English Listening Player</h1><section class="section"><h2>音源の切り替え（最大12個）</h2><p id="selectedLessonLabel" class="selected-lesson-label" hidden aria-live="polite"></p><div class="slots" id="slots"><button class="slot active" data-slot="0"><small>1</small><span>未選択</span></button><button class="slot" data-slot="1"><small>2</small><span>未選択</span></button><button class="slot" data-slot="2"><small>3</small><span>未選択</span></button><button class="slot" data-slot="3"><small>4</small><span>未選択</span></button><button class="slot" data-slot="4"><small>5</small><span>未選択</span></button><button class="slot" data-slot="5"><small>6</small><span>未選択</span></button><button class="slot" data-slot="6"><small>7</small><span>未選択</span></button><button class="slot" data-slot="7"><small>8</small><span>未選択</span></button><button class="slot" data-slot="8"><small>9</small><span>未選択</span></button><button class="slot" data-slot="9"><small>10</small><span>未選択</span></button><button class="slot" data-slot="10"><small>11</small><span>未選択</span></button><button class="slot" data-slot="11"><small>12</small><span>未選択</span></button></div><details class="source-details"><summary>⚙ 音源の詳細設定 <span class="source-caption">タップして開く</span></summary><div class="source-details-content"><div class="reorderbar"><span>選択中の音源を並び替え</span><button id="moveUp" type="button">◀ 1つ前へ</button><button id="moveDown" type="button">1つ後へ ▶</button></div><div class="fileactions"><label class="pick">📁 MP3を選択（最大12個一括）<input id="file" type="file" multiple accept=".mp3,.m4a,audio/mpeg,audio/mp4,audio/*" aria-label="MP3ファイルを選択"></label><button id="clearAll" type="button" class="clearall">全解除</button></div><div class="lesson-import">
   <label class="folder-pick">📂 English MP3／教材フォルダを選択
@@ -244,8 +244,8 @@ body.dark-mode .advanced-content #analyze{
 <select id="indicatorStyle" aria-label="音量インジケーターのデザイン">
 <option value="retro">レトロ（現在のバー表示）</option>
 <option value="retroColor">レトロ（マルチカラー）</option>
-<option value="scope">カラフル波形（オシロスコープ風）</option>
-<option value="scopeMono">単色波形（オシロスコープ風・シアン）</option>
+<option value="scope">実波形・カラー（オシロスコープ風）</option>
+<option value="scopeMono">実波形・単色（オシロスコープ風）</option>
 
 <option value="pulse">マルチカラーネオン（流れる）</option>
 <option value="pulseMono">単色ネオン（流れる・グリーン）</option>
@@ -464,22 +464,30 @@ function drawWaveform(){
    meterPeaks[i]+=(target-meterPeaks[i])*(target>meterPeaks[i]?0.65:0.20);
  }
  if(style==='scope'||style==='scopeMono'){
-   // A colorful two-sided oscillogram, visually modeled after the reference image.
-   // It uses the existing amplitude envelope (not sample-accurate PCM).
+   // A scrolling two-sided display of actual time-domain PCM extrema.
+   // Each pixel uses a 10ms peak summary, not artificially generated sine waves.
    const cy=h/2;
    ctx.strokeStyle='#273248';ctx.lineWidth=1;
    for(let y=12;y<h;y+=18){ctx.beginPath();ctx.moveTo(0,y+.5);ctx.lineTo(w,y+.5);ctx.stroke()}
    for(let x=20;x<w;x+=80){ctx.beginPath();ctx.moveTo(x+.5,0);ctx.lineTo(x+.5,h);ctx.stroke()}
    ctx.strokeStyle='#34445c';ctx.beginPath();ctx.moveTo(0,cy+.5);ctx.lineTo(w,cy+.5);ctx.stroke();
-   const count=250;
-   const points=[];
+   // Show a scrolling 2.5s window of actual signed MP3 samples, compressed
+   // to 10ms min/max summaries during the existing silence analysis.
+   const count=250,points=[];
+   const waveMin=t?.waveMin,waveMax=t?.waveMax,waveStep=t?.waveStep||.01;
+   const playheadFrac=.72;
+   const rangeSec=2.5;
+   const windowStart=time-rangeSec*playheadFrac;
    for(let i=0;i<count;i++){
      const fraction=i/(count-1);
-     const pos=fraction*(bars-1),idx=Math.floor(pos),blend=pos-idx;
-     const volume=meterPeaks[idx]*(1-blend)+meterPeaks[Math.min(idx+1,bars-1)]*blend;
-     // Short frequency texture, still visually bounded by the detected amplitude.
-     const texture=.55+.45*Math.abs(Math.sin(i*1.31+time*13)*Math.cos(i*.67-time*7));
-     points.push({x:6+fraction*(w-12),amp:Math.min(cy-8,2+volume*(cy-10)*texture)});
+     const sampleTime=windowStart+fraction*rangeSec;
+     const bin=Math.floor(sampleTime/waveStep);
+     const valid=waveMin&&waveMax&&bin>=0&&bin<waveMin.length;
+     points.push({
+       x:6+fraction*(w-12),
+       upper:valid?Math.min(cy-4,waveMax[bin]/127*(cy-8)):0,
+       lower:valid?Math.min(cy-4,-waveMin[bin]/127*(cy-8)):0
+     });
    }
    const rainbow=ctx.createLinearGradient(0,0,w,0);
    if(style==='scopeMono'){
@@ -491,17 +499,17 @@ function drawWaveform(){
      rainbow.addColorStop(.82,'#a26dff');rainbow.addColorStop(1,'#58ffa7');
    }
    ctx.beginPath();ctx.moveTo(points[0].x,cy);
-   for(const a of points)ctx.lineTo(a.x,cy-a.amp);
-   for(let i=points.length-1;i>=0;i--)ctx.lineTo(points[i].x,cy+points[i].amp);
+   for(const a of points)ctx.lineTo(a.x,cy-a.upper);
+   for(let i=points.length-1;i>=0;i--)ctx.lineTo(points[i].x,cy+points[i].lower);
    ctx.closePath();ctx.globalAlpha=.84;ctx.fillStyle=rainbow;ctx.fill();ctx.globalAlpha=1;
    // Sharp luminous colored waveform edges make soft passages more readable.
    for(const sign of [-1,1]){
-     ctx.beginPath();points.forEach((p,i)=>{const yy=cy+sign*p.amp;if(i===0)ctx.moveTo(p.x,yy);else ctx.lineTo(p.x,yy)});
+     ctx.beginPath();points.forEach((p,i)=>{const yy=sign<0?cy-p.upper:cy+p.lower;if(i===0)ctx.moveTo(p.x,yy);else ctx.lineTo(p.x,yy)});
      ctx.strokeStyle=rainbow;ctx.lineWidth=1.4;ctx.stroke();
    }
    // Bright moving playhead reminiscent of an illuminated tape oscilloscope.
    if(playing){
-     const scanX=((time*92)%(w+60))-30;
+     const scanX=6+playheadFrac*(w-12);
      const glow=ctx.createLinearGradient(scanX-13,0,scanX+13,0);
      const scanRGB=style==='scopeMono'?'81,218,255':'61,255,174';
      glow.addColorStop(0,`rgba(${scanRGB},0)`);glow.addColorStop(.5,`rgba(${scanRGB},.25)`);glow.addColorStop(1,`rgba(${scanRGB},0)`);
@@ -629,7 +637,32 @@ $('#moveDown').onclick=()=>moveTrack(1);
 slots.forEach((b,i)=>b.onclick=()=>loadSlot(i,false,false));fileInput.addEventListener('change',()=>{const files=[...(fileInput.files||[])];fileInput.value='';if(selectedLesson){rememberCurrentLesson();selectedLesson=null;$('#lessonChoice').value='';updateSelectedLessonLabel();}if(!files.length)return;const valid=files.filter(f=>f.type.startsWith('audio/')||/\.(mp3|m4a|aac|wav|ogg)$/i.test(f.name));if(!valid.length){msg('対応する音声ファイルを選択してください。',true);return}const empty=tracks.map((t,i)=>t?null:i).filter(i=>i!==null);const targets=empty.length?empty:tracks.map((_,i)=>(active+i)%tracks.length);let added=0;for(const f of valid.slice(0,Math.min(tracks.length,targets.length))){const i=targets[added];if(tracks[i])URL.revokeObjectURL(tracks[i].url);tracks[i]={name:f.name,url:URL.createObjectURL(f),position:0,A:null,B:null,repeat:false,chapterRepeat:false,selectedChapter:0,chapters:null,chapterEnds:[],file:f};added++}if(added){const target=targets[0];loadSlot(target,true);msg(`${added}件読み込みました。音源をタップすると一時停止で切り替わります。`)}if(valid.length>added)msg(`${added}件読み込みました。空き枠が不足したため残り${valid.length-added}件は読み込んでいません。`)});
 $('#clearAll').onclick=()=>{audio.pause();analysisId++;loadId++;if(pendingLoaded)audio.removeEventListener('loadedmetadata',pendingLoaded);if(pendingError)audio.removeEventListener('error',pendingError);pendingLoaded=null;pendingError=null;audio.removeAttribute('src');audio.load();tracks.forEach((t,i)=>{if(t)URL.revokeObjectURL(t.url);tracks[i]=null});active=0;ready=false;chapterFollow=true;lastFollowedChapter=-1;lastChapterDraw=-1;draw();maybeDrawChapters(true);updateSelectedLessonLabel();msg('全12音源を解除しました。端末のMP3ファイルは削除していません。')};
 
-function jump(n){if(!ready)return;try{const t=currentTrack();let next=Math.max(0,Math.min(Number.isFinite(audio.duration)?audio.duration:Infinity,audio.currentTime+n));if(t?.repeat&&t.A!==null&&t.B!==null&&next<t.A)next=t.A;audio.currentTime=next;draw()}catch(e){msg('移動できません: '+e.message,true)}}async function analyzeTrack(t,token){const task=++analysisId;const note=$('#chapterstatus');note.textContent='音声を解析中…（長い音源は時間がかかります）';try{const ctx=new (window.AudioContext||window.webkitAudioContext)();let buffer;try{const bytes=await t.file.arrayBuffer();buffer=await ctx.decodeAudioData(bytes)}finally{await ctx.close().catch(()=>{})}if(task!==analysisId||token!==loadId||currentTrack()!==t)return;const minSilence=Number($('#silence').value),rate=buffer.sampleRate,step=Math.max(1,Math.floor(rate*.01)),count=Math.ceil(buffer.length/step),channels=Math.min(buffer.numberOfChannels,2),levels=new Float32Array(count);let peak=0;for(let k=0;k<count;k++){let sum=0,n=0;const start=k*step,end=Math.min(start+step,buffer.length);for(let ch=0;ch<channels;ch++){const data=buffer.getChannelData(ch);for(let j=start;j<end;j+=4){sum+=data[j]*data[j];n++}}const v=Math.sqrt(sum/Math.max(1,n));levels[k]=v;if(v>peak)peak=v}// Only small amplitude summaries are retained, never the decoded audio.
+function jump(n){if(!ready)return;try{const t=currentTrack();let next=Math.max(0,Math.min(Number.isFinite(audio.duration)?audio.duration:Infinity,audio.currentTime+n));if(t?.repeat&&t.A!==null&&t.B!==null&&next<t.A)next=t.A;audio.currentTime=next;draw()}catch(e){msg('移動できません: '+e.message,true)}}async function analyzeTrack(t,token){const task=++analysisId;const note=$('#chapterstatus');note.textContent='音声を解析中…（長い音源は時間がかかります）';try{const ctx=new (window.AudioContext||window.webkitAudioContext)();let buffer;try{const bytes=await t.file.arrayBuffer();buffer=await ctx.decodeAudioData(bytes)}finally{await ctx.close().catch(()=>{})}if(task!==analysisId||token!==loadId||currentTrack()!==t)return;const minSilence=Number($('#silence').value),rate=buffer.sampleRate,step=Math.max(1,Math.floor(rate*.01)),count=Math.ceil(buffer.length/step),channels=Math.min(buffer.numberOfChannels,2),levels=new Float32Array(count);
+// True signed PCM extrema for each 10ms bin. Keep only two compact byte arrays,
+// not a decoded buffer or another copy of the MP3, after analysis ends.
+const rawWaveMin=new Float32Array(count),rawWaveMax=new Float32Array(count);
+const channelData=Array.from({length:channels},(_,ch)=>buffer.getChannelData(ch));
+let peak=0,wavePeak=0;
+for(let k=0;k<count;k++){
+ let sum=0,n=0,min=0,max=0;
+ const start=k*step,end=Math.min(start+step,buffer.length);
+ for(const data of channelData){
+  for(let j=start;j<end;j+=4){const sample=data[j];sum+=sample*sample;n++;if(sample<min)min=sample;if(sample>max)max=sample}
+ }
+ const v=Math.sqrt(sum/Math.max(1,n));levels[k]=v;
+ rawWaveMin[k]=min;rawWaveMax[k]=max;
+ if(v>peak)peak=v;
+ wavePeak=Math.max(wavePeak,max,-min);
+}
+// Approximate true time-domain waveform in 10ms extrema; only ~2 bytes/10ms stored.
+const waveMin=new Int8Array(count),waveMax=new Int8Array(count);
+const waveScale=127/Math.max(.0001,wavePeak);
+for(let k=0;k<count;k++){
+ waveMin[k]=Math.max(-127,Math.min(0,Math.round(rawWaveMin[k]*waveScale)));
+ waveMax[k]=Math.min(127,Math.max(0,Math.round(rawWaveMax[k]*waveScale)));
+}
+t.waveMin=waveMin;t.waveMax=waveMax;t.waveStep=step/rate;
+// Only compact per-time-bin summaries are retained, never decoded audio.
 // Store only a compact ~0.18s volume summary for the decorative level meter.
 // No raw audio or MP3 copies are stored; this stays in memory for this session.
 const bins=Math.min(22000,Math.max(1,Math.ceil(buffer.duration/0.18)));
