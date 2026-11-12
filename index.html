@@ -179,6 +179,13 @@ body.dark-mode .advanced-content .section.settings-card{
 body.dark-mode .source-caption{color:#b0bfd3}
 body.dark-mode .advanced-content .settings-card h2{color:#f0f5ff}
 
+
+.indicator-design{display:flex;align-items:center;gap:12px;margin-top:10px;font-size:13px;color:#425677;font-weight:600}
+.indicator-design select{min-width:0;flex:1;font-size:15px;padding:8px;border-radius:8px;border:1px solid #afbfda;background:#fff;color:#223b5b}
+.indicator-help{font-size:12px;line-height:1.45;color:#64748b;margin:7px 0 0}
+body.dark-mode .indicator-design{color:#dbe6f8}
+body.dark-mode .indicator-design select{background:#1b2c43;color:#f4f8ff;border-color:#5c7191}
+body.dark-mode .indicator-help{color:#b9c8da}
 </style></head><body><main><h1>🎧 English Listening Player</h1><section class="section"><h2>音源の切り替え（最大12個）</h2><p id="selectedLessonLabel" class="selected-lesson-label" hidden aria-live="polite"></p><div class="slots" id="slots"><button class="slot active" data-slot="0"><small>1</small><span>未選択</span></button><button class="slot" data-slot="1"><small>2</small><span>未選択</span></button><button class="slot" data-slot="2"><small>3</small><span>未選択</span></button><button class="slot" data-slot="3"><small>4</small><span>未選択</span></button><button class="slot" data-slot="4"><small>5</small><span>未選択</span></button><button class="slot" data-slot="5"><small>6</small><span>未選択</span></button><button class="slot" data-slot="6"><small>7</small><span>未選択</span></button><button class="slot" data-slot="7"><small>8</small><span>未選択</span></button><button class="slot" data-slot="8"><small>9</small><span>未選択</span></button><button class="slot" data-slot="9"><small>10</small><span>未選択</span></button><button class="slot" data-slot="10"><small>11</small><span>未選択</span></button><button class="slot" data-slot="11"><small>12</small><span>未選択</span></button></div><details class="source-details"><summary>⚙ 音源の詳細設定 <span class="source-caption">タップして開く</span></summary><div class="source-details-content"><div class="reorderbar"><span>選択中の音源を並び替え</span><button id="moveUp" type="button">◀ 1つ前へ</button><button id="moveDown" type="button">1つ後へ ▶</button></div><div class="fileactions"><label class="pick">📁 MP3を選択（最大12個一括）<input id="file" type="file" multiple accept=".mp3,.m4a,audio/mpeg,audio/mp4,audio/*" aria-label="MP3ファイルを選択"></label><button id="clearAll" type="button" class="clearall">全解除</button></div><div class="lesson-import">
   <label class="folder-pick">📂 English MP3／教材フォルダを選択
     <input id="lessonFolder" type="file" webkitdirectory directory multiple aria-label="教材フォルダを選択">
@@ -205,7 +212,17 @@ body.dark-mode .advanced-content .settings-card h2{color:#f0f5ff}
 </section><section class="section chaptersettings settings-card"><div class="chapteropts"><strong>チャプター</strong><label>無音判定 <select id="silence"><option value="0.35">0.35秒</option><option value="0.5" selected>0.5秒</option><option value="0.8">0.8秒</option><option value="1.2">1.2秒</option></select></label><button id="analyze" type="button">再解析</button></div></section>
 <section class="section controlprefs settings-card"><h2>再生ボタン左右2個ずつの設定</h2><div class="prefrow four-prefs"><label>左端 <select id="trackLeftAction" aria-label="左端ボタンの動作"></select></label><label>再生の左 <select id="leftJump" aria-label="再生ボタン左の動作"></select></label><label>再生の右 <select id="rightJump" aria-label="再生ボタン右の動作"></select></label><label>右端 <select id="trackRightAction" aria-label="右端ボタンの動作"></select></label></div><div class="chapterhelp">音源切り替えは一時停止、チャプター移動はその位置から再生します。</div></section>
 <section class="section pitchsettings settings-card"><h2>ピッチ補正</h2><label class="pitchoption"><input type="checkbox" id="preservePitch" checked> 声の高さを維持（ピッチ補正）</label><div class="pitchhint" id="pitchHint" aria-live="polite"></div></section>
-<section class="section settings-card"><label class="waveoption"><input id="showWaveform" type="checkbox" checked>音量インジケーターを表示する</label></section>
+<section class="section settings-card">
+<label class="waveoption"><input id="showWaveform" type="checkbox" checked>音量インジケーターを表示する</label>
+<label class="indicator-design">デザイン
+<select id="indicatorStyle" aria-label="音量インジケーターのデザイン">
+<option value="retro">レトロ（現在のバー表示）</option>
+<option value="scope">オシロスコープ風</option>
+<option value="vu">アナログVUメーター風</option>
+<option value="pulse">ネオンパルス</option>
+</select></label>
+<p class="indicator-help">音量解析データを使った演出表示です。周波数別の分析ではありません。</p>
+</section>
 <section class="section settings-card"><label class="wakeoption"><input id="keepAwake" type="checkbox" checked>再生中は画面を消さない</label><div class="wakehint" id="wakeStatus">ON：再生中のみ画面の自動ロックを防ぎます（対応ブラウザのみ）。</div></section><section class="section theme-settings settings-card"><label class="themeoption"><input id="darkMode" type="checkbox"> ダークモード</label><div class="themehint">OFF：ノーマル ／ ON：ダーク（表示設定のみ記憶）</div></section></div></details><p class="note">音源はこのページ内でのみ読み込み、サーバーへ送信しません。ブラウザを閉じると音源は保持されません。iPhoneでは「ファイル」アプリから選択してください。複数選択できない場合は1つずつ追加できます。左右のボタンは初期設定で前後の英文へ移動します。設定から秒数指定にも変更できます。Windows: Space＝再生/停止、←＝1秒戻る、Shift＋←＝0.5秒戻る、A/B＝区間指定。</p></main><audio id="audio" preload="metadata" playsinline></audio><script>
 (()=>{'use strict';
 // Keep only the small theme preference; never store MP3 audio.
@@ -389,35 +406,92 @@ function maybeDrawChapters(force=false){
 const waveCanvas=$('#waveform'),waveBox=$('#waveBox'),waveToggle=$('#showWaveform');
 let meterFrame=0,meterLastFrame=0;
 const meterPeaks=new Float32Array(22);
+const indicatorStyle=$('#indicatorStyle');
+try{
+ const savedStyle=localStorage.getItem('elp-indicator-style');
+ if(['retro','scope','vu','pulse'].includes(savedStyle))indicatorStyle.value=savedStyle;
+}catch(e){}
+indicatorStyle.addEventListener('change',()=>{
+ try{localStorage.setItem('elp-indicator-style',indicatorStyle.value)}catch(e){}
+ meterPeaks.fill(0);drawWaveform();
+});
 function drawWaveform(){
  if(!waveToggle.checked||waveBox.hidden)return;
  const ctx=waveCanvas.getContext('2d');if(!ctx)return;
  const w=waveCanvas.width,h=waveCanvas.height;
- ctx.fillStyle='#101a21';ctx.fillRect(0,0,w,h);
+ const style=indicatorStyle.value;
+ ctx.clearRect(0,0,w,h);
+ ctx.fillStyle=style==='vu'?'#e7dfca':'#101a21';
+ ctx.fillRect(0,0,w,h);
  const t=currentTrack(),meter=t?.meterLevels;
  const playing=ready&&!audio.paused&&!audio.ended;
- // Each bar shows a recent short interval of real RMS loudness (not frequency bands).
- // This keeps the normal HTMLAudioElement signal path intact on iOS/Safari.
- const bars=meterPeaks.length,stepX=(w-26)/bars,segmentH=5.2,segmentGap=2.2;
- const time=audio.currentTime||0;
- const secondsPerBin=t?.meterStep||0.18;
+ const bars=meterPeaks.length,stepX=(w-26)/bars;
+ const time=audio.currentTime||0,secondsPerBin=t?.meterStep||0.18;
  for(let i=0;i<bars;i++){
    const lookback=(bars-1-i)*0.105;
    const sampleAt=Math.floor(Math.max(0,time-lookback)/secondsPerBin);
-   let target=(playing&&meter?.length)?(meter[Math.min(meter.length-1,sampleAt)]||0):0;
-   // Slight visual smoothing makes this look like a classic audio level indicator.
-   meterPeaks[i]+= (target-meterPeaks[i])*(target>meterPeaks[i]?0.65:0.20);
-   const sections=10,lit=Math.round(meterPeaks[i]*sections);
+   const target=(playing&&meter?.length)?(meter[Math.min(meter.length-1,sampleAt)]||0):0;
+   meterPeaks[i]+=(target-meterPeaks[i])*(target>meterPeaks[i]?0.65:0.20);
+ }
+ if(style==='scope'){
+  const middle=h/2;
+  ctx.strokeStyle='#194d3f';ctx.lineWidth=1;
+  for(let y=13;y<h;y+=15){ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(w,y);ctx.stroke()}
+  for(let x=16;x<w;x+=32){ctx.beginPath();ctx.moveTo(x,0);ctx.lineTo(x,h);ctx.stroke()}
+  ctx.beginPath();
+  for(let i=0;i<bars;i++){
+   const x=6+i*(w-12)/(bars-1);
+   const envelope=meterPeaks[i];
+   const v=middle-((i%2===0)?1:-1)*(5+envelope*27);
+   if(i===0)ctx.moveTo(x,v);else ctx.lineTo(x,v);
+  }
+  ctx.lineWidth=3;ctx.strokeStyle='#5fffb7';ctx.shadowBlur=10;ctx.shadowColor='#24ffab';ctx.stroke();ctx.shadowBlur=0;
+ }else if(style==='vu'){
+  const half=w/2;
+  for(let channel=0;channel<2;channel++){
+   const left=channel*half;
+   const level=meterPeaks.slice(channel*11,channel*11+11).reduce((a,b)=>a+b,0)/11;
+   const centerX=left+half/2,baseY=h+9;
+   for(let n=0;n<=6;n++){
+    const angle=(-Math.PI/2)+(n/6)*(Math.PI/2);
+    const x1=centerX+Math.cos(angle)*94,y1=baseY+Math.sin(angle)*69;
+    const x2=centerX+Math.cos(angle)*104,y2=baseY+Math.sin(angle)*76;
+    ctx.strokeStyle=n>=5?'#b44434':'#867b64';ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(x1,y1);ctx.lineTo(x2,y2);ctx.stroke();
+   }
+   const angle=(-Math.PI/2)+Math.max(0,Math.min(1,level))*(Math.PI/2);
+   ctx.strokeStyle='#372f2b';ctx.lineWidth=3;ctx.beginPath();ctx.moveTo(centerX,baseY);ctx.lineTo(centerX+Math.cos(angle)*115,baseY+Math.sin(angle)*85);ctx.stroke();
+   ctx.fillStyle='#5d4b3f';ctx.beginPath();ctx.arc(centerX,baseY,6,0,Math.PI*2);ctx.fill();
+   ctx.font='bold 14px system-ui';ctx.textAlign='center';ctx.fillStyle='#6e5945';ctx.fillText(channel===0?'L':'R',left+26,18);
+  }
+ }else if(style==='pulse'){
+  ctx.strokeStyle='#3a365d';ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(8,h/2);ctx.lineTo(w-8,h/2);ctx.stroke();
+  for(let i=0;i<bars;i++){
+   const x=13+i*stepX+stepX/2,mag=meterPeaks[i]*34+2;
+   const grad=ctx.createLinearGradient(0,h/2-mag,0,h/2+mag);
+   grad.addColorStop(0,'#ff62a8');grad.addColorStop(.5,'#a879ff');grad.addColorStop(1,'#45d7ff');
+   ctx.strokeStyle=grad;ctx.lineWidth=Math.max(3,stepX-5);ctx.lineCap='round';ctx.shadowBlur=5;ctx.shadowColor='#ac7bff';
+   ctx.beginPath();ctx.moveTo(x,h/2-mag);ctx.lineTo(x,h/2+mag);ctx.stroke();
+  }
+  ctx.shadowBlur=0;
+ }else{
+  const segmentH=5.2,segmentGap=2.2;
+  for(let i=0;i<bars;i++){
+   const lit=Math.round(meterPeaks[i]*10);
    const x=13+i*stepX+1,barWidth=Math.max(3,stepX-3);
-   for(let seg=0;seg<sections;seg++){
+   for(let seg=0;seg<10;seg++){
      const y=h-7-(seg+1)*(segmentH+segmentGap);
      ctx.fillStyle=seg>=8?'#e86755':seg>=6?'#e4b849':'#44d5a3';
      ctx.globalAlpha=seg<lit?0.98:0.12;
      ctx.fillRect(x,y,barWidth,segmentH);
    }
+  }
+  ctx.globalAlpha=1;
  }
- ctx.globalAlpha=1;
- if(!t||!meter?.length){ctx.textAlign='center';ctx.fillStyle='#c2cdd6';ctx.font='21px system-ui,sans-serif';ctx.fillText(t?'音量データを解析中…':'MP3を選択すると表示',w/2,h/2+7)}
+ if(!t||!meter?.length){
+  ctx.fillStyle=style==='vu'?'#594d3f':'#c2cdd6';
+  ctx.textAlign='center';ctx.font='21px system-ui,sans-serif';
+  ctx.fillText(t?'音量データを解析中…':'MP3を選択すると表示',w/2,h/2+7);
+ }
 }
 function meterTick(stamp){
  meterFrame=0;
