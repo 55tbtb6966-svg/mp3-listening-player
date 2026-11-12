@@ -186,6 +186,12 @@ body.dark-mode .advanced-content .settings-card h2{color:#f0f5ff}
 body.dark-mode .indicator-design{color:#dbe6f8}
 body.dark-mode .indicator-design select{background:#1b2c43;color:#f4f8ff;border-color:#5c7191}
 body.dark-mode .indicator-help{color:#b9c8da}
+
+/* Bigger illuminated screen only for the new waveform; retro bars keep their compact size. */
+.wavebox[data-indicator-style="scope"],#waveBox[data-indicator-style="scope"]{height:100px}
+#waveBox[data-indicator-style="scope"] #waveform{height:100px}
+#waveBox[data-indicator-style="pulse"]{height:76px}
+#waveBox[data-indicator-style="pulse"] #waveform{height:76px}
 </style></head><body><main><h1>🎧 English Listening Player</h1><section class="section"><h2>音源の切り替え（最大12個）</h2><p id="selectedLessonLabel" class="selected-lesson-label" hidden aria-live="polite"></p><div class="slots" id="slots"><button class="slot active" data-slot="0"><small>1</small><span>未選択</span></button><button class="slot" data-slot="1"><small>2</small><span>未選択</span></button><button class="slot" data-slot="2"><small>3</small><span>未選択</span></button><button class="slot" data-slot="3"><small>4</small><span>未選択</span></button><button class="slot" data-slot="4"><small>5</small><span>未選択</span></button><button class="slot" data-slot="5"><small>6</small><span>未選択</span></button><button class="slot" data-slot="6"><small>7</small><span>未選択</span></button><button class="slot" data-slot="7"><small>8</small><span>未選択</span></button><button class="slot" data-slot="8"><small>9</small><span>未選択</span></button><button class="slot" data-slot="9"><small>10</small><span>未選択</span></button><button class="slot" data-slot="10"><small>11</small><span>未選択</span></button><button class="slot" data-slot="11"><small>12</small><span>未選択</span></button></div><details class="source-details"><summary>⚙ 音源の詳細設定 <span class="source-caption">タップして開く</span></summary><div class="source-details-content"><div class="reorderbar"><span>選択中の音源を並び替え</span><button id="moveUp" type="button">◀ 1つ前へ</button><button id="moveDown" type="button">1つ後へ ▶</button></div><div class="fileactions"><label class="pick">📁 MP3を選択（最大12個一括）<input id="file" type="file" multiple accept=".mp3,.m4a,audio/mpeg,audio/mp4,audio/*" aria-label="MP3ファイルを選択"></label><button id="clearAll" type="button" class="clearall">全解除</button></div><div class="lesson-import">
   <label class="folder-pick">📂 English MP3／教材フォルダを選択
     <input id="lessonFolder" type="file" webkitdirectory directory multiple aria-label="教材フォルダを選択">
@@ -194,7 +200,7 @@ body.dark-mode .indicator-help{color:#b9c8da}
     <select id="lessonChoice" disabled><option value="">フォルダを選択してください</option></select>
   </label>
   <p class="lesson-help">「English MP3」を選ぶと、教材A・教材Bなどを切り替えられます。教材Aだけを直接選ぶこともできます。各教材の直下のMP3だけを読み込み、「未使用」などの下位フォルダは除外します。保存するのは並び順だけで、MP3本体は保存しません。</p>
-</div><div id="status" class="status" role="status" aria-live="polite">最大12音源。音源のタップは切り替えのみで、自動再生しません。</div><div class="trackendsettings"><div class="trackendtitle">音源全体の再生モード</div><div class="trackmode-row"><button type="button" id="trackEndMode" class="trackmodebtn" aria-label="音源全体の再生モードを切り替え" title="再生モードを切り替え">🔂 1音源リピート</button><p class="trackendhint" id="trackModeHint" aria-live="polite">現在のMP3を先頭から繰り返します。</p></div><p class="trackendhint trackmode-priority">A-B・チャプターリピートが有効ならそちらを優先。</p></div></div></details></section><div class="top"><div class="now" id="now">MP3を選択してください</div><div class="playrow five-controls" aria-label="再生と移動の操作"><button id="trackBack" class="rew track-side" disabled aria-label="前の音源">⏮<span>前の音源</span></button><button id="back" class="rew" disabled aria-label="前のチャプター">◀<span>前のチャプター</span></button><button id="play" class="play" disabled aria-label="再生または一時停止">▶ 再生</button><button id="half" class="rew" disabled aria-label="次のチャプター">▶<span>次のチャプター</span></button><button id="trackForward" class="rew track-side" disabled aria-label="次の音源">⏭<span>次の音源</span></button></div><div class="chapters"><div id="chapterbar" class="chapterbar" aria-label="チャプター一覧"><span class="chapterhelp">音源を読み込むと無音区間から自動生成します</span></div><div class="chapterhelp" id="chapterstatus">番号と開始時刻を表示。シークバー操作時はチャプター一覧が追従します。チャプター選択後は一覧を固定し、再生中のチャプターが欄外に出たら中央へ自動移動します。</div></div><div class="seekwrap"><div id="chapterTicks" class="chapterticks" aria-hidden="true"></div><input id="seek" type="range" min="0" max="100" step="0.01" value="0" disabled aria-label="再生位置"></div><div class="times"><span id="current">0:00.0</span><span id="duration">0:00.0</span></div><div id="waveBox" class="wavebox"><canvas id="waveform" width="640" height="90" aria-label="音量インジケーター（再生中の音量で棒が上下します）" role="img"></canvas></div></div>
+</div><div id="status" class="status" role="status" aria-live="polite">最大12音源。音源のタップは切り替えのみで、自動再生しません。</div><div class="trackendsettings"><div class="trackendtitle">音源全体の再生モード</div><div class="trackmode-row"><button type="button" id="trackEndMode" class="trackmodebtn" aria-label="音源全体の再生モードを切り替え" title="再生モードを切り替え">🔂 1音源リピート</button><p class="trackendhint" id="trackModeHint" aria-live="polite">現在のMP3を先頭から繰り返します。</p></div><p class="trackendhint trackmode-priority">A-B・チャプターリピートが有効ならそちらを優先。</p></div></div></details></section><div class="top"><div class="now" id="now">MP3を選択してください</div><div class="playrow five-controls" aria-label="再生と移動の操作"><button id="trackBack" class="rew track-side" disabled aria-label="前の音源">⏮<span>前の音源</span></button><button id="back" class="rew" disabled aria-label="前のチャプター">◀<span>前のチャプター</span></button><button id="play" class="play" disabled aria-label="再生または一時停止">▶ 再生</button><button id="half" class="rew" disabled aria-label="次のチャプター">▶<span>次のチャプター</span></button><button id="trackForward" class="rew track-side" disabled aria-label="次の音源">⏭<span>次の音源</span></button></div><div class="chapters"><div id="chapterbar" class="chapterbar" aria-label="チャプター一覧"><span class="chapterhelp">音源を読み込むと無音区間から自動生成します</span></div><div class="chapterhelp" id="chapterstatus">番号と開始時刻を表示。シークバー操作時はチャプター一覧が追従します。チャプター選択後は一覧を固定し、再生中のチャプターが欄外に出たら中央へ自動移動します。</div></div><div class="seekwrap"><div id="chapterTicks" class="chapterticks" aria-hidden="true"></div><input id="seek" type="range" min="0" max="100" step="0.01" value="0" disabled aria-label="再生位置"></div><div class="times"><span id="current">0:00.0</span><span id="duration">0:00.0</span></div><div id="waveBox" class="wavebox"><canvas id="waveform" width="640" height="90" aria-label="再生中の音量に応じて動くインジケーター" role="img"></canvas></div></div>
 
 <section class="section repeatsettings"><div class="chapterrepeat"><button id="repeatChapter" disabled aria-pressed="false">🔁 チャプターリピート OFF</button></div></section>
 <section class="section speedsection framed-setting"><div class="speedrow"><label for="speed"><strong>再生速度</strong></label><select id="speed"><option value="0.5">0.5×</option><option value="0.75">0.75×</option><option value="0.9">0.9×</option><option value="1" selected>1.0×</option><option value="1.1">1.1×</option><option value="1.25">1.25×</option><option value="1.5">1.5×</option><option value="2">2.0×</option></select></div></section>
@@ -217,11 +223,12 @@ body.dark-mode .indicator-help{color:#b9c8da}
 <label class="indicator-design">デザイン
 <select id="indicatorStyle" aria-label="音量インジケーターのデザイン">
 <option value="retro">レトロ（現在のバー表示）</option>
-<option value="scope">オシロスコープ風</option>
-<option value="vu">アナログVUメーター風</option>
-<option value="pulse">ネオンパルス</option>
+<option value="retroColor">レトロ（マルチカラー）</option>
+<option value="scope">カラフル波形（オシロスコープ風）</option>
+
+<option value="pulse">マルチカラーネオン（流れる）</option>
 </select></label>
-<p class="indicator-help">音量解析データを使った演出表示です。周波数別の分析ではありません。</p>
+<p class="indicator-help">レトロ・カラフル波形・流れるネオンから選択できます。波形は音量データに基づく演出表示です。</p>
 </section>
 <section class="section settings-card"><label class="wakeoption"><input id="keepAwake" type="checkbox" checked>再生中は画面を消さない</label><div class="wakehint" id="wakeStatus">ON：再生中のみ画面の自動ロックを防ぎます（対応ブラウザのみ）。</div></section><section class="section theme-settings settings-card"><label class="themeoption"><input id="darkMode" type="checkbox"> ダークモード</label><div class="themehint">OFF：ノーマル ／ ON：ダーク（表示設定のみ記憶）</div></section></div></details><p class="note">音源はこのページ内でのみ読み込み、サーバーへ送信しません。ブラウザを閉じると音源は保持されません。iPhoneでは「ファイル」アプリから選択してください。複数選択できない場合は1つずつ追加できます。左右のボタンは初期設定で前後の英文へ移動します。設定から秒数指定にも変更できます。Windows: Space＝再生/停止、←＝1秒戻る、Shift＋←＝0.5秒戻る、A/B＝区間指定。</p></main><audio id="audio" preload="metadata" playsinline></audio><script>
 (()=>{'use strict';
@@ -409,20 +416,21 @@ const meterPeaks=new Float32Array(22);
 const indicatorStyle=$('#indicatorStyle');
 try{
  const savedStyle=localStorage.getItem('elp-indicator-style');
- if(['retro','scope','vu','pulse'].includes(savedStyle))indicatorStyle.value=savedStyle;
+ if(['retro','retroColor','scope','pulse'].includes(savedStyle))indicatorStyle.value=savedStyle;
 }catch(e){}
 indicatorStyle.addEventListener('change',()=>{
  try{localStorage.setItem('elp-indicator-style',indicatorStyle.value)}catch(e){}
- meterPeaks.fill(0);drawWaveform();
+ meterPeaks.fill(0);updateIndicatorAppearance();drawWaveform();
 });
+function updateIndicatorAppearance(){waveBox.dataset.indicatorStyle=indicatorStyle.value}
+updateIndicatorAppearance();
 function drawWaveform(){
  if(!waveToggle.checked||waveBox.hidden)return;
  const ctx=waveCanvas.getContext('2d');if(!ctx)return;
  const w=waveCanvas.width,h=waveCanvas.height;
  const style=indicatorStyle.value;
  ctx.clearRect(0,0,w,h);
- ctx.fillStyle=style==='vu'?'#e7dfca':'#101a21';
- ctx.fillRect(0,0,w,h);
+ ctx.fillStyle='#0c101e';ctx.fillRect(0,0,w,h);
  const t=currentTrack(),meter=t?.meterLevels;
  const playing=ready&&!audio.paused&&!audio.ended;
  const bars=meterPeaks.length,stepX=(w-26)/bars;
@@ -434,46 +442,83 @@ function drawWaveform(){
    meterPeaks[i]+=(target-meterPeaks[i])*(target>meterPeaks[i]?0.65:0.20);
  }
  if(style==='scope'){
-  const middle=h/2;
-  ctx.strokeStyle='#194d3f';ctx.lineWidth=1;
-  for(let y=13;y<h;y+=15){ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(w,y);ctx.stroke()}
-  for(let x=16;x<w;x+=32){ctx.beginPath();ctx.moveTo(x,0);ctx.lineTo(x,h);ctx.stroke()}
-  ctx.beginPath();
-  for(let i=0;i<bars;i++){
-   const x=6+i*(w-12)/(bars-1);
-   const envelope=meterPeaks[i];
-   const v=middle-((i%2===0)?1:-1)*(5+envelope*27);
-   if(i===0)ctx.moveTo(x,v);else ctx.lineTo(x,v);
-  }
-  ctx.lineWidth=3;ctx.strokeStyle='#5fffb7';ctx.shadowBlur=10;ctx.shadowColor='#24ffab';ctx.stroke();ctx.shadowBlur=0;
- }else if(style==='vu'){
-  const half=w/2;
-  for(let channel=0;channel<2;channel++){
-   const left=channel*half;
-   const level=meterPeaks.slice(channel*11,channel*11+11).reduce((a,b)=>a+b,0)/11;
-   const centerX=left+half/2,baseY=h+9;
-   for(let n=0;n<=6;n++){
-    const angle=(-Math.PI/2)+(n/6)*(Math.PI/2);
-    const x1=centerX+Math.cos(angle)*94,y1=baseY+Math.sin(angle)*69;
-    const x2=centerX+Math.cos(angle)*104,y2=baseY+Math.sin(angle)*76;
-    ctx.strokeStyle=n>=5?'#b44434':'#867b64';ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(x1,y1);ctx.lineTo(x2,y2);ctx.stroke();
+   // A colorful two-sided oscillogram, visually modeled after the reference image.
+   // It uses the existing amplitude envelope (not sample-accurate PCM).
+   const cy=h/2;
+   ctx.strokeStyle='#273248';ctx.lineWidth=1;
+   for(let y=12;y<h;y+=18){ctx.beginPath();ctx.moveTo(0,y+.5);ctx.lineTo(w,y+.5);ctx.stroke()}
+   for(let x=20;x<w;x+=80){ctx.beginPath();ctx.moveTo(x+.5,0);ctx.lineTo(x+.5,h);ctx.stroke()}
+   ctx.strokeStyle='#34445c';ctx.beginPath();ctx.moveTo(0,cy+.5);ctx.lineTo(w,cy+.5);ctx.stroke();
+   const count=250;
+   const points=[];
+   for(let i=0;i<count;i++){
+     const fraction=i/(count-1);
+     const pos=fraction*(bars-1),idx=Math.floor(pos),blend=pos-idx;
+     const volume=meterPeaks[idx]*(1-blend)+meterPeaks[Math.min(idx+1,bars-1)]*blend;
+     // Short frequency texture, still visually bounded by the detected amplitude.
+     const texture=.55+.45*Math.abs(Math.sin(i*1.31+time*13)*Math.cos(i*.67-time*7));
+     points.push({x:6+fraction*(w-12),amp:Math.min(cy-8,2+volume*(cy-10)*texture)});
    }
-   const angle=(-Math.PI/2)+Math.max(0,Math.min(1,level))*(Math.PI/2);
-   ctx.strokeStyle='#372f2b';ctx.lineWidth=3;ctx.beginPath();ctx.moveTo(centerX,baseY);ctx.lineTo(centerX+Math.cos(angle)*115,baseY+Math.sin(angle)*85);ctx.stroke();
-   ctx.fillStyle='#5d4b3f';ctx.beginPath();ctx.arc(centerX,baseY,6,0,Math.PI*2);ctx.fill();
-   ctx.font='bold 14px system-ui';ctx.textAlign='center';ctx.fillStyle='#6e5945';ctx.fillText(channel===0?'L':'R',left+26,18);
-  }
- }else if(style==='pulse'){
-  ctx.strokeStyle='#3a365d';ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(8,h/2);ctx.lineTo(w-8,h/2);ctx.stroke();
+   const rainbow=ctx.createLinearGradient(0,0,w,0);
+   rainbow.addColorStop(0,'#ffb04c');rainbow.addColorStop(.13,'#ff6f49');
+   rainbow.addColorStop(.28,'#6ed8ff');rainbow.addColorStop(.40,'#ad73ff');
+   rainbow.addColorStop(.58,'#65bbff');rainbow.addColorStop(.70,'#ff9760');
+   rainbow.addColorStop(.82,'#a26dff');rainbow.addColorStop(1,'#58ffa7');
+   ctx.beginPath();ctx.moveTo(points[0].x,cy);
+   for(const a of points)ctx.lineTo(a.x,cy-a.amp);
+   for(let i=points.length-1;i>=0;i--)ctx.lineTo(points[i].x,cy+points[i].amp);
+   ctx.closePath();ctx.globalAlpha=.84;ctx.fillStyle=rainbow;ctx.fill();ctx.globalAlpha=1;
+   // Sharp luminous colored waveform edges make soft passages more readable.
+   for(const sign of [-1,1]){
+     ctx.beginPath();points.forEach((p,i)=>{const yy=cy+sign*p.amp;if(i===0)ctx.moveTo(p.x,yy);else ctx.lineTo(p.x,yy)});
+     ctx.strokeStyle=rainbow;ctx.lineWidth=1.4;ctx.stroke();
+   }
+   // Bright moving playhead reminiscent of an illuminated tape oscilloscope.
+   if(playing){
+     const scanX=((time*92)%(w+60))-30;
+     const glow=ctx.createLinearGradient(scanX-13,0,scanX+13,0);
+     glow.addColorStop(0,'rgba(61,255,174,0)');glow.addColorStop(.5,'rgba(61,255,174,.25)');glow.addColorStop(1,'rgba(61,255,174,0)');
+     ctx.fillStyle=glow;ctx.fillRect(scanX-13,2,26,h-4);
+     ctx.fillStyle='#4affae';ctx.fillRect(scanX,2,2,h-4);
+   }
+ }else if(style==='retroColor'){
+  // Segmented retro bars with rainbow coloring, keeping the classic stacked look.
+  const segmentH=5.2,segmentGap=2.2;
   for(let i=0;i<bars;i++){
-   const x=13+i*stepX+stepX/2,mag=meterPeaks[i]*34+2;
-   const grad=ctx.createLinearGradient(0,h/2-mag,0,h/2+mag);
-   grad.addColorStop(0,'#ff62a8');grad.addColorStop(.5,'#a879ff');grad.addColorStop(1,'#45d7ff');
-   ctx.strokeStyle=grad;ctx.lineWidth=Math.max(3,stepX-5);ctx.lineCap='round';ctx.shadowBlur=5;ctx.shadowColor='#ac7bff';
-   ctx.beginPath();ctx.moveTo(x,h/2-mag);ctx.lineTo(x,h/2+mag);ctx.stroke();
+   const lit=Math.round(meterPeaks[i]*10);
+   const x=13+i*stepX+1,barWidth=Math.max(3,stepX-3);
+   const baseHue=((i/Math.max(1,bars-1))*300+18)%360;
+   for(let seg=0;seg<10;seg++){
+     const y=h-7-(seg+1)*(segmentH+segmentGap);
+     const hue=(baseHue+seg*5)%360;
+     const color=`hsl(${hue}, 98%, ${seg>=8?63:seg>=6?58:54}%)`;
+     ctx.fillStyle=color;
+     ctx.globalAlpha=seg<lit?0.98:0.12;
+     if(seg<lit){ctx.shadowColor=color;ctx.shadowBlur=5;}else{ctx.shadowBlur=0;}
+     ctx.fillRect(x,y,barWidth,segmentH);
+   }
   }
-  ctx.shadowBlur=0;
+  ctx.shadowBlur=0;ctx.globalAlpha=1;
+ }else if(style==='pulse'){
+   // Flowing spectrum-colored neon columns: gradient animates right-to-left.
+   const cy=h/2,phase=playing?time*1.85:0;
+   ctx.strokeStyle='#282946';ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(6,cy+.5);ctx.lineTo(w-6,cy+.5);ctx.stroke();
+   const count=65,gap=(w-24)/count;
+   for(let i=0;i<count;i++){
+     const idxFloat=i/(count-1)*(bars-1),idx=Math.floor(idxFloat),blend=idxFloat-idx;
+     const level=meterPeaks[idx]*(1-blend)+meterPeaks[Math.min(idx+1,bars-1)]*blend;
+     const wave=(Math.sin(i*.37-phase*4)+Math.cos(i*.14+phase*2))*.12;
+     const mag=3+Math.max(0,Math.min(1,level+wave*level))*(cy-10);
+     const hue=((i/count*360+phase*66)%360+360)%360;
+     const color=`hsl(${hue}, 100%, 66%)`;
+     const x=12+i*gap+gap*.5;
+     ctx.strokeStyle=color;ctx.lineWidth=Math.max(3.2,gap*.52);ctx.lineCap='round';
+     ctx.shadowColor=color;ctx.shadowBlur=10;
+     ctx.beginPath();ctx.moveTo(x,cy-mag);ctx.lineTo(x,cy+mag);ctx.stroke();
+   }
+   ctx.shadowBlur=0;
  }else{
+  // Preserve the original retro segmented sound-level indicator.
   const segmentH=5.2,segmentGap=2.2;
   for(let i=0;i<bars;i++){
    const lit=Math.round(meterPeaks[i]*10);
@@ -488,8 +533,7 @@ function drawWaveform(){
   ctx.globalAlpha=1;
  }
  if(!t||!meter?.length){
-  ctx.fillStyle=style==='vu'?'#594d3f':'#c2cdd6';
-  ctx.textAlign='center';ctx.font='21px system-ui,sans-serif';
+  ctx.fillStyle='#c2cdd6';ctx.textAlign='center';ctx.font='21px system-ui,sans-serif';
   ctx.fillText(t?'音量データを解析中…':'MP3を選択すると表示',w/2,h/2+7);
  }
 }
