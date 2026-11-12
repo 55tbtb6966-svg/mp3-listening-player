@@ -156,7 +156,30 @@ body.dark-mode .memory-reset-row .reset-all{background:#462b33;color:#ffe7e7;bor
 .selected-lesson-label{margin:-4px 0 12px;padding:7px 11px;border-radius:9px;background:#edf3ff;color:#254571;font-size:13px;font-weight:600;overflow-wrap:anywhere}
 .selected-lesson-label[hidden]{display:none}
 body.dark-mode .selected-lesson-label{background:#263d5b;color:#d9ecff}
-</style></head><body><main><h1>🎧 English Listening Player</h1><section class="section"><h2>音源の切り替え（最大12個）</h2><p id="selectedLessonLabel" class="selected-lesson-label" hidden aria-live="polite"></p><div class="slots" id="slots"><button class="slot active" data-slot="0"><small>1</small><span>未選択</span></button><button class="slot" data-slot="1"><small>2</small><span>未選択</span></button><button class="slot" data-slot="2"><small>3</small><span>未選択</span></button><button class="slot" data-slot="3"><small>4</small><span>未選択</span></button><button class="slot" data-slot="4"><small>5</small><span>未選択</span></button><button class="slot" data-slot="5"><small>6</small><span>未選択</span></button><button class="slot" data-slot="6"><small>7</small><span>未選択</span></button><button class="slot" data-slot="7"><small>8</small><span>未選択</span></button><button class="slot" data-slot="8"><small>9</small><span>未選択</span></button><button class="slot" data-slot="9"><small>10</small><span>未選択</span></button><button class="slot" data-slot="10"><small>11</small><span>未選択</span></button><button class="slot" data-slot="11"><small>12</small><span>未選択</span></button></div><details class="source-details"><summary>⚙ 音源の詳細設定</summary><div class="source-details-content"><div class="reorderbar"><span>選択中の音源を並び替え</span><button id="moveUp" type="button">◀ 1つ前へ</button><button id="moveDown" type="button">1つ後へ ▶</button></div><div class="fileactions"><label class="pick">📁 MP3を選択（最大12個一括）<input id="file" type="file" multiple accept=".mp3,.m4a,audio/mpeg,audio/mp4,audio/*" aria-label="MP3ファイルを選択"></label><button id="clearAll" type="button" class="clearall">全解除</button></div><div class="lesson-import">
+
+/* Individual rounded panels within collapsible detailed settings. */
+.advanced-content .section.settings-card{
+  padding:14px 13px;
+  margin:10px 0;
+  border:1px solid #d8e2ef;
+  background:#ffffff;
+  border-radius:13px;
+  box-sizing:border-box;
+}
+.advanced-content .settings-card h2{margin-top:0}
+.advanced-content .settings-card .wakehint,
+.advanced-content .settings-card .themehint,
+.advanced-content .settings-card .pitchhint{margin:7px 0 0}
+.source-caption{font-size:12px;font-weight:400;color:#697b91;margin-left:auto}
+body.dark-mode .advanced-content .section.settings-card{
+  background:#273a52;
+  border-color:#526b89;
+  color:#f0f5ff;
+}
+body.dark-mode .source-caption{color:#b0bfd3}
+body.dark-mode .advanced-content .settings-card h2{color:#f0f5ff}
+
+</style></head><body><main><h1>🎧 English Listening Player</h1><section class="section"><h2>音源の切り替え（最大12個）</h2><p id="selectedLessonLabel" class="selected-lesson-label" hidden aria-live="polite"></p><div class="slots" id="slots"><button class="slot active" data-slot="0"><small>1</small><span>未選択</span></button><button class="slot" data-slot="1"><small>2</small><span>未選択</span></button><button class="slot" data-slot="2"><small>3</small><span>未選択</span></button><button class="slot" data-slot="3"><small>4</small><span>未選択</span></button><button class="slot" data-slot="4"><small>5</small><span>未選択</span></button><button class="slot" data-slot="5"><small>6</small><span>未選択</span></button><button class="slot" data-slot="6"><small>7</small><span>未選択</span></button><button class="slot" data-slot="7"><small>8</small><span>未選択</span></button><button class="slot" data-slot="8"><small>9</small><span>未選択</span></button><button class="slot" data-slot="9"><small>10</small><span>未選択</span></button><button class="slot" data-slot="10"><small>11</small><span>未選択</span></button><button class="slot" data-slot="11"><small>12</small><span>未選択</span></button></div><details class="source-details"><summary>⚙ 音源の詳細設定 <span class="source-caption">タップして開く</span></summary><div class="source-details-content"><div class="reorderbar"><span>選択中の音源を並び替え</span><button id="moveUp" type="button">◀ 1つ前へ</button><button id="moveDown" type="button">1つ後へ ▶</button></div><div class="fileactions"><label class="pick">📁 MP3を選択（最大12個一括）<input id="file" type="file" multiple accept=".mp3,.m4a,audio/mpeg,audio/mp4,audio/*" aria-label="MP3ファイルを選択"></label><button id="clearAll" type="button" class="clearall">全解除</button></div><div class="lesson-import">
   <label class="folder-pick">📂 English MP3／教材フォルダを選択
     <input id="lessonFolder" type="file" webkitdirectory directory multiple aria-label="教材フォルダを選択">
   </label>
@@ -174,16 +197,16 @@ body.dark-mode .selected-lesson-label{background:#263d5b;color:#d9ecff}
 <div class="navigation-group"><div class="navigation-group-title">音源を切り替え</div>
   <div class="navigation-buttons"><button id="prevTrack" type="button" aria-label="前の音源、または現在の音源の先頭へ">⏮ <span>前の音源</span></button><button id="nextTrack" type="button" aria-label="次の音源へ">⏭ <span>次の音源</span></button></div></div>
 </div><section class="section framed-setting"><h2>細かい巻き戻し・早送り</h2><div class="grid"><button data-jump="-0.5" disabled>−0.5秒</button><button data-jump="-1" disabled>−1秒</button><button data-jump="-2" disabled>−2秒</button><button data-jump="-3" disabled>−3秒</button><button data-jump="-5" disabled>−5秒</button><button data-jump="1" disabled>＋1秒</button></div></section>
-<details class="advanced-settings"><summary>⚙ 詳細設定 <span class="advanced-caption">タップして開く</span></summary><div class="advanced-content"><section class="section lesson-memory-settings">
+<details class="advanced-settings"><summary>⚙ 詳細設定 <span class="advanced-caption">タップして開く</span></summary><div class="advanced-content"><section class="section lesson-memory-settings settings-card">
 <h2>音源の記憶管理</h2>
 <p class="lesson-help">教材ごとの音源名・並び順だけを端末に記憶します。MP3本体やiCloud上のファイルは変更しません。</p>
 <div class="memory-reset-row"><button type="button" id="resetCurrentLesson">現在の教材の記憶をリセット</button><button type="button" id="resetAllLessons" class="reset-all">全教材の記憶をリセット</button></div>
 <p class="lesson-help">確認後に記憶情報を削除します。現在読み込んでいる音声は再生を継続できます。</p>
 </section><section class="section chaptersettings"><div class="chapteropts"><strong>チャプター</strong><label>無音判定 <select id="silence"><option value="0.35">0.35秒</option><option value="0.5" selected>0.5秒</option><option value="0.8">0.8秒</option><option value="1.2">1.2秒</option></select></label><button id="analyze" type="button">再解析</button></div></section>
-<section class="section controlprefs"><h2>再生ボタン左右2個ずつの設定</h2><div class="prefrow four-prefs"><label>左端 <select id="trackLeftAction" aria-label="左端ボタンの動作"></select></label><label>再生の左 <select id="leftJump" aria-label="再生ボタン左の動作"></select></label><label>再生の右 <select id="rightJump" aria-label="再生ボタン右の動作"></select></label><label>右端 <select id="trackRightAction" aria-label="右端ボタンの動作"></select></label></div><div class="chapterhelp">音源切り替えは一時停止、チャプター移動はその位置から再生します。</div></section>
-<section class="section pitchsettings"><h2>ピッチ補正</h2><label class="pitchoption"><input type="checkbox" id="preservePitch" checked> 声の高さを維持（ピッチ補正）</label><div class="pitchhint" id="pitchHint" aria-live="polite"></div></section>
-<section class="section"><label class="waveoption"><input id="showWaveform" type="checkbox" checked>音量インジケーターを表示する</label></section>
-<section class="section"><label class="wakeoption"><input id="keepAwake" type="checkbox" checked>再生中は画面を消さない</label><div class="wakehint" id="wakeStatus">ON：再生中のみ画面の自動ロックを防ぎます（対応ブラウザのみ）。</div></section><section class="section theme-settings"><label class="themeoption"><input id="darkMode" type="checkbox"> ダークモード</label><div class="themehint">OFF：ノーマル ／ ON：ダーク（表示設定のみ記憶）</div></section></div></details><p class="note">音源はこのページ内でのみ読み込み、サーバーへ送信しません。ブラウザを閉じると音源は保持されません。iPhoneでは「ファイル」アプリから選択してください。複数選択できない場合は1つずつ追加できます。左右のボタンは初期設定で前後の英文へ移動します。設定から秒数指定にも変更できます。Windows: Space＝再生/停止、←＝1秒戻る、Shift＋←＝0.5秒戻る、A/B＝区間指定。</p></main><audio id="audio" preload="metadata" playsinline></audio><script>
+<section class="section controlprefs settings-card"><h2>再生ボタン左右2個ずつの設定</h2><div class="prefrow four-prefs"><label>左端 <select id="trackLeftAction" aria-label="左端ボタンの動作"></select></label><label>再生の左 <select id="leftJump" aria-label="再生ボタン左の動作"></select></label><label>再生の右 <select id="rightJump" aria-label="再生ボタン右の動作"></select></label><label>右端 <select id="trackRightAction" aria-label="右端ボタンの動作"></select></label></div><div class="chapterhelp">音源切り替えは一時停止、チャプター移動はその位置から再生します。</div></section>
+<section class="section pitchsettings settings-card"><h2>ピッチ補正</h2><label class="pitchoption"><input type="checkbox" id="preservePitch" checked> 声の高さを維持（ピッチ補正）</label><div class="pitchhint" id="pitchHint" aria-live="polite"></div></section>
+<section class="section settings-card"><label class="waveoption"><input id="showWaveform" type="checkbox" checked>音量インジケーターを表示する</label></section>
+<section class="section settings-card"><label class="wakeoption"><input id="keepAwake" type="checkbox" checked>再生中は画面を消さない</label><div class="wakehint" id="wakeStatus">ON：再生中のみ画面の自動ロックを防ぎます（対応ブラウザのみ）。</div></section><section class="section theme-settings settings-card"><label class="themeoption"><input id="darkMode" type="checkbox"> ダークモード</label><div class="themehint">OFF：ノーマル ／ ON：ダーク（表示設定のみ記憶）</div></section></div></details><p class="note">音源はこのページ内でのみ読み込み、サーバーへ送信しません。ブラウザを閉じると音源は保持されません。iPhoneでは「ファイル」アプリから選択してください。複数選択できない場合は1つずつ追加できます。左右のボタンは初期設定で前後の英文へ移動します。設定から秒数指定にも変更できます。Windows: Space＝再生/停止、←＝1秒戻る、Shift＋←＝0.5秒戻る、A/B＝区間指定。</p></main><audio id="audio" preload="metadata" playsinline></audio><script>
 (()=>{'use strict';
 // Keep only the small theme preference; never store MP3 audio.
 const darkModeToggle=document.getElementById('darkMode');
