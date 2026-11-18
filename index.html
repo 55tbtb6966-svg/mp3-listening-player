@@ -250,6 +250,7 @@ body.dark-mode .indicator-tap-option{color:#dbe6f8}
 <select id="indicatorStyle" aria-label="音量インジケーターのデザイン">
 <option value="retro">レトロ（現在のバー表示）</option>
 <option value="retroColor">レトロ（マルチカラー）</option>
+<option value="retroColorFlow">レトロ（マルチカラー・流れる）</option>
 <option value="scope">実波形・カラー（オシロスコープ風）</option>
 <option value="scopeMono">実波形・単色（オシロスコープ風）</option>
 
@@ -257,7 +258,7 @@ body.dark-mode .indicator-tap-option{color:#dbe6f8}
 <option value="pulseMono">単色ネオン（流れる・グリーン）</option>
 </select></label>
 <label class="indicator-tap-option"><input id="tapChangeIndicator" type="checkbox" checked> インジケーターをタップしてデザインを切り替える</label>
-<p class="indicator-help">レトロ・波形・流れるネオンのカラー／単色表示を選択できます。波形は音量データに基づく演出表示です。</p>
+<p class="indicator-help">レトロ（固定色／流れる色）・波形・流れるネオンのカラー／単色表示を選択できます。波形は音量データに基づく演出表示です。</p>
 </section>
 <section class="section settings-card"><label class="wakeoption"><input id="keepAwake" type="checkbox" checked>再生中は画面を消さない</label><div class="wakehint" id="wakeStatus">ON：再生中のみ画面の自動ロックを防ぎます（対応ブラウザのみ）。</div></section><section class="section theme-settings settings-card"><label class="themeoption"><input id="darkMode" type="checkbox"> ダークモード</label><div class="themehint">OFF：ノーマル ／ ON：ダーク（表示設定のみ記憶）</div></section></div></details><p class="note">音源はこのページ内でのみ読み込み、サーバーへ送信しません。ブラウザを閉じると音源は保持されません。iPhoneでは「ファイル」アプリから選択してください。複数選択できない場合は1つずつ追加できます。左右のボタンは初期設定で前後の英文へ移動します。設定から秒数指定にも変更できます。Windows: Space＝再生/停止、←＝1秒戻る、Shift＋←＝0.5秒戻る、A/B＝区間指定。</p></main><audio id="audio" preload="metadata" playsinline></audio><script>
 (()=>{'use strict';
@@ -444,7 +445,7 @@ let meterFrame=0,meterLastFrame=0;
 const meterPeaks=new Float32Array(22);
 const indicatorStyle=$('#indicatorStyle');
 const tapChangeIndicator=$('#tapChangeIndicator');
-const indicatorStyles=['retro','retroColor','scope','scopeMono','pulse','pulseMono'];
+const indicatorStyles=['retro','retroColor','retroColorFlow','scope','scopeMono','pulse','pulseMono'];
 function updateIndicatorTapState(){
  waveBox.classList.toggle('tap-change-enabled',tapChangeIndicator.checked);
  waveBox.setAttribute('role',tapChangeIndicator.checked?'button':'group');
@@ -550,13 +551,15 @@ function drawWaveform(){
      ctx.fillStyle=glow;ctx.fillRect(scanX-13,2,26,h-4);
      ctx.fillStyle=style==='scopeMono'?'#51daff':'#4affae';ctx.fillRect(scanX,2,2,h-4);
    }
- }else if(style==='retroColor'){
+ }else if(style==='retroColor'||style==='retroColorFlow'){
   // Segmented retro bars with rainbow coloring, keeping the classic stacked look.
   const segmentH=5.2,segmentGap=2.2;
   for(let i=0;i<bars;i++){
    const lit=Math.round(meterPeaks[i]*10);
    const x=13+i*stepX+1,barWidth=Math.max(3,stepX-3);
-   const baseHue=((i/Math.max(1,bars-1))*300+18)%360;
+   // In the flowing variant, the rainbow palette slides right-to-left while playing.
+   const hueShift=style==='retroColorFlow'&&playing?time*55:0;
+   const baseHue=((i/Math.max(1,bars-1))*300+18+hueShift)%360;
    for(let seg=0;seg<10;seg++){
      const y=h-7-(seg+1)*(segmentH+segmentGap);
      const hue=(baseHue+seg*5)%360;
