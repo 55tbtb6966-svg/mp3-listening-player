@@ -254,6 +254,8 @@ body.dark-mode .indicator-tap-option{color:#dbe6f8}
 <option value="scope">実波形・カラー（オシロスコープ風）</option>
 <option value="scopeMono">実波形・単色（オシロスコープ風）</option>
 <option value="spectrum">スペクトラムアナライザー風</option>
+<option value="ledStereo">2段LEDスペクトラム（カラー）</option>
+<option value="ledStereoMono">2段LEDスペクトラム（単色）</option>
 <option value="led">LEDドットマトリクス</option>
 <option value="circle">円形ビジュアライザー</option>
 
@@ -261,7 +263,7 @@ body.dark-mode .indicator-tap-option{color:#dbe6f8}
 <option value="pulseMono">単色ネオン（流れる・グリーン）</option>
 </select></label>
 <label class="indicator-tap-option"><input id="tapChangeIndicator" type="checkbox" checked> インジケーターをタップしてデザインを切り替える</label>
-<p class="indicator-help">レトロ・波形・スペクトラム・LED・円形ビジュアライザー・流れるネオンを選べます。波形系は音声データを、その他は音量データをもとに表示します。</p>
+<p class="indicator-help">レトロ・波形・スペクトラム・2段LEDスペクトラム・LED・円形ビジュアライザー・流れるネオンを選べます。波形系は音声データを、その他は音量データをもとに表示します。</p>
 </section>
 <section class="section settings-card"><label class="wakeoption"><input id="keepAwake" type="checkbox" checked>再生中は画面を消さない</label><div class="wakehint" id="wakeStatus">ON：再生中のみ画面の自動ロックを防ぎます（対応ブラウザのみ）。</div></section><section class="section theme-settings settings-card"><label class="themeoption"><input id="darkMode" type="checkbox"> ダークモード</label><div class="themehint">OFF：ノーマル ／ ON：ダーク（表示設定のみ記憶）</div></section></div></details><p class="note">音源はこのページ内でのみ読み込み、サーバーへ送信しません。ブラウザを閉じると音源は保持されません。iPhoneでは「ファイル」アプリから選択してください。複数選択できない場合は1つずつ追加できます。左右のボタンは初期設定で前後の英文へ移動します。設定から秒数指定にも変更できます。Windows: Space＝再生/停止、←＝1秒戻る、Shift＋←＝0.5秒戻る、A/B＝区間指定。</p></main><audio id="audio" preload="metadata" playsinline></audio><script>
 (()=>{'use strict';
@@ -448,7 +450,7 @@ let meterFrame=0,meterLastFrame=0;
 const meterPeaks=new Float32Array(22);
 const indicatorStyle=$('#indicatorStyle');
 const tapChangeIndicator=$('#tapChangeIndicator');
-const indicatorStyles=['retro','retroColor','retroColorFlow','scope','scopeMono','spectrum','led','circle','pulse','pulseMono'];
+const indicatorStyles=['retro','retroColor','retroColorFlow','scope','scopeMono','spectrum','ledStereo','ledStereoMono','led','circle','pulse','pulseMono'];
 function updateIndicatorTapState(){
  waveBox.classList.toggle('tap-change-enabled',tapChangeIndicator.checked);
  waveBox.setAttribute('role',tapChangeIndicator.checked?'button':'group');
@@ -590,6 +592,67 @@ function drawWaveform(){
      ctx.fillStyle=grad;ctx.shadowColor='rgba(41,216,160,.45)';ctx.shadowBlur=7;ctx.fillRect(x,y,barWidth,barH);
    }
    ctx.shadowBlur=0;
+ }else if(style==='ledStereo'||style==='ledStereoMono'){
+   // Two-row LED spectrum analyzer inspired by hardware audio displays.
+   const barsPerRow=18, rows=2;
+   const topPad=8, bottomPad=8, midGap=10;
+   const rowH=(h-topPad-bottomPad-midGap)/2;
+   const leftPad=12, rightPad=12;
+   const slotW=(w-leftPad-rightPad)/barsPerRow;
+   const segGap=1.8, segCount=10;
+   const segH=Math.max(2.2,(rowH-6-(segCount-1)*segGap)/segCount);
+   const activeTrack=currentTrack();
+   const useMono = style==='ledStereoMono';
+   const drawRow=(rowIndex, yBase, bandOffset)=>{
+     for(let b=0;b<barsPerRow;b++){
+       const idxFloat=(b/(barsPerRow-1))*(bars-1);
+       const idx=Math.floor(idxFloat),blend=idxFloat-idx;
+       let level=(meterPeaks[idx]*(1-blend)+meterPeaks[Math.min(idx+1,bars-1)]*blend);
+       // Small offset differences to mimic upper/lower channel variation.
+       if(playing){
+         const wobble=0.07*Math.abs(Math.sin(time*2.1 + rowIndex*.8 + b*.47));
+         const shifted = meterPeaks[(idx+bandOffset)%bars] || level;
+         level=Math.max(0,Math.min(1, level*0.76 + shifted*0.24 + wobble*(0.25+level)));
+       }
+       const lit=Math.max(0,Math.min(segCount,Math.round(level*segCount+0.3)));
+       const x=leftPad + b*slotW + slotW*0.18;
+       const barW=Math.max(5, slotW*0.62);
+       for(let seg=0; seg<segCount; seg++){
+         const y=yBase + rowH - 4 - (seg+1)*segH - seg*segGap;
+         const isLit = seg < lit;
+         let color, unlit;
+         if(useMono){
+           color = '#52efe7';
+           unlit = '#16353b';
+         }else{
+           // Bottom = blue/cyan, middle = teal/green, top = yellow/orange/red.
+           if(seg <= 1) color = '#2242ff';
+           else if(seg <= 5) color = '#44e7ef';
+           else if(seg <= 7) color = '#7ff36f';
+           else if(seg == 8) color = '#ffd85f';
+           else color = '#ff6b58';
+           unlit = '#112634';
+         }
+         ctx.fillStyle = isLit ? color : unlit;
+         ctx.globalAlpha = isLit ? 0.98 : 0.26;
+         if(isLit){ctx.shadowColor=color;ctx.shadowBlur=5;} else {ctx.shadowBlur=0;}
+         ctx.fillRect(x, y, barW, segH);
+       }
+       // Tiny peak dot
+       if(lit>0){
+         const peakSeg=Math.min(segCount-1, lit);
+         const py=yBase + rowH - 4 - peakSeg*segH - Math.max(0,peakSeg-1)*segGap - 1;
+         const dotColor = useMono ? '#b7fffb' : (peakSeg>=9 ? '#ffd4b7' : '#cfffff');
+         ctx.fillStyle=dotColor;ctx.globalAlpha=0.9;ctx.shadowColor=dotColor;ctx.shadowBlur=4;
+         ctx.fillRect(x+barW+1.2, py, 2.2, 2.2);
+       }
+     }
+   };
+   ctx.fillStyle='rgba(79,104,162,.18)';
+   ctx.fillRect(0, h/2-0.5, w, 1);
+   drawRow(0, topPad, 2);
+   drawRow(1, topPad+rowH+midGap, 5);
+   ctx.shadowBlur=0;ctx.globalAlpha=1;
  }else if(style==='led'){
    // Round LED dots light up by column, resembling a retro matrix display.
    const cols=18,rows=8,cellW=(w-18)/cols,cellH=(h-14)/rows;
