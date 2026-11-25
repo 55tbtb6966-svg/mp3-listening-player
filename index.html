@@ -218,6 +218,29 @@ body.dark-mode .advanced-content #analyze{
 .wavebox.tap-change-enabled{cursor:pointer;touch-action:manipulation;-webkit-tap-highlight-color:transparent}
 .wavebox.tap-change-enabled:focus-visible{outline:2px solid #74a8ff;outline-offset:3px}
 body.dark-mode .indicator-tap-option{color:#dbe6f8}
+
+/* Playback screen saver: almost-black OLED-friendly overlay with a moving dim dot. */
+.saver-option{display:flex;gap:9px;align-items:flex-start;font-size:14px;line-height:1.5;font-weight:600;color:#314763}
+.saver-option input{margin:2px 0 0;accent-color:#2059d4;width:19px;height:19px;flex:none}
+.saver-time{display:flex;align-items:center;gap:12px;margin:12px 0 0;font-size:13px;color:#425677}
+.saver-time select{border:1px solid #b7c8dd;border-radius:9px;padding:8px;font-size:15px;background:#fff;color:#233b59}
+.saver-buttons{margin-top:10px}
+.saver-buttons button{min-height:43px;padding:8px 12px;font-size:13px}
+.saver-hint{margin:8px 0 0;font-size:12px;line-height:1.6;color:#64748b}
+body.dark-mode .saver-option,body.dark-mode .saver-time{color:#dae5f5}
+body.dark-mode .saver-time select{background:#1b2c43;color:#f4f8ff;border-color:#5c7191}
+body.dark-mode .saver-hint{color:#b9c8da}
+.screen-saver{position:fixed;inset:0;z-index:99999;background:#000;touch-action:manipulation;cursor:pointer;overflow:hidden}
+.screen-saver[hidden]{display:none!important}
+.saver-orb{position:absolute;left:0;top:0;width:8px;height:8px;border-radius:50%;background:#284658;opacity:.55;box-shadow:0 0 7px #1b3547;animation:saver-drift 43s ease-in-out infinite alternate}
+@keyframes saver-drift{
+0%{transform:translate(12vw,16vh)}
+22%{transform:translate(78vw,25vh)}
+49%{transform:translate(43vw,77vh)}
+74%{transform:translate(87vw,68vh)}
+100%{transform:translate(16vw,84vh)}
+}
+@media(prefers-reduced-motion:reduce){.saver-orb{animation-duration:100s}}
 </style></head><body><main><h1>🎧 English Listening Player</h1><section class="section"><h2>音源の切り替え（最大12個）</h2><p id="selectedLessonLabel" class="selected-lesson-label" hidden aria-live="polite"></p><div class="slots" id="slots"><button class="slot active" data-slot="0"><small>1</small><span>未選択</span></button><button class="slot" data-slot="1"><small>2</small><span>未選択</span></button><button class="slot" data-slot="2"><small>3</small><span>未選択</span></button><button class="slot" data-slot="3"><small>4</small><span>未選択</span></button><button class="slot" data-slot="4"><small>5</small><span>未選択</span></button><button class="slot" data-slot="5"><small>6</small><span>未選択</span></button><button class="slot" data-slot="6"><small>7</small><span>未選択</span></button><button class="slot" data-slot="7"><small>8</small><span>未選択</span></button><button class="slot" data-slot="8"><small>9</small><span>未選択</span></button><button class="slot" data-slot="9"><small>10</small><span>未選択</span></button><button class="slot" data-slot="10"><small>11</small><span>未選択</span></button><button class="slot" data-slot="11"><small>12</small><span>未選択</span></button></div><details class="source-details"><summary>⚙ 音源の詳細設定 <span class="source-caption">タップして開く</span></summary><div class="source-details-content"><div class="reorderbar"><span>選択中の音源を並び替え</span><button id="moveUp" type="button">◀ 1つ前へ</button><button id="moveDown" type="button">1つ後へ ▶</button></div><div class="fileactions"><label class="pick">📁 MP3を選択（最大12個一括）<input id="file" type="file" multiple accept=".mp3,.m4a,audio/mpeg,audio/mp4,audio/*" aria-label="MP3ファイルを選択"></label><button id="clearAll" type="button" class="clearall">全解除</button></div><div class="lesson-import">
   <label class="folder-pick">📂 English MP3／教材フォルダを選択
     <input id="lessonFolder" type="file" webkitdirectory directory multiple aria-label="教材フォルダを選択">
@@ -265,7 +288,13 @@ body.dark-mode .indicator-tap-option{color:#dbe6f8}
 <label class="indicator-tap-option"><input id="tapChangeIndicator" type="checkbox" checked> インジケーターをタップしてデザインを切り替える</label>
 <p class="indicator-help">レトロ・波形・スペクトラム・2段LEDスペクトラム・LED・円形ビジュアライザー・流れるネオンを選べます。波形系は音声データを、その他は音量データをもとに表示します。</p>
 </section>
-<section class="section settings-card"><label class="wakeoption"><input id="keepAwake" type="checkbox" checked>再生中は画面を消さない</label><div class="wakehint" id="wakeStatus">ON：再生中のみ画面の自動ロックを防ぎます（対応ブラウザのみ）。</div></section><section class="section theme-settings settings-card"><label class="themeoption"><input id="darkMode" type="checkbox"> ダークモード</label><div class="themehint">OFF：ノーマル ／ ON：ダーク（表示設定のみ記憶）</div></section></div></details><p class="note">音源はこのページ内でのみ読み込み、サーバーへ送信しません。ブラウザを閉じると音源は保持されません。iPhoneでは「ファイル」アプリから選択してください。複数選択できない場合は1つずつ追加できます。左右のボタンは初期設定で前後の英文へ移動します。設定から秒数指定にも変更できます。Windows: Space＝再生/停止、←＝1秒戻る、Shift＋←＝0.5秒戻る、A/B＝区間指定。</p></main><audio id="audio" preload="metadata" playsinline></audio><script>
+<section class="section settings-card"><label class="wakeoption"><input id="keepAwake" type="checkbox" checked>再生中は画面を消さない</label><div class="wakehint" id="wakeStatus">ON：再生中のみ画面の自動ロックを防ぎます（対応ブラウザのみ）。</div></section><section class="section settings-card saver-settings">
+<h2>画面焼き付き対策（スクリーンセーバー）</h2>
+<label class="saver-option"><input id="saverEnabled" type="checkbox"> 再生中、操作しなければ暗い画面に切り替える</label>
+<label class="saver-time">切り替えまで <select id="saverDelay" aria-label="スクリーンセーバーまでの時間"><option value="30">30秒</option><option value="60" selected>1分</option><option value="120">2分</option><option value="300">5分</option></select></label>
+<div class="saver-buttons"><button type="button" id="saverNow">今すぐ暗い画面にする</button></div>
+<p class="saver-hint">再生中だけ動作します。暗い画面をタップすると元に戻ります。画面には小さな光がゆっくり移動します。画面の明るさは自動変更しません。</p>
+</section><section class="section theme-settings settings-card"><label class="themeoption"><input id="darkMode" type="checkbox"> ダークモード</label><div class="themehint">OFF：ノーマル ／ ON：ダーク（表示設定のみ記憶）</div></section></div></details><p class="note">音源はこのページ内でのみ読み込み、サーバーへ送信しません。ブラウザを閉じると音源は保持されません。iPhoneでは「ファイル」アプリから選択してください。複数選択できない場合は1つずつ追加できます。左右のボタンは初期設定で前後の英文へ移動します。設定から秒数指定にも変更できます。Windows: Space＝再生/停止、←＝1秒戻る、Shift＋←＝0.5秒戻る、A/B＝区間指定。</p></main><div id="screenSaver" class="screen-saver" hidden role="button" tabindex="-1" aria-label="スクリーンセーバー。画面をタップして戻る"><div class="saver-orb" aria-hidden="true"></div></div><audio id="audio" preload="metadata" playsinline></audio><script>
 (()=>{'use strict';
 // Keep only the small theme preference; never store MP3 audio.
 const darkModeToggle=document.getElementById('darkMode');
@@ -950,6 +979,48 @@ keepAwake.addEventListener('change',()=>{wakeStatus.textContent=keepAwake.checke
 audio.addEventListener('play',syncWake);audio.addEventListener('pause',syncWake);audio.addEventListener('ended',syncWake);
 document.addEventListener('visibilitychange',syncWake);
 window.addEventListener('pagehide',releaseWake);
+// Optional OLED-conscious screen saver. No access to MP3 files or stored audio.
+const saverOverlay=$('#screenSaver'),saverEnabled=$('#saverEnabled'),saverDelay=$('#saverDelay'),saverNow=$('#saverNow');
+let saverLastInteraction=Date.now();
+try{
+ const saved=localStorage.getItem('elp-saver-enabled');
+ if(saved==='1')saverEnabled.checked=true;
+ const delay=localStorage.getItem('elp-saver-delay');
+ if(['30','60','120','300'].includes(delay))saverDelay.value=delay;
+}catch(e){}
+function saverHide(){saverOverlay.hidden=true;saverLastInteraction=Date.now()}
+function saverShow(){
+ if(audio.paused||audio.ended||!ready||document.visibilityState!=='visible')return;
+ saverOverlay.hidden=false;
+}
+function saverMarkActive(){saverLastInteraction=Date.now()}
+saverOverlay.addEventListener('pointerdown',e=>{e.preventDefault();e.stopPropagation();saverHide()});
+saverOverlay.addEventListener('click',e=>{e.preventDefault();e.stopPropagation();saverHide()});
+// A touch to wake must never activate a hidden playback control underneath.
+saverOverlay.addEventListener('touchstart',e=>{e.preventDefault();e.stopPropagation();saverHide()},{passive:false});
+saverNow.addEventListener('click',()=>{saverMarkActive();saverShow()});
+saverEnabled.addEventListener('change',()=>{
+ try{localStorage.setItem('elp-saver-enabled',saverEnabled.checked?'1':'0')}catch(e){}
+ if(!saverEnabled.checked)saverHide();else saverMarkActive();
+});
+saverDelay.addEventListener('change',()=>{
+ try{localStorage.setItem('elp-saver-delay',saverDelay.value)}catch(e){}
+ saverMarkActive();
+});
+// Count only actual interaction with the visible player, not audio progress events.
+for(const ev of ['pointerdown','touchstart','keydown']){
+ document.addEventListener(ev,()=>{if(saverOverlay.hidden)saverMarkActive()}, {passive:true,capture:true});
+}
+window.setInterval(()=>{
+ if(!saverEnabled.checked||!saverOverlay.hidden)return;
+ if(!ready||audio.paused||audio.ended||document.visibilityState!=='visible')return;
+ if(Date.now()-saverLastInteraction>=Number(saverDelay.value)*1000)saverShow();
+},1000);
+audio.addEventListener('pause',saverHide);
+audio.addEventListener('ended',saverHide);
+audio.addEventListener('play',saverMarkActive);
+document.addEventListener('visibilitychange',()=>{if(document.visibilityState!=='visible')saverHide();else saverMarkActive()});
+window.addEventListener('pagehide',saverHide);
 // iOS lock screen / Control Center / Bluetooth headset integration.
 // A single audio element is retained across all six slots so OS media controls
 // continue to address the currently selected recording.
