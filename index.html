@@ -279,22 +279,30 @@ body.dark-mode .lesson-quick-help{color:#b7cce1}
 .slots.many-tracks{max-height:350px;overflow-y:auto;overscroll-behavior:contain;padding:3px;scrollbar-gutter:stable}
 body.dark-mode .lesson-limit-row label{color:#e1edfa}
 
-/* Compact lesson choice: unobtrusive, left aligned, above the audio slots. */
+/* A comfortable one-touch lesson picker with no visible caption. */
 .lesson-quick-switch{
-  width:fit-content;max-width:100%;margin:8px 0 9px;
-  padding:5px 7px;border:1px solid #cfdef1;
-  background:#edf5ff;border-radius:9px;
+  width:min(100%,320px);margin:8px 0 10px;padding:5px 7px;
+  border:1px solid #cfdef1;background:#edf5ff;border-radius:10px;
 }
-.lesson-quick-switch .lesson-select-label{margin:0;font-size:12px;gap:5px;white-space:nowrap;}
+.lesson-quick-switch .lesson-select-label{margin:0;display:block;}
 .lesson-quick-switch #lessonChoice{
-  flex:none;width:auto;max-width:min(57vw,210px);min-width:110px;
-  padding:5px 20px 5px 6px;font-size:13px;min-height:30px;
+  display:block;width:100%;min-width:0;max-width:none;
+  min-height:42px;padding:9px 10px;border-radius:9px;font-size:16px;
 }
-.lesson-capacity-settings .lesson-limit-row{margin-top:6px;display:flex;flex-wrap:wrap;align-items:center;}
-.lesson-capacity-settings .lesson-limit-row select{max-width:165px;}
+.lesson-capacity-settings .lesson-limit-row{
+  margin-top:8px;display:flex;align-items:center;flex-wrap:wrap;gap:8px;
+}
+.lesson-capacity-settings .lesson-limit-row select{max-width:175px;}
+.lesson-capacity-settings #advancedLessonChoice{
+  display:block;width:100%;max-width:340px;min-height:40px;
+  font-size:16px;padding:7px 9px;margin:7px 0 12px;
+}
+.lesson-capacity-settings .advanced-lesson-label{
+  font-weight:700;font-size:13px;display:block;
+}
 @media(max-width:390px){
- .lesson-quick-switch #lessonChoice{max-width:54vw;}
- .lesson-capacity-settings .lesson-limit-row label{white-space:normal;}
+  .lesson-quick-switch{width:min(100%,300px);}
+  .lesson-capacity-settings .lesson-limit-row label{white-space:normal;}
 }
 </style><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><meta name="apple-mobile-web-app-title" content="English MP3"><meta name="mobile-web-app-capable" content="yes"><link rel="manifest" href="manifest.webmanifest"><link rel="apple-touch-icon" href="app-icon-180.png"></head><body><main><h1>🎧 English Listening Player</h1><section class="section"><h2 id="trackListHeading">音源の切り替え（最大12個）</h2><div class="quick-folder" aria-label="教材フォルダの再選択">
   <p id="lastFolderName" class="quick-folder-name" aria-live="polite">前回のフォルダ：未登録</p>
@@ -303,15 +311,15 @@ body.dark-mode .lesson-limit-row label{color:#e1edfa}
   </label>
   <p class="quick-folder-hint">名前と並び順のみ記憶。毎回フォルダを選択してください（音源本体は保存しません）。</p>
 </div><div class="lesson-quick-switch" aria-label="教材を選択">
-  <label class="lesson-select-label" for="lessonChoice">📚 教材
-    <select id="lessonChoice" disabled><option value="">English MP3 を選択</option></select>
+  <label class="lesson-select-label" for="lessonChoice">
+    <select id="lessonChoice" disabled aria-label="教材フォルダを選択"><option value="">English MP3 を選択</option></select>
   </label>
 </div><p id="selectedLessonLabel" class="selected-lesson-label" hidden aria-live="polite"></p><div class="slots" id="slots" aria-label="音源一覧"><button class="slot active" data-slot="0"><small>1</small><span>未選択</span></button><button class="slot" data-slot="1"><small>2</small><span>未選択</span></button><button class="slot" data-slot="2"><small>3</small><span>未選択</span></button><button class="slot" data-slot="3"><small>4</small><span>未選択</span></button><button class="slot" data-slot="4"><small>5</small><span>未選択</span></button><button class="slot" data-slot="5"><small>6</small><span>未選択</span></button><button class="slot" data-slot="6"><small>7</small><span>未選択</span></button><button class="slot" data-slot="7"><small>8</small><span>未選択</span></button><button class="slot" data-slot="8"><small>9</small><span>未選択</span></button><button class="slot" data-slot="9"><small>10</small><span>未選択</span></button><button class="slot" data-slot="10"><small>11</small><span>未選択</span></button><button class="slot" data-slot="11"><small>12</small><span>未選択</span></button></div><details class="source-details"><summary>⚙ 音源の詳細設定 <span class="source-caption">タップして開く</span></summary><div class="source-details-content"><div class="reorderbar"><span>選択中の音源を並び替え（教材内は自動記憶）</span><button id="moveUp" type="button">◀ 1つ前へ</button><button id="moveDown" type="button">1つ後へ ▶</button></div><div class="fileactions"><label class="pick">📁 MP3を選択（空き枠に追加・入れ替え）<input id="file" type="file" multiple accept=".mp3,.m4a,audio/mpeg,audio/mp4,audio/*" aria-label="MP3ファイルを選択"></label><button id="clearAll" type="button" class="clearall">全解除</button></div><div class="lesson-import">
   <label class="folder-pick">📂 English MP3／教材フォルダを選択
     <input id="lessonFolder" type="file" webkitdirectory directory multiple aria-label="教材フォルダを選択">
   </label>
   <p class="lesson-help">「English MP3」を選んだ後は、画面上部の「教材フォルダ」プルダウンで教材A・教材Bなどを切り替えられます。教材Aだけを直接選ぶこともできます。各教材の直下のMP3だけを読み込み、「未使用」などの下位フォルダは除外します。保存するのは並び順だけで、MP3本体は保存しません。</p>
-</div><div id="status" class="status" role="status" aria-live="polite">教材ごとの音源数は12〜100件。音源のタップは切り替えのみで、自動再生しません。</div><div class="trackendsettings"><div class="trackendtitle">音源全体の再生モード</div><div class="trackmode-row"><button type="button" id="trackEndMode" class="trackmodebtn" aria-label="音源全体の再生モードを切り替え" title="再生モードを切り替え">🔂 1音源リピート</button><p class="trackendhint" id="trackModeHint" aria-live="polite">現在のMP3を先頭から繰り返します。</p></div><p class="trackendhint trackmode-priority">A-B・チャプターリピートが有効ならそちらを優先。</p></div></div></details></section><div class="top"><div class="now" id="now">MP3を選択してください</div><div class="playrow five-controls" aria-label="再生と移動の操作"><button id="trackBack" class="rew track-side" disabled aria-label="前の音源">⏮<span>前の音源</span></button><button id="back" class="rew" disabled aria-label="前のチャプター">◀<span>前のチャプター</span></button><button id="play" class="play" disabled aria-label="再生または一時停止">▶ 再生</button><button id="half" class="rew" disabled aria-label="次のチャプター">▶<span>次のチャプター</span></button><button id="trackForward" class="rew track-side" disabled aria-label="次の音源">⏭<span>次の音源</span></button></div><div class="chapters"><div id="chapterbar" class="chapterbar" aria-label="チャプター一覧"><span class="chapterhelp">音源を読み込むと無音区間から自動生成します</span></div><div class="chapterhelp" id="chapterstatus">番号と開始時刻を表示。シークバー操作時はチャプター一覧が追従します。チャプター選択後は一覧を固定し、再生中のチャプターが欄外に出たら中央へ自動移動します。</div></div><div class="seekwrap"><div id="chapterTicks" class="chapterticks" aria-hidden="true"></div><input id="seek" type="range" min="0" max="100" step="0.01" value="0" disabled aria-label="再生位置"></div><div class="times"><span id="current">0:00.0</span><span id="duration">0:00.0</span></div><div id="waveBox" class="wavebox"><canvas id="waveform" width="640" height="90" aria-label="再生中の音量に応じて動くインジケーター" role="img"></canvas></div></div>
+</div><div id="status" class="status" role="status" aria-live="polite">教材ごとの最大音源数は3〜99件（3件刻み）。音源のタップは切り替えのみで、自動再生しません。</div><div class="trackendsettings"><div class="trackendtitle">音源全体の再生モード</div><div class="trackmode-row"><button type="button" id="trackEndMode" class="trackmodebtn" aria-label="音源全体の再生モードを切り替え" title="再生モードを切り替え">🔂 1音源リピート</button><p class="trackendhint" id="trackModeHint" aria-live="polite">現在のMP3を先頭から繰り返します。</p></div><p class="trackendhint trackmode-priority">A-B・チャプターリピートが有効ならそちらを優先。</p></div></div></details></section><div class="top"><div class="now" id="now">MP3を選択してください</div><div class="playrow five-controls" aria-label="再生と移動の操作"><button id="trackBack" class="rew track-side" disabled aria-label="前の音源">⏮<span>前の音源</span></button><button id="back" class="rew" disabled aria-label="前のチャプター">◀<span>前のチャプター</span></button><button id="play" class="play" disabled aria-label="再生または一時停止">▶ 再生</button><button id="half" class="rew" disabled aria-label="次のチャプター">▶<span>次のチャプター</span></button><button id="trackForward" class="rew track-side" disabled aria-label="次の音源">⏭<span>次の音源</span></button></div><div class="chapters"><div id="chapterbar" class="chapterbar" aria-label="チャプター一覧"><span class="chapterhelp">音源を読み込むと無音区間から自動生成します</span></div><div class="chapterhelp" id="chapterstatus">番号と開始時刻を表示。シークバー操作時はチャプター一覧が追従します。チャプター選択後は一覧を固定し、再生中のチャプターが欄外に出たら中央へ自動移動します。</div></div><div class="seekwrap"><div id="chapterTicks" class="chapterticks" aria-hidden="true"></div><input id="seek" type="range" min="0" max="100" step="0.01" value="0" disabled aria-label="再生位置"></div><div class="times"><span id="current">0:00.0</span><span id="duration">0:00.0</span></div><div id="waveBox" class="wavebox"><canvas id="waveform" width="640" height="90" aria-label="再生中の音量に応じて動くインジケーター" role="img"></canvas></div></div>
 
 <section class="section repeatsettings"><div class="chapterrepeat"><button id="repeatChapter" disabled aria-pressed="false">🔁 チャプターリピート OFF</button></div></section>
 <section class="section studysettings" aria-label="英会話のポーズ付き反復練習">
@@ -332,9 +340,11 @@ body.dark-mode .lesson-limit-row label{color:#e1edfa}
 </div><section class="section framed-setting"><h2>細かい巻き戻し・早送り</h2><div class="grid"><button data-jump="-0.5" disabled>−0.5秒</button><button data-jump="-1" disabled>−1秒</button><button data-jump="-2" disabled>−2秒</button><button data-jump="-3" disabled>−3秒</button><button data-jump="-5" disabled>−5秒</button><button data-jump="1" disabled>＋1秒</button></div></section>
 <details class="advanced-settings"><summary>⚙ 詳細設定 <span class="advanced-caption">タップして開く</span></summary><div class="advanced-content"><section class="section lesson-capacity-settings settings-card">
 <h2>教材フォルダごとの最大音源数</h2>
-<div class="lesson-limit-row"><label for="lessonCapacity">選択中の教材の最大音源数</label>
-<select id="lessonCapacity" disabled aria-label="選択した教材の最大音源数"><option value="12">12音源</option><option value="24">24音源</option><option value="50">50音源</option><option value="100">100音源</option></select></div>
-<p class="lesson-help">画面上部で教材を選んでから変更してください。教材ごとに設定を記憶します。変更するとその教材を読み直し、再生位置はリセットされます。</p>
+<label class="advanced-lesson-label" for="advancedLessonChoice">教材フォルダを選択</label>
+<select id="advancedLessonChoice" disabled aria-label="詳細設定で教材フォルダを選択"><option value="">先に English MP3 を選択してください</option></select>
+<div class="lesson-limit-row"><label for="lessonCapacity">この教材の最大音源数</label>
+<select id="lessonCapacity" disabled aria-label="選択した教材の最大音源数"><option value="3">3音源</option><option value="6">6音源</option><option value="9">9音源</option><option value="12" selected>12音源</option><option value="15">15音源</option><option value="18">18音源</option><option value="21">21音源</option><option value="24">24音源</option><option value="27">27音源</option><option value="30">30音源</option><option value="33">33音源</option><option value="36">36音源</option><option value="39">39音源</option><option value="42">42音源</option><option value="45">45音源</option><option value="48">48音源</option><option value="51">51音源</option><option value="54">54音源</option><option value="57">57音源</option><option value="60">60音源</option><option value="63">63音源</option><option value="66">66音源</option><option value="69">69音源</option><option value="72">72音源</option><option value="75">75音源</option><option value="78">78音源</option><option value="81">81音源</option><option value="84">84音源</option><option value="87">87音源</option><option value="90">90音源</option><option value="93">93音源</option><option value="96">96音源</option><option value="99">99音源</option></select></div>
+<p class="lesson-help">3・6・9…99音源から選択できます。教材ごとに設定を記憶します。音源数を変更すると選択中の教材を読み直し、再生位置はリセットされます。</p>
 </section><section class="section lesson-memory-settings settings-card">
 <h2>音源の記憶管理</h2>
 <p class="lesson-help">教材ごとの音源名・配置順を端末に記憶します。同じ教材内の1ファイル入れ替えも自動保存します。MP3本体やiCloud上のファイルは変更しません。</p>
@@ -425,10 +435,14 @@ function readLessonMemory(){
 }
 let lessonMemory=readLessonMemory();
 const LESSON_CAPACITY_KEY='elp-lesson-capacity-v1';
-const ALLOWED_LESSON_CAPACITIES=[12,24,50,100];
+const ALLOWED_LESSON_CAPACITIES=Array.from({length:33},(_,i)=>(i+1)*3);
 function readLessonCapacities(){try{const obj=JSON.parse(localStorage.getItem(LESSON_CAPACITY_KEY)||'{}');return obj&&typeof obj==='object'&&!Array.isArray(obj)?obj:{}}catch(e){return {}}}
 let lessonCapacities=readLessonCapacities();
-function lessonCapacity(name){const value=Number(lessonCapacities[name]);return ALLOWED_LESSON_CAPACITIES.includes(value)?value:12}
+function lessonCapacity(name){
+ const value=Number(lessonCapacities[name]);
+ if(!Number.isFinite(value)||value<=0)return 12;
+ return Math.max(3,Math.min(99,Math.round(value/3)*3));
+}
 function saveLessonCapacity(name,limit){
  lessonCapacities[name]=limit;
  try{localStorage.setItem(LESSON_CAPACITY_KEY,JSON.stringify(lessonCapacities))}catch(e){msg('音源数の設定を記憶できませんでした。',true)}
@@ -476,16 +490,19 @@ function clearLoadedTracks(){
  draw();maybeDrawChapters(true);
 }
 function populateLessonChoices(){
- const select=$('#lessonChoice');
+ const select=$('#lessonChoice'),advanced=$('#advancedLessonChoice');
  const old=select.value;
- select.replaceChildren();
- for(const name of [...lessonFiles.keys()].sort((a,b)=>a.localeCompare(b,'ja',{numeric:true}))){const opt=document.createElement('option');opt.value=name;opt.textContent=name;select.appendChild(opt)}
- select.disabled=lessonFiles.size===0;
+ const names=[...lessonFiles.keys()].sort((a,b)=>a.localeCompare(b,'ja',{numeric:true}));
+ for(const picker of [select,advanced]){
+  picker.replaceChildren();
+  for(const name of names){const opt=document.createElement('option');opt.value=name;opt.textContent=name;picker.appendChild(opt)}
+  picker.disabled=names.length===0;
+  if(!names.length){const opt=document.createElement('option');opt.value='';opt.textContent='先に English MP3 を選択してください';picker.appendChild(opt)}
+ }
  const remembered=lastLessons[selectedFolderRoot];
- if(lessonFiles.has(remembered))select.value=remembered;
- else if(lessonFiles.has(old))select.value=old;
- else if(lessonFiles.size)select.value=select.options[0].value;
- else {const opt=document.createElement('option');opt.value='';opt.textContent='先に English MP3 を選択してください';select.appendChild(opt)};
+ const chosen=lessonFiles.has(remembered)?remembered:lessonFiles.has(old)?old:(names[0]||'');
+ select.value=chosen;
+ advanced.value=chosen;
 }
 function loadLesson(name){
  const files=lessonFiles.get(name);
@@ -512,6 +529,7 @@ function loadLesson(name){
   tracks[i]={name:f.name,url:URL.createObjectURL(f),position:0,A:null,B:null,repeat:false,chapterRepeat:false,selectedChapter:0,chapters:null,chapterEnds:[],file:f,lesson:name,fileKey:lessonFileKey(f)};
  });
  $('#lessonChoice').value=name;
+ $('#advancedLessonChoice').value=name;
  if(chosen.length)loadSlot(0,true,false);else draw();
  rememberCurrentLesson();
  msg(`${name}：${chosen.length}音源を読み込みました${sorted.length>tracks.length?`（先頭${tracks.length}件／全${sorted.length}件）`:''}。未使用フォルダ内は除外しています。`);
@@ -548,6 +566,7 @@ function onLessonFolderSelected(event){
 $('#lessonFolder').addEventListener('change',onLessonFolderSelected);
 $('#quickLessonFolder').addEventListener('change',onLessonFolderSelected);
 $('#lessonChoice').addEventListener('change',e=>loadLesson(e.target.value));
+$('#advancedLessonChoice').addEventListener('change',e=>loadLesson(e.target.value));
 $('#lessonCapacity').addEventListener('change',e=>{
  if(!selectedLesson||!lessonFiles.has(selectedLesson))return;
  const limit=Number(e.target.value);
@@ -573,6 +592,7 @@ $('#resetAllLessons').addEventListener('click',()=>{
  lessonMemory={};lessonCapacities={};selectedLesson=null;updateSelectedLessonLabel();
  try{localStorage.removeItem(LESSON_MEMORY_KEY);localStorage.removeItem(LESSON_CAPACITY_KEY)}catch(e){}
  $('#lessonCapacity').value='12';$('#lessonCapacity').disabled=true;
+ $('#advancedLessonChoice').disabled=true;
  msg('全教材の記憶を削除しました。音声ファイルには変更ありません。');
 });
 // Pause-and-repeat study mode: independent of classic A–B / chapter looping.
