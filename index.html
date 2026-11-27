@@ -240,19 +240,19 @@ body.dark-mode .saver-hint{color:#b9c8da}
 100%{transform:translate(16vw,84vh)}
 }
 @media(prefers-reduced-motion:reduce){.saver-orb{animation-duration:100s}}
-.studysettings{border:1px solid #b8d1eb;border-radius:15px;background:#eef6ff;padding:12px 13px;margin:12px 0;color:#233c5d}
+.studysettings{border:1px solid #dbe3ee;border-radius:12px;background:#f6f8fb;padding:11px 12px;margin:12px 0;color:#314c6e}
 .studyhead{display:flex;align-items:center;justify-content:space-between;gap:8px;font-size:15px}
-.study-switch{display:flex;align-items:center;gap:7px;font-size:14px;white-space:nowrap}
-.study-switch input{width:19px;height:19px;accent-color:#277bc3}
+.study-switch{display:flex;align-items:center;justify-content:center;gap:7px;min-height:42px;padding:8px 11px;border:1px solid #c9d7ed;border-radius:9px;background:#e9f0ff;color:#20436f;font-size:14px;font-weight:700;white-space:nowrap;cursor:pointer}
+.study-switch input{width:19px;height:19px;accent-color:#2059d4}
 .study-controls{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
 .study-controls label{display:flex;flex:1 1 150px;flex-direction:column;gap:4px;font-size:13px;font-weight:600}
-.study-controls select{min-width:0;padding:8px;border:1px solid #a9c6e5;background:#fff;border-radius:9px;font-size:15px;color:#253b55}
-.study-status{font-weight:650;color:#245c90;font-size:13px;margin:9px 0 3px}
-.study-help{font-size:12px;color:#5c718a;line-height:1.55;margin:6px 0 0}
-body.dark-mode .studysettings{background:#203b56;border-color:#5b83a8;color:#f0f6ff}
-body.dark-mode .study-controls select{background:#182940;border-color:#6687a8;color:#f1f7ff}
-body.dark-mode .study-status{color:#9ed5ff}
-body.dark-mode .study-help{color:#bfd0e3}
+.study-controls select{min-width:0;padding:9px;border:1px solid #c9d7ed;background:#e9f0ff;border-radius:9px;font-size:15px;color:#20436f;font-weight:700}
+.study-status{font-weight:650;color:#314c6e;font-size:13px;margin:9px 0 3px}
+.study-help{font-size:12px;color:#64748b;line-height:1.55;margin:6px 0 0}
+body.dark-mode .studysettings{background:#202f44;border-color:#405570;color:#e4eaf5}
+body.dark-mode .study-controls select,body.dark-mode .study-switch{background:#263a54;border-color:#46607d;color:#e1ecff}
+body.dark-mode .study-status{color:#e3edfb}
+body.dark-mode .study-help{color:#b5c4d9}
 
 /* One-tap folder re-selection, visible even while advanced controls are collapsed. */
 .quick-folder{margin:5px 0 13px;padding:11px 12px;border-radius:12px;border:1px solid #bed1e8;background:#f0f6ff}
@@ -338,6 +338,7 @@ body.dark-mode .source-details-content .lesson-capacity-settings{background:#1c3
   <p class="lesson-help">「English MP3」を選んだ後は、画面上部の「教材フォルダ」プルダウンで教材A・教材Bなどを切り替えられます。教材Aだけを直接選ぶこともできます。各教材の直下のMP3だけを読み込み、「未使用」などの下位フォルダは除外します。保存するのは並び順だけで、MP3本体は保存しません。</p>
 </div><div id="status" class="status" role="status" aria-live="polite">教材ごとの最大音源数は3〜99件（3件刻み）。音源のタップは切り替えのみで、自動再生しません。</div><div class="trackendsettings"><div class="trackendtitle">音源全体の再生モード</div><div class="trackmode-row"><button type="button" id="trackEndMode" class="trackmodebtn" aria-label="音源全体の再生モードを切り替え" title="再生モードを切り替え">🔂 1音源リピート</button><p class="trackendhint" id="trackModeHint" aria-live="polite">現在のMP3を先頭から繰り返します。</p></div><p class="trackendhint trackmode-priority">A-B・チャプターリピートが有効ならそちらを優先。</p></div></div></details></section><div class="top"><div class="now" id="now">MP3を選択してください</div><div class="playrow five-controls" aria-label="再生と移動の操作"><button id="trackBack" class="rew track-side" disabled aria-label="前の音源">⏮<span>前の音源</span></button><button id="back" class="rew" disabled aria-label="前のチャプター">◀<span>前のチャプター</span></button><button id="play" class="play" disabled aria-label="再生または一時停止">▶ 再生</button><button id="half" class="rew" disabled aria-label="次のチャプター">▶<span>次のチャプター</span></button><button id="trackForward" class="rew track-side" disabled aria-label="次の音源">⏭<span>次の音源</span></button></div><div class="chapters"><div id="chapterbar" class="chapterbar" aria-label="チャプター一覧"><span class="chapterhelp">音源を読み込むと無音区間から自動生成します</span></div><div class="chapterhelp" id="chapterstatus">番号と開始時刻を表示。シークバー操作時はチャプター一覧が追従します。チャプター選択後は一覧を固定し、再生中のチャプターが欄外に出たら中央へ自動移動します。</div></div><div class="seekwrap"><div id="chapterTicks" class="chapterticks" aria-hidden="true"></div><input id="seek" type="range" min="0" max="100" step="0.01" value="0" disabled aria-label="再生位置"></div><div class="times"><span id="current">0:00.0</span><span id="duration">0:00.0</span></div><div id="waveBox" class="wavebox"><canvas id="waveform" width="640" height="90" aria-label="再生中の音量に応じて動くインジケーター" role="img"></canvas></div></div>
 
+<section class="section speedsection framed-setting"><div class="speedrow"><label for="speed"><strong>再生速度</strong></label><select id="speed"><option value="0.5">0.5×</option><option value="0.75">0.75×</option><option value="0.9">0.9×</option><option value="1" selected>1.0×</option><option value="1.1">1.1×</option><option value="1.25">1.25×</option><option value="1.5">1.5×</option><option value="2">2.0×</option></select></div></section>
 <section class="section repeatsettings"><div class="chapterrepeat"><button id="repeatChapter" disabled aria-pressed="false">🔁 チャプターリピート OFF</button></div></section>
 <section class="section studysettings" aria-label="英会話のポーズ付き反復練習">
   <div class="studyhead"><strong>🎙 ポーズ付きリピート学習</strong><label class="study-switch"><input id="studyEnabled" type="checkbox"> ON</label></div>
@@ -348,7 +349,7 @@ body.dark-mode .source-details-content .lesson-capacity-settings{background:#1c3
   <p id="studyStatus" class="study-status" aria-live="polite">OFF：通常の再生・リピートを使用します。</p>
   <p class="study-help">ONでは各チャプターを指定回数だけ再生し、英文の後に無音を入れて次へ進みます。チャプターリピート・A–Bリピートとは排他的です。音源の最後で終了します。</p>
 </section>
-<section class="section speedsection framed-setting"><div class="speedrow"><label for="speed"><strong>再生速度</strong></label><select id="speed"><option value="0.5">0.5×</option><option value="0.75">0.75×</option><option value="0.9">0.9×</option><option value="1" selected>1.0×</option><option value="1.1">1.1×</option><option value="1.25">1.25×</option><option value="1.5">1.5×</option><option value="2">2.0×</option></select></div></section>
+
 <section class="section ab"><h2>🔁 A–B区間リピート</h2><div class="grid"><button id="setA" disabled>ここをAに</button><button id="setB" disabled>ここをBに</button><button id="clearAB" disabled>解除</button></div><div class="abstate">開始 A：<strong id="atime">未設定</strong>　終了 B：<strong id="btime">未設定</strong></div><div class="grid"><button id="toggleAB" disabled>リピート OFF</button><button id="gotoA" disabled>Aから再生</button><button id="clearPoints" disabled>A・Bを消去</button></div><div class="abstate" id="abstate">音源ごとにA・B位置を保持します。</div></section><div class="navigation-switches" aria-label="音源とチャプターの移動">
   <div class="navigation-group"><div class="navigation-group-title">チャプターを移動 <small>（前：1回で先頭・素早く2回で前へ）</small></div>
   <div class="navigation-buttons chapteractions"><button id="prevChapter" type="button" disabled aria-label="1回で現在のチャプターの先頭、素早く2回で前のチャプター">◀ <span>前のチャプター</span></button><button id="nextChapter" type="button" disabled aria-label="次のチャプターへ移動して再生"><span>次のチャプター</span> ▶</button></div></div>
