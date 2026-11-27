@@ -314,6 +314,48 @@ body.dark-mode .lesson-limit-row label{color:#e1edfa}
 .source-details-content .lesson-capacity-settings{margin:10px 0 13px;padding:12px;border-radius:12px;background:#f0f5fc;border:1px solid #d7e1ee}
 body.dark-mode .source-details-content .lesson-capacity-settings{background:#1c314a;border-color:#405570}
 @media(max-width:390px){.lesson-quick-switch{width:100%;max-width:none}.lesson-quick-switch #lessonChoice{max-width:none}}
+
+/* Consistent folder controls: same neutral cards and blue buttons as navigation. */
+.quick-folder,
+.lesson-quick-switch{
+  background:#f6f8fb;
+  border:1px solid #dbe3ee;
+  border-radius:12px;
+}
+.quick-folder-btn,
+.lesson-quick-switch #lessonChoice{
+  background:#e9f0ff;
+  border:1px solid #c9d7ed;
+  color:#20436f;
+  border-radius:9px;
+  font-weight:700;
+}
+.quick-folder-name{color:#314c6e;}
+.quick-folder-hint{color:#64748b;}
+.selected-lesson-label{
+  font-size:16px;
+  line-height:1.55;
+  font-weight:700;
+  color:#314c6e;
+  background:#f6f8fb;
+  border:1px solid #dbe3ee;
+}
+body.dark-mode .quick-folder,
+body.dark-mode .lesson-quick-switch,
+body.dark-mode .selected-lesson-label{
+  background:#202f44;
+  border-color:#405570;
+  color:#e4eaf5;
+}
+body.dark-mode .quick-folder-btn,
+body.dark-mode .lesson-quick-switch #lessonChoice{
+  background:#263a54;
+  border-color:#46607d;
+  color:#e1ecff;
+}
+body.dark-mode .quick-folder-name,
+body.dark-mode .selected-lesson-label{color:#e3edfb;}
+body.dark-mode .quick-folder-hint{color:#b5c4d9;}
 </style><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><meta name="apple-mobile-web-app-title" content="English MP3"><meta name="mobile-web-app-capable" content="yes"><link rel="manifest" href="manifest.webmanifest"><link rel="apple-touch-icon" href="app-icon-180.png"></head><body><main><h1 class="player-title"><img src="app-icon-180.png" alt="" class="player-title-icon">English Listening Player</h1><section class="section"><h2 id="trackListHeading">音源</h2><div class="quick-folder" aria-label="教材フォルダの再選択">
   <p id="lastFolderName" class="quick-folder-name" aria-live="polite">前回のフォルダ：未登録</p>
   <label class="quick-folder-btn" id="quickFolderLabel"><span id="quickFolderButtonText">📂 教材フォルダを選択</span>
