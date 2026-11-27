@@ -253,7 +253,24 @@ body.dark-mode .studysettings{background:#203b56;border-color:#5b83a8;color:#f0f
 body.dark-mode .study-controls select{background:#182940;border-color:#6687a8;color:#f1f7ff}
 body.dark-mode .study-status{color:#9ed5ff}
 body.dark-mode .study-help{color:#bfd0e3}
-</style><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><meta name="apple-mobile-web-app-title" content="English MP3"><meta name="mobile-web-app-capable" content="yes"><link rel="manifest" href="manifest.webmanifest"><link rel="apple-touch-icon" href="app-icon-180.png"></head><body><main><h1>🎧 English Listening Player</h1><section class="section"><h2>音源の切り替え（最大12個）</h2><p id="selectedLessonLabel" class="selected-lesson-label" hidden aria-live="polite"></p><div class="slots" id="slots"><button class="slot active" data-slot="0"><small>1</small><span>未選択</span></button><button class="slot" data-slot="1"><small>2</small><span>未選択</span></button><button class="slot" data-slot="2"><small>3</small><span>未選択</span></button><button class="slot" data-slot="3"><small>4</small><span>未選択</span></button><button class="slot" data-slot="4"><small>5</small><span>未選択</span></button><button class="slot" data-slot="5"><small>6</small><span>未選択</span></button><button class="slot" data-slot="6"><small>7</small><span>未選択</span></button><button class="slot" data-slot="7"><small>8</small><span>未選択</span></button><button class="slot" data-slot="8"><small>9</small><span>未選択</span></button><button class="slot" data-slot="9"><small>10</small><span>未選択</span></button><button class="slot" data-slot="10"><small>11</small><span>未選択</span></button><button class="slot" data-slot="11"><small>12</small><span>未選択</span></button></div><details class="source-details"><summary>⚙ 音源の詳細設定 <span class="source-caption">タップして開く</span></summary><div class="source-details-content"><div class="reorderbar"><span>選択中の音源を並び替え（教材内は自動記憶）</span><button id="moveUp" type="button">◀ 1つ前へ</button><button id="moveDown" type="button">1つ後へ ▶</button></div><div class="fileactions"><label class="pick">📁 MP3を選択（最大12個一括）<input id="file" type="file" multiple accept=".mp3,.m4a,audio/mpeg,audio/mp4,audio/*" aria-label="MP3ファイルを選択"></label><button id="clearAll" type="button" class="clearall">全解除</button></div><div class="lesson-import">
+
+/* One-tap folder re-selection, visible even while advanced controls are collapsed. */
+.quick-folder{margin:5px 0 13px;padding:11px 12px;border-radius:12px;border:1px solid #bed1e8;background:#f0f6ff}
+.quick-folder-name{font-size:13px;font-weight:650;color:#334f72;overflow-wrap:anywhere;margin:0 0 8px}
+.quick-folder-btn{position:relative;display:block;overflow:hidden;min-height:45px;padding:12px 10px;text-align:center;border-radius:10px;background:#e2edff;border:1px solid #9ebbe5;color:#174784;font-weight:700;font-size:14px;cursor:pointer}
+.quick-folder-btn input{position:absolute;inset:0;width:100%;height:100%;opacity:0;cursor:pointer;font-size:100px}
+.quick-folder-hint{font-size:11px;color:#637c9e;margin:7px 0 0;line-height:1.5}
+body.dark-mode .quick-folder{background:#233955;border-color:#536f95}
+body.dark-mode .quick-folder-name{color:#e2eefd}
+body.dark-mode .quick-folder-btn{background:#315579;border-color:#6089b6;color:#f1f7ff}
+body.dark-mode .quick-folder-hint{color:#b8c9df}
+</style><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><meta name="apple-mobile-web-app-title" content="English MP3"><meta name="mobile-web-app-capable" content="yes"><link rel="manifest" href="manifest.webmanifest"><link rel="apple-touch-icon" href="app-icon-180.png"></head><body><main><h1>🎧 English Listening Player</h1><section class="section"><h2>音源の切り替え（最大12個）</h2><div class="quick-folder" aria-label="教材フォルダの再選択">
+  <p id="lastFolderName" class="quick-folder-name" aria-live="polite">前回のフォルダ：未登録</p>
+  <label class="quick-folder-btn" id="quickFolderLabel"><span id="quickFolderButtonText">📂 教材フォルダを選択</span>
+    <input id="quickLessonFolder" type="file" webkitdirectory directory multiple aria-label="前回の教材フォルダを再選択">
+  </label>
+  <p class="quick-folder-hint">名前と並び順のみ記憶。毎回フォルダを選択してください（音源本体は保存しません）。</p>
+</div><p id="selectedLessonLabel" class="selected-lesson-label" hidden aria-live="polite"></p><div class="slots" id="slots"><button class="slot active" data-slot="0"><small>1</small><span>未選択</span></button><button class="slot" data-slot="1"><small>2</small><span>未選択</span></button><button class="slot" data-slot="2"><small>3</small><span>未選択</span></button><button class="slot" data-slot="3"><small>4</small><span>未選択</span></button><button class="slot" data-slot="4"><small>5</small><span>未選択</span></button><button class="slot" data-slot="5"><small>6</small><span>未選択</span></button><button class="slot" data-slot="6"><small>7</small><span>未選択</span></button><button class="slot" data-slot="7"><small>8</small><span>未選択</span></button><button class="slot" data-slot="8"><small>9</small><span>未選択</span></button><button class="slot" data-slot="9"><small>10</small><span>未選択</span></button><button class="slot" data-slot="10"><small>11</small><span>未選択</span></button><button class="slot" data-slot="11"><small>12</small><span>未選択</span></button></div><details class="source-details"><summary>⚙ 音源の詳細設定 <span class="source-caption">タップして開く</span></summary><div class="source-details-content"><div class="reorderbar"><span>選択中の音源を並び替え（教材内は自動記憶）</span><button id="moveUp" type="button">◀ 1つ前へ</button><button id="moveDown" type="button">1つ後へ ▶</button></div><div class="fileactions"><label class="pick">📁 MP3を選択（最大12個一括）<input id="file" type="file" multiple accept=".mp3,.m4a,audio/mpeg,audio/mp4,audio/*" aria-label="MP3ファイルを選択"></label><button id="clearAll" type="button" class="clearall">全解除</button></div><div class="lesson-import">
   <label class="folder-pick">📂 English MP3／教材フォルダを選択
     <input id="lessonFolder" type="file" webkitdirectory directory multiple aria-label="教材フォルダを選択">
   </label>
@@ -342,6 +359,14 @@ const controlSelects=controlIds.map(id=>$('#'+id));
 controlSelects.forEach((select,i)=>{for(const n of jumpValues){const opt=document.createElement('option');opt.value=String(n);opt.textContent=jumpLabel(n);select.appendChild(opt)}select.value=controlDefaults[i]});
 function updateSideLabels(){controlSelects.forEach((select,i)=>{const b=$('#'+controlButtons[i]),[symbol,label]=shortLabel(select.value);b.replaceChildren(document.createTextNode(symbol));const sp=document.createElement('span');sp.textContent=label;b.appendChild(sp);b.setAttribute('aria-label',jumpLabel(select.value));b.title=jumpLabel(select.value)})}
 controlSelects.forEach(select=>select.addEventListener('change',()=>{updateSideLabels();updatePrimaryControls()}));updateSideLabels();
+const LAST_FOLDER_KEY='elp-last-folder-name-v1';
+function updateLastFolderDisplay(name){
+ const safeName=typeof name==='string'?name.trim():'';
+ $('#lastFolderName').textContent=safeName?'前回のフォルダ：'+safeName:'前回のフォルダ：未登録';
+ $('#quickFolderButtonText').textContent=safeName?'📂 前回のフォルダを再選択':'📂 教材フォルダを選択';
+ $('#quickLessonFolder').setAttribute('aria-label',safeName?'前回のフォルダ '+safeName+' を再選択':'教材フォルダを選択');
+}
+try{updateLastFolderDisplay(localStorage.getItem(LAST_FOLDER_KEY)||'')}catch(e){updateLastFolderDisplay('')}
 const LESSON_MEMORY_KEY='elp-lesson-order-v1';
 let lessonFiles=new Map(), selectedLesson=null;let selectedFolderRoot='';
 function updateSelectedLessonLabel(){
@@ -414,7 +439,7 @@ function loadLesson(name){
  rememberCurrentLesson();
  msg(`${name}：${chosen.length}音源を読み込みました${sorted.length>tracks.length?`（先頭${tracks.length}件／全${sorted.length}件）`:''}。未使用フォルダ内は除外しています。`);
 }
-$('#lessonFolder').addEventListener('change',event=>{
+function onLessonFolderSelected(event){
  const list=[...(event.target.files||[])];event.target.value='';
  if(!list.length)return;
  const grouped=new Map();
@@ -433,10 +458,18 @@ $('#lessonFolder').addEventListener('change',event=>{
  if(!grouped.size){msg('選択したフォルダの直下（または教材フォルダ直下）にMP3が見つかりません。',true);return}
  if(selectedLesson)rememberCurrentLesson();
  selectedFolderRoot=(list.find(f=>(f.webkitRelativePath||'').includes('/'))?.webkitRelativePath||'').split('/')[0]||'';
+ // Record only the chosen folder's display name after a successful MP3 import.
+ // Do not save or attempt to restore any directory handle or MP3 bytes.
+ if(selectedFolderRoot){
+   try{localStorage.setItem(LAST_FOLDER_KEY,selectedFolderRoot)}catch(e){}
+   updateLastFolderDisplay(selectedFolderRoot);
+ }
  lessonFiles=grouped;selectedLesson=null;
  populateLessonChoices();
  loadLesson($('#lessonChoice').value);
-});
+}
+$('#lessonFolder').addEventListener('change',onLessonFolderSelected);
+$('#quickLessonFolder').addEventListener('change',onLessonFolderSelected);
 $('#lessonChoice').addEventListener('change',e=>loadLesson(e.target.value));
 $('#resetCurrentLesson').addEventListener('click',()=>{
  if(!selectedLesson){msg('先に教材フォルダを選択してください。',true);return}
