@@ -304,7 +304,17 @@ body.dark-mode .lesson-limit-row label{color:#e1edfa}
   .lesson-quick-switch{width:min(100%,300px);}
   .lesson-capacity-settings .lesson-limit-row label{white-space:normal;}
 }
-</style><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><meta name="apple-mobile-web-app-title" content="English MP3"><meta name="mobile-web-app-capable" content="yes"><link rel="manifest" href="manifest.webmanifest"><link rel="apple-touch-icon" href="app-icon-180.png"></head><body><main><h1>🎧 English Listening Player</h1><section class="section"><h2 id="trackListHeading">音源の切り替え（最大12個）</h2><div class="quick-folder" aria-label="教材フォルダの再選択">
+
+/* Source selection takes the whole content row; icon matches iPhone PWA icon. */
+.player-title{display:flex;align-items:center;gap:9px;min-width:0}
+.player-title-icon{width:32px;height:32px;border-radius:8px;object-fit:cover;flex:0 0 auto}
+.lesson-quick-switch{width:100%;max-width:none;margin:8px 0 10px;padding:5px 7px}
+.lesson-quick-switch .lesson-select-label{width:100%;display:block}
+.lesson-quick-switch #lessonChoice{display:block;width:100%;min-width:0;max-width:none;min-height:44px;font-size:16px}
+.source-details-content .lesson-capacity-settings{margin:10px 0 13px;padding:12px;border-radius:12px;background:#f0f5fc;border:1px solid #d7e1ee}
+body.dark-mode .source-details-content .lesson-capacity-settings{background:#1c314a;border-color:#405570}
+@media(max-width:390px){.lesson-quick-switch{width:100%;max-width:none}.lesson-quick-switch #lessonChoice{max-width:none}}
+</style><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><meta name="apple-mobile-web-app-title" content="English MP3"><meta name="mobile-web-app-capable" content="yes"><link rel="manifest" href="manifest.webmanifest"><link rel="apple-touch-icon" href="app-icon-180.png"></head><body><main><h1 class="player-title"><img src="app-icon-180.png" alt="" class="player-title-icon">English Listening Player</h1><section class="section"><h2 id="trackListHeading">音源</h2><div class="quick-folder" aria-label="教材フォルダの再選択">
   <p id="lastFolderName" class="quick-folder-name" aria-live="polite">前回のフォルダ：未登録</p>
   <label class="quick-folder-btn" id="quickFolderLabel"><span id="quickFolderButtonText">📂 教材フォルダを選択</span>
     <input id="quickLessonFolder" type="file" webkitdirectory directory multiple aria-label="前回の教材フォルダを再選択">
@@ -314,7 +324,14 @@ body.dark-mode .lesson-limit-row label{color:#e1edfa}
   <label class="lesson-select-label" for="lessonChoice">
     <select id="lessonChoice" disabled aria-label="教材フォルダを選択"><option value="">English MP3 を選択</option></select>
   </label>
-</div><p id="selectedLessonLabel" class="selected-lesson-label" hidden aria-live="polite"></p><div class="slots" id="slots" aria-label="音源一覧"><button class="slot active" data-slot="0"><small>1</small><span>未選択</span></button><button class="slot" data-slot="1"><small>2</small><span>未選択</span></button><button class="slot" data-slot="2"><small>3</small><span>未選択</span></button><button class="slot" data-slot="3"><small>4</small><span>未選択</span></button><button class="slot" data-slot="4"><small>5</small><span>未選択</span></button><button class="slot" data-slot="5"><small>6</small><span>未選択</span></button><button class="slot" data-slot="6"><small>7</small><span>未選択</span></button><button class="slot" data-slot="7"><small>8</small><span>未選択</span></button><button class="slot" data-slot="8"><small>9</small><span>未選択</span></button><button class="slot" data-slot="9"><small>10</small><span>未選択</span></button><button class="slot" data-slot="10"><small>11</small><span>未選択</span></button><button class="slot" data-slot="11"><small>12</small><span>未選択</span></button></div><details class="source-details"><summary>⚙ 音源の詳細設定 <span class="source-caption">タップして開く</span></summary><div class="source-details-content"><div class="reorderbar"><span>選択中の音源を並び替え（教材内は自動記憶）</span><button id="moveUp" type="button">◀ 1つ前へ</button><button id="moveDown" type="button">1つ後へ ▶</button></div><div class="fileactions"><label class="pick">📁 MP3を選択（空き枠に追加・入れ替え）<input id="file" type="file" multiple accept=".mp3,.m4a,audio/mpeg,audio/mp4,audio/*" aria-label="MP3ファイルを選択"></label><button id="clearAll" type="button" class="clearall">全解除</button></div><div class="lesson-import">
+</div><p id="selectedLessonLabel" class="selected-lesson-label" hidden aria-live="polite"></p><div class="slots" id="slots" aria-label="音源一覧"><button class="slot active" data-slot="0"><small>1</small><span>未選択</span></button><button class="slot" data-slot="1"><small>2</small><span>未選択</span></button><button class="slot" data-slot="2"><small>3</small><span>未選択</span></button><button class="slot" data-slot="3"><small>4</small><span>未選択</span></button><button class="slot" data-slot="4"><small>5</small><span>未選択</span></button><button class="slot" data-slot="5"><small>6</small><span>未選択</span></button><button class="slot" data-slot="6"><small>7</small><span>未選択</span></button><button class="slot" data-slot="7"><small>8</small><span>未選択</span></button><button class="slot" data-slot="8"><small>9</small><span>未選択</span></button><button class="slot" data-slot="9"><small>10</small><span>未選択</span></button><button class="slot" data-slot="10"><small>11</small><span>未選択</span></button><button class="slot" data-slot="11"><small>12</small><span>未選択</span></button></div><details class="source-details"><summary>⚙ 音源の詳細設定 <span class="source-caption">タップして開く</span></summary><div class="source-details-content"><section class="section lesson-capacity-settings settings-card">
+<h2>教材フォルダごとの最大音源数</h2>
+<label class="advanced-lesson-label" for="advancedLessonChoice">教材フォルダを選択</label>
+<select id="advancedLessonChoice" disabled aria-label="詳細設定で教材フォルダを選択"><option value="">先に English MP3 を選択してください</option></select>
+<div class="lesson-limit-row"><label for="lessonCapacity">この教材の最大音源数</label>
+<select id="lessonCapacity" disabled aria-label="選択した教材の最大音源数"><option value="3">3音源</option><option value="6">6音源</option><option value="9">9音源</option><option value="12" selected>12音源</option><option value="15">15音源</option><option value="18">18音源</option><option value="21">21音源</option><option value="24">24音源</option><option value="27">27音源</option><option value="30">30音源</option><option value="33">33音源</option><option value="36">36音源</option><option value="39">39音源</option><option value="42">42音源</option><option value="45">45音源</option><option value="48">48音源</option><option value="51">51音源</option><option value="54">54音源</option><option value="57">57音源</option><option value="60">60音源</option><option value="63">63音源</option><option value="66">66音源</option><option value="69">69音源</option><option value="72">72音源</option><option value="75">75音源</option><option value="78">78音源</option><option value="81">81音源</option><option value="84">84音源</option><option value="87">87音源</option><option value="90">90音源</option><option value="93">93音源</option><option value="96">96音源</option><option value="99">99音源</option></select></div>
+<p class="lesson-help">3・6・9…99音源から選択できます。教材ごとに設定を記憶します。音源数を変更すると選択中の教材を読み直し、再生位置はリセットされます。</p>
+</section><div class="reorderbar"><span>選択中の音源を並び替え（教材内は自動記憶）</span><button id="moveUp" type="button">◀ 1つ前へ</button><button id="moveDown" type="button">1つ後へ ▶</button></div><div class="fileactions"><label class="pick">📁 MP3を選択（空き枠に追加・入れ替え）<input id="file" type="file" multiple accept=".mp3,.m4a,audio/mpeg,audio/mp4,audio/*" aria-label="MP3ファイルを選択"></label><button id="clearAll" type="button" class="clearall">全解除</button></div><div class="lesson-import">
   <label class="folder-pick">📂 English MP3／教材フォルダを選択
     <input id="lessonFolder" type="file" webkitdirectory directory multiple aria-label="教材フォルダを選択">
   </label>
@@ -338,14 +355,7 @@ body.dark-mode .lesson-limit-row label{color:#e1edfa}
 <div class="navigation-group"><div class="navigation-group-title">音源を切り替え</div>
   <div class="navigation-buttons"><button id="prevTrack" type="button" aria-label="前の音源、または現在の音源の先頭へ">⏮ <span>前の音源</span></button><button id="nextTrack" type="button" aria-label="次の音源へ">⏭ <span>次の音源</span></button></div></div>
 </div><section class="section framed-setting"><h2>細かい巻き戻し・早送り</h2><div class="grid"><button data-jump="-0.5" disabled>−0.5秒</button><button data-jump="-1" disabled>−1秒</button><button data-jump="-2" disabled>−2秒</button><button data-jump="-3" disabled>−3秒</button><button data-jump="-5" disabled>−5秒</button><button data-jump="1" disabled>＋1秒</button></div></section>
-<details class="advanced-settings"><summary>⚙ 詳細設定 <span class="advanced-caption">タップして開く</span></summary><div class="advanced-content"><section class="section lesson-capacity-settings settings-card">
-<h2>教材フォルダごとの最大音源数</h2>
-<label class="advanced-lesson-label" for="advancedLessonChoice">教材フォルダを選択</label>
-<select id="advancedLessonChoice" disabled aria-label="詳細設定で教材フォルダを選択"><option value="">先に English MP3 を選択してください</option></select>
-<div class="lesson-limit-row"><label for="lessonCapacity">この教材の最大音源数</label>
-<select id="lessonCapacity" disabled aria-label="選択した教材の最大音源数"><option value="3">3音源</option><option value="6">6音源</option><option value="9">9音源</option><option value="12" selected>12音源</option><option value="15">15音源</option><option value="18">18音源</option><option value="21">21音源</option><option value="24">24音源</option><option value="27">27音源</option><option value="30">30音源</option><option value="33">33音源</option><option value="36">36音源</option><option value="39">39音源</option><option value="42">42音源</option><option value="45">45音源</option><option value="48">48音源</option><option value="51">51音源</option><option value="54">54音源</option><option value="57">57音源</option><option value="60">60音源</option><option value="63">63音源</option><option value="66">66音源</option><option value="69">69音源</option><option value="72">72音源</option><option value="75">75音源</option><option value="78">78音源</option><option value="81">81音源</option><option value="84">84音源</option><option value="87">87音源</option><option value="90">90音源</option><option value="93">93音源</option><option value="96">96音源</option><option value="99">99音源</option></select></div>
-<p class="lesson-help">3・6・9…99音源から選択できます。教材ごとに設定を記憶します。音源数を変更すると選択中の教材を読み直し、再生位置はリセットされます。</p>
-</section><section class="section lesson-memory-settings settings-card">
+<details class="advanced-settings"><summary>⚙ 詳細設定 <span class="advanced-caption">タップして開く</span></summary><div class="advanced-content"><section class="section lesson-memory-settings settings-card">
 <h2>音源の記憶管理</h2>
 <p class="lesson-help">教材ごとの音源名・配置順を端末に記憶します。同じ教材内の1ファイル入れ替えも自動保存します。MP3本体やiCloud上のファイルは変更しません。</p>
 <div class="memory-reset-row"><button type="button" id="resetCurrentLesson">現在の教材の記憶をリセット</button><button type="button" id="resetAllLessons" class="reset-all">全教材の記憶をリセット</button></div>
@@ -460,7 +470,7 @@ function rebuildSlots(count){
  root.replaceChildren(fragment);
  root.classList.toggle('many-tracks',count>12);
  slots=[...root.querySelectorAll('[data-slot]')];
- $('#trackListHeading').textContent=`音源の切り替え（最大${count}個）`;
+ $('#trackListHeading').textContent='音源';
 }
 
 function saveLessonMemory(){
