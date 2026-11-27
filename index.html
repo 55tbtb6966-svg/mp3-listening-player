@@ -240,6 +240,19 @@ body.dark-mode .saver-hint{color:#b9c8da}
 100%{transform:translate(16vw,84vh)}
 }
 @media(prefers-reduced-motion:reduce){.saver-orb{animation-duration:100s}}
+.studysettings{border:1px solid #b8d1eb;border-radius:15px;background:#eef6ff;padding:12px 13px;margin:12px 0;color:#233c5d}
+.studyhead{display:flex;align-items:center;justify-content:space-between;gap:8px;font-size:15px}
+.study-switch{display:flex;align-items:center;gap:7px;font-size:14px;white-space:nowrap}
+.study-switch input{width:19px;height:19px;accent-color:#277bc3}
+.study-controls{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
+.study-controls label{display:flex;flex:1 1 150px;flex-direction:column;gap:4px;font-size:13px;font-weight:600}
+.study-controls select{min-width:0;padding:8px;border:1px solid #a9c6e5;background:#fff;border-radius:9px;font-size:15px;color:#253b55}
+.study-status{font-weight:650;color:#245c90;font-size:13px;margin:9px 0 3px}
+.study-help{font-size:12px;color:#5c718a;line-height:1.55;margin:6px 0 0}
+body.dark-mode .studysettings{background:#203b56;border-color:#5b83a8;color:#f0f6ff}
+body.dark-mode .study-controls select{background:#182940;border-color:#6687a8;color:#f1f7ff}
+body.dark-mode .study-status{color:#9ed5ff}
+body.dark-mode .study-help{color:#bfd0e3}
 </style><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><meta name="apple-mobile-web-app-title" content="English MP3"><meta name="mobile-web-app-capable" content="yes"><link rel="manifest" href="manifest.webmanifest"><link rel="apple-touch-icon" href="app-icon-180.png"></head><body><main><h1>🎧 English Listening Player</h1><section class="section"><h2>音源の切り替え（最大12個）</h2><p id="selectedLessonLabel" class="selected-lesson-label" hidden aria-live="polite"></p><div class="slots" id="slots"><button class="slot active" data-slot="0"><small>1</small><span>未選択</span></button><button class="slot" data-slot="1"><small>2</small><span>未選択</span></button><button class="slot" data-slot="2"><small>3</small><span>未選択</span></button><button class="slot" data-slot="3"><small>4</small><span>未選択</span></button><button class="slot" data-slot="4"><small>5</small><span>未選択</span></button><button class="slot" data-slot="5"><small>6</small><span>未選択</span></button><button class="slot" data-slot="6"><small>7</small><span>未選択</span></button><button class="slot" data-slot="7"><small>8</small><span>未選択</span></button><button class="slot" data-slot="8"><small>9</small><span>未選択</span></button><button class="slot" data-slot="9"><small>10</small><span>未選択</span></button><button class="slot" data-slot="10"><small>11</small><span>未選択</span></button><button class="slot" data-slot="11"><small>12</small><span>未選択</span></button></div><details class="source-details"><summary>⚙ 音源の詳細設定 <span class="source-caption">タップして開く</span></summary><div class="source-details-content"><div class="reorderbar"><span>選択中の音源を並び替え</span><button id="moveUp" type="button">◀ 1つ前へ</button><button id="moveDown" type="button">1つ後へ ▶</button></div><div class="fileactions"><label class="pick">📁 MP3を選択（最大12個一括）<input id="file" type="file" multiple accept=".mp3,.m4a,audio/mpeg,audio/mp4,audio/*" aria-label="MP3ファイルを選択"></label><button id="clearAll" type="button" class="clearall">全解除</button></div><div class="lesson-import">
   <label class="folder-pick">📂 English MP3／教材フォルダを選択
     <input id="lessonFolder" type="file" webkitdirectory directory multiple aria-label="教材フォルダを選択">
@@ -251,6 +264,15 @@ body.dark-mode .saver-hint{color:#b9c8da}
 </div><div id="status" class="status" role="status" aria-live="polite">最大12音源。音源のタップは切り替えのみで、自動再生しません。</div><div class="trackendsettings"><div class="trackendtitle">音源全体の再生モード</div><div class="trackmode-row"><button type="button" id="trackEndMode" class="trackmodebtn" aria-label="音源全体の再生モードを切り替え" title="再生モードを切り替え">🔂 1音源リピート</button><p class="trackendhint" id="trackModeHint" aria-live="polite">現在のMP3を先頭から繰り返します。</p></div><p class="trackendhint trackmode-priority">A-B・チャプターリピートが有効ならそちらを優先。</p></div></div></details></section><div class="top"><div class="now" id="now">MP3を選択してください</div><div class="playrow five-controls" aria-label="再生と移動の操作"><button id="trackBack" class="rew track-side" disabled aria-label="前の音源">⏮<span>前の音源</span></button><button id="back" class="rew" disabled aria-label="前のチャプター">◀<span>前のチャプター</span></button><button id="play" class="play" disabled aria-label="再生または一時停止">▶ 再生</button><button id="half" class="rew" disabled aria-label="次のチャプター">▶<span>次のチャプター</span></button><button id="trackForward" class="rew track-side" disabled aria-label="次の音源">⏭<span>次の音源</span></button></div><div class="chapters"><div id="chapterbar" class="chapterbar" aria-label="チャプター一覧"><span class="chapterhelp">音源を読み込むと無音区間から自動生成します</span></div><div class="chapterhelp" id="chapterstatus">番号と開始時刻を表示。シークバー操作時はチャプター一覧が追従します。チャプター選択後は一覧を固定し、再生中のチャプターが欄外に出たら中央へ自動移動します。</div></div><div class="seekwrap"><div id="chapterTicks" class="chapterticks" aria-hidden="true"></div><input id="seek" type="range" min="0" max="100" step="0.01" value="0" disabled aria-label="再生位置"></div><div class="times"><span id="current">0:00.0</span><span id="duration">0:00.0</span></div><div id="waveBox" class="wavebox"><canvas id="waveform" width="640" height="90" aria-label="再生中の音量に応じて動くインジケーター" role="img"></canvas></div></div>
 
 <section class="section repeatsettings"><div class="chapterrepeat"><button id="repeatChapter" disabled aria-pressed="false">🔁 チャプターリピート OFF</button></div></section>
+<section class="section studysettings" aria-label="英会話のポーズ付き反復練習">
+  <div class="studyhead"><strong>🎙 ポーズ付きリピート学習</strong><label class="study-switch"><input id="studyEnabled" type="checkbox"> ON</label></div>
+  <div class="study-controls">
+    <label>1文の再生回数 <select id="studyRepetitions" aria-label="1文の繰り返し回数"><option value="2">2回</option><option value="3" selected>3回</option><option value="5">5回</option><option value="10">10回</option><option value="0">無制限</option></select></label>
+    <label>発話ポーズ <select id="studyPause" aria-label="英文の後の無音時間"><option value="0">なし</option><option value="1">1秒</option><option value="2">2秒</option><option value="3" selected>3秒</option><option value="5">5秒</option><option value="10">10秒</option></select></label>
+  </div>
+  <p id="studyStatus" class="study-status" aria-live="polite">OFF：通常の再生・リピートを使用します。</p>
+  <p class="study-help">ONでは各チャプターを指定回数だけ再生し、英文の後に無音を入れて次へ進みます。チャプターリピート・A–Bリピートとは排他的です。音源の最後で終了します。</p>
+</section>
 <section class="section speedsection framed-setting"><div class="speedrow"><label for="speed"><strong>再生速度</strong></label><select id="speed"><option value="0.5">0.5×</option><option value="0.75">0.75×</option><option value="0.9">0.9×</option><option value="1" selected>1.0×</option><option value="1.1">1.1×</option><option value="1.25">1.25×</option><option value="1.5">1.5×</option><option value="2">2.0×</option></select></div></section>
 <section class="section ab"><h2>🔁 A–B区間リピート</h2><div class="grid"><button id="setA" disabled>ここをAに</button><button id="setB" disabled>ここをBに</button><button id="clearAB" disabled>解除</button></div><div class="abstate">開始 A：<strong id="atime">未設定</strong>　終了 B：<strong id="btime">未設定</strong></div><div class="grid"><button id="toggleAB" disabled>リピート OFF</button><button id="gotoA" disabled>Aから再生</button><button id="clearPoints" disabled>A・Bを消去</button></div><div class="abstate" id="abstate">音源ごとにA・B位置を保持します。</div></section><div class="navigation-switches" aria-label="音源とチャプターの移動">
   <div class="navigation-group"><div class="navigation-group-title">チャプターを移動 <small>（前：1回で先頭・素早く2回で前へ）</small></div>
@@ -351,7 +373,7 @@ function rememberCurrentLesson(){
  saveLessonMemory();
 }
 function clearLoadedTracks(){
- audio.pause();analysisId++;loadId++;
+ studyReset();audio.pause();analysisId++;loadId++;
  if(pendingLoaded)audio.removeEventListener('loadedmetadata',pendingLoaded);
  if(pendingError)audio.removeEventListener('error',pendingError);
  pendingLoaded=null;pendingError=null;
@@ -430,7 +452,116 @@ $('#resetAllLessons').addEventListener('click',()=>{
  lessonMemory={};selectedLesson=null;updateSelectedLessonLabel();try{localStorage.removeItem(LESSON_MEMORY_KEY)}catch(e){}
  msg('全教材の記憶を削除しました。音声ファイルには変更ありません。');
 });
-const tracks=Array(12).fill(null),slots=[...document.querySelectorAll('[data-slot]')];let active=0,ready=false,loadId=0,analysisId=0;let pendingLoaded=null,pendingError=null;let chapterLoopGuard=false;let chapterFollow=true;let lastFollowedChapter=-1;const fmt=n=>Number.isFinite(n)?`${Math.floor(n/60)}:${String(Math.floor(n%60)).padStart(2,'0')}.${Math.floor((n%1)*10)}`:'0:00.0';const currentTrack=()=>tracks[active];function msg(t,error=false){status.textContent=t;status.classList.toggle('error',error)}function buttons(){const t=currentTrack();document.querySelectorAll('button[disabled],button[data-jump],#setA,#setB,#clearAB,#clearPoints,#gotoA,#toggleAB').forEach(b=>{if(!b.classList.contains('slot'))b.disabled=!ready});seek.disabled=!ready;const valid=t&&t.A!==null&&t.B!==null&&t.B>t.A;$('#toggleAB').disabled=!ready||!valid;$('#gotoA').disabled=!ready||!t||t.A===null;$('#clearPoints').disabled=!ready||!t||(t.A===null&&t.B===null);$('#clearAB').disabled=!ready||!t||!t.repeat;$('#atime').textContent=t&&t.A!==null?fmt(t.A):'未設定';$('#btime').textContent=t&&t.B!==null?fmt(t.B):'未設定';$('#toggleAB').textContent=t&&t.repeat?'リピート ON':'リピート OFF';$('#toggleAB').classList.toggle('activeAB',!!(t&&t.repeat));$('#abstate').textContent=t&&t.repeat?'A〜Bを繰り返し再生中':valid?'区間設定済み（リピートOFF）':'音源ごとにA・B位置を保持します。'}function drawChapters(){const t=currentTrack(),bar=$('#chapterbar');const previousScroll=bar.scrollLeft;bar.replaceChildren();const chapters=t?.chapters||[];if(!chapters.length){const span=document.createElement('span');span.className='chapterhelp';span.textContent=t?'解析待ち、または無音区間が見つかりません':'音源を選択してください';bar.append(span)}else{const pos=audio.currentTime||0;let selected=0;chapters.forEach((c,i)=>{if(c<=pos+0.05)selected=i});if(t.chapterRepeat&&Number.isInteger(t.selectedChapter))selected=Math.min(t.selectedChapter,chapters.length-1);chapters.forEach((c,i)=>{const b=document.createElement('button');b.className='chapter'+(i===selected?' selected':'');b.innerHTML='<strong>'+(i+1)+'</strong><small>'+fmt(c)+'</small>';b.title='チャプター '+(i+1)+' / '+fmt(c);b.onclick=()=>{if(!ready)return;chapterFollow=false;t.selectedChapter=i;audio.currentTime=c;draw();const p=audio.play();if(p&&p.catch)p.catch(e=>msg('再生できません: '+e.message,true))};bar.append(b)});bar.scrollLeft=previousScroll}$('#repeatChapter').disabled=!ready||!chapters.length;$('#repeatChapter').textContent=t?.chapterRepeat?'🔁 チャプターリピート ON':'🔁 チャプターリピート OFF';$('#repeatChapter').classList.toggle('on',!!t?.chapterRepeat);$('#repeatChapter').setAttribute('aria-pressed',String(!!t?.chapterRepeat));$('#prevChapter').disabled=!ready||chapters.length<2;$('#nextChapter').disabled=!ready||chapters.length<2;updatePrimaryControls()}
+// Pause-and-repeat study mode: independent of classic A–B / chapter looping.
+const studyEnabled=$('#studyEnabled'),studyRepetitions=$('#studyRepetitions'),studyPause=$('#studyPause'),studyStatus=$('#studyStatus');
+let studyTimer=null,studyPhase='idle',studyTrack=null,studyChapter=-1,studyCompleted=0,studyPendingNext=-1,studyGapToken=0,studyFinished=false;
+try{
+ const reps=localStorage.getItem('elp-study-reps');
+ const gap=localStorage.getItem('elp-study-pause');
+ if(['2','3','5','10','0'].includes(reps))studyRepetitions.value=reps;
+ if(['0','1','2','3','5','10'].includes(gap))studyPause.value=gap;
+}catch(e){}
+function studyCancelGap(){
+ studyGapToken++;
+ if(studyTimer!==null){clearTimeout(studyTimer);studyTimer=null}
+ if(studyPhase==='gap')studyPhase='idle';
+}
+function studyReset(){
+ studyCancelGap();studyTrack=null;studyChapter=-1;studyCompleted=0;studyPendingNext=-1;studyFinished=false;studyRender();
+}
+function studyChapterAt(pos){
+ const chapters=currentTrack()?.chapters||[];
+ let idx=0;
+ for(let i=0;i<chapters.length;i++)if(chapters[i]<=pos+0.05)idx=i;
+ return idx;
+}
+function studyRender(){
+ if(!studyEnabled.checked){studyStatus.textContent='OFF：通常の再生・リピートを使用します。';return}
+ const t=currentTrack();
+ if(!ready||!t?.chapters?.length){studyStatus.textContent='ON：チャプター解析と音源の読み込みを待っています。';return}
+ if(studyFinished){studyStatus.textContent='学習完了：再生ボタンで最初からもう一度練習できます。';return}
+ const idx=studyTrack===t&&studyChapter>=0?studyChapter:studyChapterAt(audio.currentTime);
+ const max=Number(studyRepetitions.value);
+ const round=Math.min(studyCompleted+1,max||Infinity);
+ studyStatus.textContent=studyPhase==='gap'
+   ?`発話ポーズ中（${studyPause.value}秒）／英文 ${idx+1}・${studyCompleted}回終了`
+   :`英文 ${idx+1}/${t.chapters.length}・${round}/${max||'∞'}回目${audio.paused?'（一時停止中）':''}`;
+}
+function studyPrepare(){
+ if(!studyEnabled.checked||!ready)return false;
+ const t=currentTrack();if(!t?.chapters?.length){studyRender();return false}
+ if(studyTrack!==t||studyChapter<0){
+  studyTrack=t;studyChapter=studyChapterAt(audio.currentTime);studyCompleted=0;studyFinished=false;
+ }
+ return true;
+}
+function studyStartChapter(index){
+ const t=currentTrack();if(!ready||!t?.chapters?.length)return;
+ studyCancelGap();studyTrack=t;studyChapter=Math.max(0,Math.min(t.chapters.length-1,index));
+ studyCompleted=0;studyFinished=false;
+ const start=t.chapters[studyChapter];
+ audio.currentTime=Math.max(0,start-Math.min(.035,start));
+ studyRender();
+}
+function studyResumeAfterGap(){
+ if(!studyEnabled.checked||!ready||!studyTrack||studyTrack!==currentTrack())return;
+ const t=currentTrack();
+ const next=studyPendingNext;
+ studyPendingNext=-1;
+ studyPhase='idle';
+ if(next>=t.chapters.length){
+  studyFinished=true;studyRender();draw();return;
+ }
+ if(next!==studyChapter){studyChapter=next;studyCompleted=0}
+ const start=t.chapters[studyChapter];
+ audio.currentTime=Math.max(0,start-Math.min(.035,start));
+ studyRender();draw();
+ const p=audio.play();
+ if(p&&p.catch)p.catch(()=>{studyStatus.textContent='自動再生が制限されました。「再生」を押して続けてください。'});
+}
+function studyHandleEnd(){
+ if(!studyEnabled.checked||studyPhase==='gap'||studyFinished||!studyPrepare())return false;
+ const t=currentTrack(),max=Number(studyRepetitions.value);
+ studyCompleted++;
+ studyPendingNext=(max===0||studyCompleted<max)?studyChapter:studyChapter+1;
+ // The real audio element pauses while the learner speaks during the gap.
+ studyPhase='gap';audio.pause();
+ studyRender();draw();
+ const token=++studyGapToken;
+ const delay=Number(studyPause.value)*1000;
+ if(delay===0){studyPhase='idle';studyResumeAfterGap();return true}
+ studyTimer=setTimeout(()=>{
+  if(token!==studyGapToken||studyPhase!=='gap')return;
+  studyTimer=null;studyResumeAfterGap();
+ },delay);
+ return true;
+}
+function checkStudyRepeat(){
+ if(!studyEnabled.checked||studyPhase==='gap'||studyFinished||audio.paused||audio.ended)return;
+ if(!studyPrepare())return;
+ const t=currentTrack(),i=studyChapter;
+ const start=t.chapters[i];
+ const end=(i+1<t.chapters.length)?(t.chapterEnds?.[i]??t.chapters[i+1]-.20):audio.duration;
+ if(!Number.isFinite(end)||end<=start)return;
+ // Follow a genuine user seek or chapter change (but not our own pre-roll).
+ if(audio.currentTime<start-.15||audio.currentTime>end+.2){
+  studyChapter=studyChapterAt(audio.currentTime);studyCompleted=0;studyRender();return;
+ }
+ if(audio.currentTime>=end-.035){studyHandleEnd()}
+}
+studyEnabled.addEventListener('change',()=>{
+ studyReset();
+ if(studyEnabled.checked){
+  const t=currentTrack();if(t){t.chapterRepeat=false;t.repeat=false}
+  if(ready&&t?.chapters?.length)studyStartChapter(studyChapterAt(audio.currentTime));
+ }
+ draw();
+});
+for(const control of [studyRepetitions,studyPause])control.addEventListener('change',()=>{
+ try{localStorage.setItem(control===studyRepetitions?'elp-study-reps':'elp-study-pause',control.value)}catch(e){}
+ studyReset();
+});
+const tracks=Array(12).fill(null),slots=[...document.querySelectorAll('[data-slot]')];let active=0,ready=false,loadId=0,analysisId=0;let pendingLoaded=null,pendingError=null;let chapterLoopGuard=false;let chapterFollow=true;let lastFollowedChapter=-1;const fmt=n=>Number.isFinite(n)?`${Math.floor(n/60)}:${String(Math.floor(n%60)).padStart(2,'0')}.${Math.floor((n%1)*10)}`:'0:00.0';const currentTrack=()=>tracks[active];function msg(t,error=false){status.textContent=t;status.classList.toggle('error',error)}function buttons(){const t=currentTrack();document.querySelectorAll('button[disabled],button[data-jump],#setA,#setB,#clearAB,#clearPoints,#gotoA,#toggleAB').forEach(b=>{if(!b.classList.contains('slot'))b.disabled=!ready});seek.disabled=!ready;const valid=t&&t.A!==null&&t.B!==null&&t.B>t.A;$('#toggleAB').disabled=!ready||!valid||studyEnabled.checked;$('#gotoA').disabled=!ready||!t||t.A===null||studyEnabled.checked;$('#clearPoints').disabled=!ready||!t||(t.A===null&&t.B===null);$('#clearAB').disabled=!ready||!t||!t.repeat;$('#setB').disabled=!ready||studyEnabled.checked;$('#atime').textContent=t&&t.A!==null?fmt(t.A):'未設定';$('#btime').textContent=t&&t.B!==null?fmt(t.B):'未設定';$('#toggleAB').textContent=t&&t.repeat?'リピート ON':'リピート OFF';$('#toggleAB').classList.toggle('activeAB',!!(t&&t.repeat));$('#abstate').textContent=t&&t.repeat?'A〜Bを繰り返し再生中':valid?'区間設定済み（リピートOFF）':'音源ごとにA・B位置を保持します。'}function drawChapters(){const t=currentTrack(),bar=$('#chapterbar');const previousScroll=bar.scrollLeft;bar.replaceChildren();const chapters=t?.chapters||[];if(!chapters.length){const span=document.createElement('span');span.className='chapterhelp';span.textContent=t?'解析待ち、または無音区間が見つかりません':'音源を選択してください';bar.append(span)}else{const pos=audio.currentTime||0;let selected=0;chapters.forEach((c,i)=>{if(c<=pos+0.05)selected=i});if(t.chapterRepeat&&Number.isInteger(t.selectedChapter))selected=Math.min(t.selectedChapter,chapters.length-1);chapters.forEach((c,i)=>{const b=document.createElement('button');b.className='chapter'+(i===selected?' selected':'');b.innerHTML='<strong>'+(i+1)+'</strong><small>'+fmt(c)+'</small>';b.title='チャプター '+(i+1)+' / '+fmt(c);b.onclick=()=>{if(!ready)return;chapterFollow=false;t.selectedChapter=i;studyReset();audio.currentTime=c;draw();const p=audio.play();if(p&&p.catch)p.catch(e=>msg('再生できません: '+e.message,true))};bar.append(b)});bar.scrollLeft=previousScroll}$('#repeatChapter').disabled=!ready||!chapters.length||studyEnabled.checked;$('#repeatChapter').textContent=t?.chapterRepeat?'🔁 チャプターリピート ON':'🔁 チャプターリピート OFF';$('#repeatChapter').classList.toggle('on',!!t?.chapterRepeat);$('#repeatChapter').setAttribute('aria-pressed',String(!!t?.chapterRepeat));$('#prevChapter').disabled=!ready||chapters.length<2;$('#nextChapter').disabled=!ready||chapters.length<2;updatePrimaryControls()}
 let lastChapterDraw=-1;
 function drawChapterTicks(){
  const el=$('#chapterTicks'),t=currentTrack(),cs=t?.chapters||[];
@@ -823,7 +954,7 @@ function changeTrackFromButton(direction){
  const wasPlaying=ready&&!audio.paused&&!audio.ended;
  // A first Previous press while well into a playing track restarts that track.
  if(direction<0&&wasPlaying&&audio.currentTime>TRACK_RESTART_THRESHOLD){
-  audio.currentTime=0;
+  audio.currentTime=0;studyReset();
   const t=currentTrack();if(t){t.position=0;t.selectedChapter=0}
   chapterFollow=true;lastFollowedChapter=-1;
   draw();maybeDrawChapters(true);
@@ -841,8 +972,8 @@ function changeTrackFromButton(direction){
  if(wasPlaying)tracks[target].position=0;
  loadSlot(target,false,wasPlaying);
 }
-function draw(){document.querySelector('#moveUp').disabled=active===0||!tracks[active];document.querySelector('#moveDown').disabled=active===tracks.length-1||!tracks[active];slots.forEach((b,i)=>{b.classList.toggle('active',i===active);b.querySelector('span').textContent=tracks[i]?.name||'未選択';b.title=tracks[i]?.name||'音源 '+(i+1)});$('#now').textContent=currentTrack()?`音源 ${active+1}：${currentTrack().name}`:`音源 ${active+1}：未選択`;$('#current').textContent=fmt(audio.currentTime);$('#duration').textContent=fmt(audio.duration);seek.max=Number.isFinite(audio.duration)?String(audio.duration):'0';if(document.activeElement!==seek)seek.value=String(audio.currentTime||0);play.textContent=audio.paused?'▶ 再生':'Ⅱ 停止';buttons();updateTrackSwitches();maybeDrawChapters();drawWaveform()}
-function storePosition(){const t=currentTrack();if(t&&ready&&Number.isFinite(audio.currentTime))t.position=audio.currentTime}function loadSlot(i,skipStore=false,autoPlay=false){if(i<0||i>=tracks.length)return;if(!skipStore)storePosition();audio.pause();if(pendingLoaded)audio.removeEventListener('loadedmetadata',pendingLoaded);if(pendingError)audio.removeEventListener('error',pendingError);pendingLoaded=null;pendingError=null;active=i;ready=false;lastChapterDraw=-1;lastFollowedChapter=-1;chapterFollow=true;analysisId++;const token=++loadId;audio.removeAttribute('src');audio.load();const t=currentTrack();draw();updateMediaSession();if(!t){maybeDrawChapters(true);msg(`音源 ${i+1} は未選択です。下の「MP3を追加・入れ替え」から選んでください。`);return}maybeDrawChapters(true);$('#chapterstatus').textContent=t.chapters?'チャプターを復元しました':'無音区間を解析します';msg('読み込み中: '+t.name);audio.src=t.url;audio.defaultPlaybackRate=Number(speed.value);audio.playbackRate=Number(speed.value);applyPitchSetting();audio.load();const loaded=()=>{if(token!==loadId)return;audio.playbackRate=Number(speed.value);applyPitchSetting();ready=true;try{audio.currentTime=Math.min(t.position||0,Number.isFinite(audio.duration)?audio.duration:0)}catch(e){}draw();maybeDrawChapters(true);msg((autoPlay?'読み込み完了（自動再生）: ':'読み込み完了（一時停止中）: ')+t.name);if(!t.chapters)analyzeTrack(t,token);if(autoPlay){audio.play().catch(e=>msg('次の音源を自動再生できません: '+e.message,true))}};const failed=()=>{if(token!==loadId)return;ready=false;draw();msg('読み込みに失敗しました。音源が端末にダウンロードされているか確認してください。',true)};pendingLoaded=loaded;pendingError=failed;audio.addEventListener('loadedmetadata',loaded,{once:true});audio.addEventListener('error',failed,{once:true});}function moveTrack(direction){
+function draw(){document.querySelector('#moveUp').disabled=active===0||!tracks[active];document.querySelector('#moveDown').disabled=active===tracks.length-1||!tracks[active];slots.forEach((b,i)=>{b.classList.toggle('active',i===active);b.querySelector('span').textContent=tracks[i]?.name||'未選択';b.title=tracks[i]?.name||'音源 '+(i+1)});$('#now').textContent=currentTrack()?`音源 ${active+1}：${currentTrack().name}`:`音源 ${active+1}：未選択`;$('#current').textContent=fmt(audio.currentTime);$('#duration').textContent=fmt(audio.duration);seek.max=Number.isFinite(audio.duration)?String(audio.duration):'0';if(document.activeElement!==seek)seek.value=String(audio.currentTime||0);play.textContent=studyPhase==='gap'?'▶ ポーズを終了':audio.paused?'▶ 再生':'Ⅱ 停止';studyRender();buttons();updateTrackSwitches();maybeDrawChapters();drawWaveform()}
+function storePosition(){const t=currentTrack();if(t&&ready&&Number.isFinite(audio.currentTime))t.position=audio.currentTime}function loadSlot(i,skipStore=false,autoPlay=false){if(i<0||i>=tracks.length)return;if(!skipStore)storePosition();studyReset();audio.pause();if(pendingLoaded)audio.removeEventListener('loadedmetadata',pendingLoaded);if(pendingError)audio.removeEventListener('error',pendingError);pendingLoaded=null;pendingError=null;active=i;ready=false;lastChapterDraw=-1;lastFollowedChapter=-1;chapterFollow=true;analysisId++;const token=++loadId;audio.removeAttribute('src');audio.load();const t=currentTrack();draw();updateMediaSession();if(!t){maybeDrawChapters(true);msg(`音源 ${i+1} は未選択です。下の「MP3を追加・入れ替え」から選んでください。`);return}maybeDrawChapters(true);$('#chapterstatus').textContent=t.chapters?'チャプターを復元しました':'無音区間を解析します';msg('読み込み中: '+t.name);audio.src=t.url;audio.defaultPlaybackRate=Number(speed.value);audio.playbackRate=Number(speed.value);applyPitchSetting();audio.load();const loaded=()=>{if(token!==loadId)return;audio.playbackRate=Number(speed.value);applyPitchSetting();ready=true;try{audio.currentTime=Math.min(t.position||0,Number.isFinite(audio.duration)?audio.duration:0)}catch(e){}draw();maybeDrawChapters(true);msg((autoPlay?'読み込み完了（自動再生）: ':'読み込み完了（一時停止中）: ')+t.name);if(!t.chapters)analyzeTrack(t,token);if(autoPlay){audio.play().catch(e=>msg('次の音源を自動再生できません: '+e.message,true))}};const failed=()=>{if(token!==loadId)return;ready=false;draw();msg('読み込みに失敗しました。音源が端末にダウンロードされているか確認してください。',true)};pendingLoaded=loaded;pendingError=failed;audio.addEventListener('loadedmetadata',loaded,{once:true});audio.addEventListener('error',failed,{once:true});}function moveTrack(direction){
  const target=active+direction;
  if(target<0||target>=tracks.length||!tracks[active])return;
  storePosition();
@@ -858,9 +989,9 @@ function storePosition(){const t=currentTrack();if(t&&ready&&Number.isFinite(aud
 $('#moveUp').onclick=()=>moveTrack(-1);
 $('#moveDown').onclick=()=>moveTrack(1);
 slots.forEach((b,i)=>b.onclick=()=>loadSlot(i,false,false));fileInput.addEventListener('change',()=>{const files=[...(fileInput.files||[])];fileInput.value='';if(selectedLesson){rememberCurrentLesson();selectedLesson=null;$('#lessonChoice').value='';updateSelectedLessonLabel();}if(!files.length)return;const valid=files.filter(f=>f.type.startsWith('audio/')||/\.(mp3|m4a|aac|wav|ogg)$/i.test(f.name));if(!valid.length){msg('対応する音声ファイルを選択してください。',true);return}const empty=tracks.map((t,i)=>t?null:i).filter(i=>i!==null);const targets=empty.length?empty:tracks.map((_,i)=>(active+i)%tracks.length);let added=0;for(const f of valid.slice(0,Math.min(tracks.length,targets.length))){const i=targets[added];if(tracks[i])URL.revokeObjectURL(tracks[i].url);tracks[i]={name:f.name,url:URL.createObjectURL(f),position:0,A:null,B:null,repeat:false,chapterRepeat:false,selectedChapter:0,chapters:null,chapterEnds:[],file:f};added++}if(added){const target=targets[0];loadSlot(target,true);msg(`${added}件読み込みました。音源をタップすると一時停止で切り替わります。`)}if(valid.length>added)msg(`${added}件読み込みました。空き枠が不足したため残り${valid.length-added}件は読み込んでいません。`)});
-$('#clearAll').onclick=()=>{audio.pause();analysisId++;loadId++;if(pendingLoaded)audio.removeEventListener('loadedmetadata',pendingLoaded);if(pendingError)audio.removeEventListener('error',pendingError);pendingLoaded=null;pendingError=null;audio.removeAttribute('src');audio.load();tracks.forEach((t,i)=>{if(t)URL.revokeObjectURL(t.url);tracks[i]=null});active=0;ready=false;chapterFollow=true;lastFollowedChapter=-1;lastChapterDraw=-1;draw();maybeDrawChapters(true);updateSelectedLessonLabel();msg('全12音源を解除しました。端末のMP3ファイルは削除していません。')};
+$('#clearAll').onclick=()=>{studyReset();audio.pause();analysisId++;loadId++;if(pendingLoaded)audio.removeEventListener('loadedmetadata',pendingLoaded);if(pendingError)audio.removeEventListener('error',pendingError);pendingLoaded=null;pendingError=null;audio.removeAttribute('src');audio.load();tracks.forEach((t,i)=>{if(t)URL.revokeObjectURL(t.url);tracks[i]=null});active=0;ready=false;chapterFollow=true;lastFollowedChapter=-1;lastChapterDraw=-1;draw();maybeDrawChapters(true);updateSelectedLessonLabel();msg('全12音源を解除しました。端末のMP3ファイルは削除していません。')};
 
-function jump(n){if(!ready)return;try{const t=currentTrack();let next=Math.max(0,Math.min(Number.isFinite(audio.duration)?audio.duration:Infinity,audio.currentTime+n));if(t?.repeat&&t.A!==null&&t.B!==null&&next<t.A)next=t.A;audio.currentTime=next;draw()}catch(e){msg('移動できません: '+e.message,true)}}async function analyzeTrack(t,token){const task=++analysisId;const note=$('#chapterstatus');note.textContent='音声を解析中…（長い音源は時間がかかります）';try{const ctx=new (window.AudioContext||window.webkitAudioContext)();let buffer;try{const bytes=await t.file.arrayBuffer();buffer=await ctx.decodeAudioData(bytes)}finally{await ctx.close().catch(()=>{})}if(task!==analysisId||token!==loadId||currentTrack()!==t)return;const minSilence=Number($('#silence').value),rate=buffer.sampleRate,step=Math.max(1,Math.floor(rate*.01)),count=Math.ceil(buffer.length/step),channels=Math.min(buffer.numberOfChannels,2),levels=new Float32Array(count);
+function jump(n){if(!ready)return;studyReset();try{const t=currentTrack();let next=Math.max(0,Math.min(Number.isFinite(audio.duration)?audio.duration:Infinity,audio.currentTime+n));if(t?.repeat&&t.A!==null&&t.B!==null&&next<t.A)next=t.A;audio.currentTime=next;draw()}catch(e){msg('移動できません: '+e.message,true)}}async function analyzeTrack(t,token){const task=++analysisId;const note=$('#chapterstatus');note.textContent='音声を解析中…（長い音源は時間がかかります）';try{const ctx=new (window.AudioContext||window.webkitAudioContext)();let buffer;try{const bytes=await t.file.arrayBuffer();buffer=await ctx.decodeAudioData(bytes)}finally{await ctx.close().catch(()=>{})}if(task!==analysisId||token!==loadId||currentTrack()!==t)return;const minSilence=Number($('#silence').value),rate=buffer.sampleRate,step=Math.max(1,Math.floor(rate*.01)),count=Math.ceil(buffer.length/step),channels=Math.min(buffer.numberOfChannels,2),levels=new Float32Array(count);
 // True signed PCM extrema for each 10ms bin. Keep only two compact byte arrays,
 // not a decoded buffer or another copy of the MP3, after analysis ends.
 const rawWaveMin=new Float32Array(count),rawWaveMax=new Float32Array(count);
@@ -898,8 +1029,8 @@ for(let i=0;i<bins;i++){
 }
 t.meterLevels=meterLevels;t.meterStep=meterStep;
 drawWaveform();
-const threshold=Math.max(.0025,peak*.035),minBins=Math.ceil(minSilence/.01);const result=[0],chapterEnds=[];let silenceStart=-1;for(let k=0;k<=count;k++){const quiet=k<count&&levels[k]<threshold;if(quiet){if(silenceStart<0)silenceStart=k}else if(silenceStart>=0){if(k-silenceStart>=minBins){const startTime=k*.01;const chapterStart=Math.max(silenceStart*.01+0.02,startTime-0.10);if(startTime-result[result.length-1]>=1.1&&startTime<buffer.duration-.2)(chapterEnds.push(Math.max(result[result.length-1]+0.1,silenceStart*.01-0.06)),result.push(Math.min(buffer.duration,chapterStart)))}silenceStart=-1}}t.chapters=result;t.chapterEnds=chapterEnds;t.selectedChapter=0;maybeDrawChapters(true);note.textContent=result.length+'チャプター検出（無音 '+minSilence+'秒以上）。番号を押すと移動します。'}catch(err){if(task!==analysisId)return;t.chapters=[0];t.chapterEnds=[];t.selectedChapter=0;maybeDrawChapters(true);note.textContent='解析できませんでした。通常再生は可能です（'+err.message+'）。'}}
-$('#analyze').onclick=()=>{const t=currentTrack();if(t&&ready){t.chapters=null;t.chapterEnds=[];analyzeTrack(t,loadId)}};$('#silence').onchange=()=>{const t=currentTrack();if(t&&ready){t.chapters=null;t.chapterEnds=[];analyzeTrack(t,loadId)}};function chapterMove(direction){const t=currentTrack(),cs=t?.chapters||[];if(!ready||!cs.length)return;const pos=audio.currentTime;let target;if(direction>0)target=cs.find(c=>c>pos+.15);else{target=cs[0];for(const c of cs){if(c>=pos-.3)break;target=c}}if(target!==undefined){t.selectedChapter=Math.max(0,cs.indexOf(target));chapterFollow=false;audio.currentTime=target;draw();maybeDrawChapters(true)}}$('#repeatChapter').onclick=()=>{const t=currentTrack();if(!ready||!t?.chapters?.length)return;t.chapterRepeat=!t.chapterRepeat;if(t.chapterRepeat){t.repeat=false;let i=0;for(let k=0;k<t.chapters.length;k++)if(t.chapters[k]<=audio.currentTime+0.05)i=k;t.selectedChapter=i;chapterFollow=false;audio.currentTime=t.chapters[i]}draw();maybeDrawChapters(true)};$('#prevTrack').onclick=()=>changeTrackFromButton(-1);$('#nextTrack').onclick=()=>changeTrackFromButton(1);
+const threshold=Math.max(.0025,peak*.035),minBins=Math.ceil(minSilence/.01);const result=[0],chapterEnds=[];let silenceStart=-1;for(let k=0;k<=count;k++){const quiet=k<count&&levels[k]<threshold;if(quiet){if(silenceStart<0)silenceStart=k}else if(silenceStart>=0){if(k-silenceStart>=minBins){const startTime=k*.01;const chapterStart=Math.max(silenceStart*.01+0.02,startTime-0.10);if(startTime-result[result.length-1]>=1.1&&startTime<buffer.duration-.2)(chapterEnds.push(Math.max(result[result.length-1]+0.1,silenceStart*.01-0.06)),result.push(Math.min(buffer.duration,chapterStart)))}silenceStart=-1}}t.chapters=result;t.chapterEnds=chapterEnds;t.selectedChapter=0;maybeDrawChapters(true);studyReset();note.textContent=result.length+'チャプター検出（無音 '+minSilence+'秒以上）。番号を押すと移動します。'}catch(err){if(task!==analysisId)return;t.chapters=[0];t.chapterEnds=[];t.selectedChapter=0;studyReset();maybeDrawChapters(true);note.textContent='解析できませんでした。通常再生は可能です（'+err.message+'）。'}}
+$('#analyze').onclick=()=>{const t=currentTrack();if(t&&ready){t.chapters=null;t.chapterEnds=[];analyzeTrack(t,loadId)}};$('#silence').onchange=()=>{const t=currentTrack();if(t&&ready){t.chapters=null;t.chapterEnds=[];analyzeTrack(t,loadId)}};function chapterMove(direction){const t=currentTrack(),cs=t?.chapters||[];if(!ready||!cs.length)return;const pos=audio.currentTime;let target;if(direction>0)target=cs.find(c=>c>pos+.15);else{target=cs[0];for(const c of cs){if(c>=pos-.3)break;target=c}}if(target!==undefined){studyReset();t.selectedChapter=Math.max(0,cs.indexOf(target));chapterFollow=false;audio.currentTime=target;draw();maybeDrawChapters(true)}}$('#repeatChapter').onclick=()=>{const t=currentTrack();if(!ready||!t?.chapters?.length||studyEnabled.checked)return;t.chapterRepeat=!t.chapterRepeat;if(t.chapterRepeat){t.repeat=false;let i=0;for(let k=0;k<t.chapters.length;k++)if(t.chapters[k]<=audio.currentTime+0.05)i=k;t.selectedChapter=i;chapterFollow=false;audio.currentTime=t.chapters[i]}draw();maybeDrawChapters(true)};$('#prevTrack').onclick=()=>changeTrackFromButton(-1);$('#nextTrack').onclick=()=>changeTrackFromButton(1);
 // Previous chapter: single tap restarts the current chapter; a second
 // quick tap goes to the previous one. This applies to both the wide buttons
 // and the customizable buttons beside Play. The lock-screen Media Session
@@ -909,7 +1040,7 @@ let lastPrevChapterTap=0;
 let lastPrevChapterTrack=-1;
 let lastPrevChapterIndex=-1;
 function chapterButtonMove(direction){
- if(!ready)return;
+ if(!ready)return;studyReset();
  if(direction<0){
   const t=currentTrack(),cs=t?.chapters||[];
   if(!cs.length)return;
@@ -934,10 +1065,10 @@ function chapterButtonMove(direction){
 }
 $('#prevChapter').onclick=()=>chapterButtonMove(-1);$('#nextChapter').onclick=()=>chapterButtonMove(1);
 function sideAction(value){if(value==='trackPrev')return changeTrackFromButton(-1);if(value==='trackNext')return changeTrackFromButton(1);if(value==='chapterPrev')return chapterButtonMove(-1);if(value==='chapterNext')return chapterButtonMove(1);jump(Number(value))}
-controlSelects.forEach((select,i)=>{$('#'+controlButtons[i]).onclick=()=>sideAction(select.value)});document.querySelectorAll('[data-jump]').forEach(b=>b.onclick=()=>jump(Number(b.dataset.jump)));play.onclick=async()=>{if(!ready)return;if(audio.paused){try{await audio.play()}catch(e){msg('再生できません: '+e.message,true)}}else audio.pause();draw()};speed.onchange=()=>{audio.defaultPlaybackRate=Number(speed.value);audio.playbackRate=Number(speed.value);applyPitchSetting()};seek.oninput=()=>{if(ready){chapterFollow=true;lastFollowedChapter=-1;try{audio.currentTime=Number(seek.value);maybeDrawChapters(true)}catch(e){}}};$('#setA').onclick=()=>{const t=currentTrack();t.A=audio.currentTime;if(t.B!==null&&t.B<=t.A){t.B=null;t.repeat=false}draw()};$('#setB').onclick=()=>{const t=currentTrack();if(t.A===null){msg('先にA地点を指定してください。',true);return}if(audio.currentTime<=t.A){msg('B地点はA地点より後にしてください。',true);return}t.B=audio.currentTime;t.repeat=true;t.chapterRepeat=false;audio.currentTime=t.A;draw()};$('#toggleAB').onclick=()=>{const t=currentTrack();t.repeat=!t.repeat;if(t.repeat){t.chapterRepeat=false;audio.currentTime=t.A}draw()};$('#clearAB').onclick=()=>{currentTrack().repeat=false;draw()};$('#clearPoints').onclick=()=>{const t=currentTrack();t.A=null;t.B=null;t.repeat=false;draw()};$('#gotoA').onclick=async()=>{audio.currentTime=currentTrack().A;try{await audio.play()}catch(e){msg('再生できません: '+e.message,true)}};let chapterSeekUnlock=null;
+controlSelects.forEach((select,i)=>{$('#'+controlButtons[i]).onclick=()=>sideAction(select.value)});document.querySelectorAll('[data-jump]').forEach(b=>b.onclick=()=>jump(Number(b.dataset.jump)));play.onclick=async()=>{if(!ready)return;if(studyPhase==='gap'){studyCancelGap();studyResumeAfterGap();return}if(studyEnabled.checked&&studyFinished){studyReset();audio.currentTime=0;}if(audio.paused){try{await audio.play()}catch(e){msg('再生できません: '+e.message,true)}}else audio.pause();draw()};speed.onchange=()=>{audio.defaultPlaybackRate=Number(speed.value);audio.playbackRate=Number(speed.value);applyPitchSetting()};seek.oninput=()=>{if(ready){studyReset();chapterFollow=true;lastFollowedChapter=-1;try{audio.currentTime=Number(seek.value);maybeDrawChapters(true)}catch(e){}}};$('#setA').onclick=()=>{const t=currentTrack();t.A=audio.currentTime;if(t.B!==null&&t.B<=t.A){t.B=null;t.repeat=false}draw()};$('#setB').onclick=()=>{if(studyEnabled.checked)return;const t=currentTrack();if(t.A===null){msg('先にA地点を指定してください。',true);return}if(audio.currentTime<=t.A){msg('B地点はA地点より後にしてください。',true);return}t.B=audio.currentTime;t.repeat=true;t.chapterRepeat=false;audio.currentTime=t.A;draw()};$('#toggleAB').onclick=()=>{if(studyEnabled.checked)return;const t=currentTrack();t.repeat=!t.repeat;if(t.repeat){t.chapterRepeat=false;audio.currentTime=t.A}draw()};$('#clearAB').onclick=()=>{currentTrack().repeat=false;draw()};$('#clearPoints').onclick=()=>{const t=currentTrack();t.A=null;t.B=null;t.repeat=false;draw()};$('#gotoA').onclick=async()=>{audio.currentTime=currentTrack().A;try{await audio.play()}catch(e){msg('再生できません: '+e.message,true)}};let chapterSeekUnlock=null;
 function checkChapterRepeat(){
  const t=currentTrack();
- if(!ready||!t?.chapterRepeat||!t.chapters?.length||chapterLoopGuard)return;
+ if(studyEnabled.checked||!ready||!t?.chapterRepeat||!t.chapters?.length||chapterLoopGuard)return;
  const i=Math.max(0,Math.min(t.selectedChapter||0,t.chapters.length-1));
  const start=t.chapters[i],end=i+1<t.chapters.length?(t.chapterEnds?.[i]??t.chapters[i+1]-.25):audio.duration;
  if(!Number.isFinite(end)||end<=start)return;
@@ -950,7 +1081,7 @@ function checkChapterRepeat(){
   audio.currentTime=Math.max(0,start-preRoll);
   if(audio.paused&&audio.ended)audio.play().catch(()=>{});
  }
-}function checkAB(){const t=currentTrack();if(ready&&t&&t.repeat&&t.A!==null&&t.B!==null&&(audio.currentTime>=t.B||audio.currentTime<t.A)){audio.currentTime=t.A}}audio.addEventListener('timeupdate',()=>{checkAB();checkChapterRepeat();draw()});let repeatFrame=0;function fastRepeatCheck(){if(!audio.paused){checkChapterRepeat();checkAB()}repeatFrame=requestAnimationFrame(fastRepeatCheck)}repeatFrame=requestAnimationFrame(fastRepeatCheck);audio.addEventListener('seeked',()=>{if(chapterLoopGuard){chapterLoopGuard=false;if(chapterSeekUnlock!==null){clearTimeout(chapterSeekUnlock);chapterSeekUnlock=null}return}checkAB();checkChapterRepeat()});['durationchange','play','pause'].forEach(ev=>audio.addEventListener(ev,draw));const trackEndMode=$('#trackEndMode');
+}function checkAB(){const t=currentTrack();if(studyEnabled.checked)return;if(ready&&t&&t.repeat&&t.A!==null&&t.B!==null&&(audio.currentTime>=t.B||audio.currentTime<t.A)){audio.currentTime=t.A}}audio.addEventListener('timeupdate',()=>{checkStudyRepeat();checkAB();checkChapterRepeat();draw()});let repeatFrame=0;function fastRepeatCheck(){if(!audio.paused){checkStudyRepeat();checkChapterRepeat();checkAB()}repeatFrame=requestAnimationFrame(fastRepeatCheck)}repeatFrame=requestAnimationFrame(fastRepeatCheck);audio.addEventListener('seeked',()=>{if(chapterLoopGuard){chapterLoopGuard=false;if(chapterSeekUnlock!==null){clearTimeout(chapterSeekUnlock);chapterSeekUnlock=null}return}checkAB();checkChapterRepeat()});['durationchange','play','pause'].forEach(ev=>audio.addEventListener(ev,draw));const trackEndMode=$('#trackEndMode');
 const trackModes=[
  {value:'stop',label:'■ 停止',hint:'現在の音源が終わったら停止します。'},
  {value:'repeatOne',label:'🔂 1音源リピート',hint:'現在のMP3を先頭から繰り返します。'},
@@ -963,6 +1094,7 @@ trackEndMode.addEventListener('click',()=>{trackModeIndex=(trackModeIndex+1)%tra
 updateTrackMode();
 // End-of-track policy is independent of manual slot switching (which stays paused).
 audio.addEventListener('ended',()=>{
+ if(studyEnabled.checked){if(studyHandleEnd())return; if(studyFinished)return;}
  const t=currentTrack();
  if(t?.chapterRepeat&&t.chapters?.length){audio.currentTime=t.chapters[Math.min(t.selectedChapter||0,t.chapters.length-1)];audio.play().catch(()=>{});draw();return}
  // A-B repeat normally seeks before the end; prioritize it if the B point is at the end.
@@ -987,13 +1119,13 @@ const wakeSupported=!!(navigator.wakeLock&&navigator.wakeLock.request);
 if(!wakeSupported){keepAwake.checked=false;keepAwake.disabled=true;wakeStatus.textContent='このブラウザでは画面点灯維持に対応していません。';}
 async function releaseWake(){const old=wakeSentinel;wakeSentinel=null;if(old){try{await old.release()}catch(e){}}}
 async function syncWake(){
- const wanted=wakeSupported&&keepAwake.checked&&!audio.paused&&!audio.ended&&document.visibilityState==='visible';
+ const wanted=wakeSupported&&keepAwake.checked&&(!audio.paused||studyPhase==='gap')&&(!audio.ended||studyPhase==='gap')&&document.visibilityState==='visible';
  if(!wanted){await releaseWake();return}
  if(wakeSentinel||wakeRequestPending)return;
  wakeRequestPending=true;
  try{
   const lock=await navigator.wakeLock.request('screen');
-  if(keepAwake.checked&&!audio.paused&&!audio.ended&&document.visibilityState==='visible'){
+  if(keepAwake.checked&&(!audio.paused||studyPhase==='gap')&&(!audio.ended||studyPhase==='gap')&&document.visibilityState==='visible'){
    wakeSentinel=lock;wakeStatus.textContent='画面点灯維持中（再生中）';
    lock.addEventListener('release',()=>{if(wakeSentinel===lock){wakeSentinel=null;wakeStatus.textContent='画面点灯維持が解除されました';}});
   }else await lock.release();
@@ -1015,7 +1147,7 @@ try{
 }catch(e){}
 function saverHide(){saverOverlay.hidden=true;saverLastInteraction=Date.now()}
 function saverShow(){
- if(audio.paused||audio.ended||!ready||document.visibilityState!=='visible')return;
+ if((audio.paused||audio.ended)&&studyPhase!=='gap'||!ready||document.visibilityState!=='visible')return;
  saverOverlay.hidden=false;
 }
 function saverMarkActive(){saverLastInteraction=Date.now()}
@@ -1039,18 +1171,18 @@ for(const ev of ['pointerdown','touchstart','keydown']){
 }
 window.setInterval(()=>{
  if(!saverEnabled.checked||!saverOverlay.hidden)return;
- if(!ready||audio.paused||audio.ended||document.visibilityState!=='visible')return;
+ if(!ready||((audio.paused||audio.ended)&&studyPhase!=='gap')||document.visibilityState!=='visible')return;
  if(Date.now()-saverLastInteraction>=Number(saverDelay.value)*1000)saverShow();
 },1000);
-audio.addEventListener('pause',saverHide);
-audio.addEventListener('ended',saverHide);
+audio.addEventListener('pause',()=>{if(studyPhase!=='gap')saverHide()});
+audio.addEventListener('ended',()=>{if(studyPhase!=='gap')saverHide()});
 audio.addEventListener('play',saverMarkActive);
 document.addEventListener('visibilitychange',()=>{if(document.visibilityState!=='visible')saverHide();else saverMarkActive()});
 window.addEventListener('pagehide',saverHide);
 // iOS lock screen / Control Center / Bluetooth headset integration.
 // A single audio element is retained across all six slots so OS media controls
 // continue to address the currently selected recording.
-function mediaPlay(){if(!ready)return;audio.play().catch(e=>msg('再生できません: '+e.message,true))}
+function mediaPlay(){if(!ready)return;if(studyPhase==='gap'){studyCancelGap();studyResumeAfterGap();return}audio.play().catch(e=>msg('再生できません: '+e.message,true))}
 function mediaChapterOrTrack(direction){
  // External controls: while playing, move between chapters.
  // While paused, choose an adjacent loaded source without starting playback.
