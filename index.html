@@ -253,7 +253,7 @@ body.dark-mode .studysettings{background:#203b56;border-color:#5b83a8;color:#f0f
 body.dark-mode .study-controls select{background:#182940;border-color:#6687a8;color:#f1f7ff}
 body.dark-mode .study-status{color:#9ed5ff}
 body.dark-mode .study-help{color:#bfd0e3}
-</style><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><meta name="apple-mobile-web-app-title" content="English MP3"><meta name="mobile-web-app-capable" content="yes"><link rel="manifest" href="manifest.webmanifest"><link rel="apple-touch-icon" href="app-icon-180.png"></head><body><main><h1>🎧 English Listening Player</h1><section class="section"><h2>音源の切り替え（最大12個）</h2><p id="selectedLessonLabel" class="selected-lesson-label" hidden aria-live="polite"></p><div class="slots" id="slots"><button class="slot active" data-slot="0"><small>1</small><span>未選択</span></button><button class="slot" data-slot="1"><small>2</small><span>未選択</span></button><button class="slot" data-slot="2"><small>3</small><span>未選択</span></button><button class="slot" data-slot="3"><small>4</small><span>未選択</span></button><button class="slot" data-slot="4"><small>5</small><span>未選択</span></button><button class="slot" data-slot="5"><small>6</small><span>未選択</span></button><button class="slot" data-slot="6"><small>7</small><span>未選択</span></button><button class="slot" data-slot="7"><small>8</small><span>未選択</span></button><button class="slot" data-slot="8"><small>9</small><span>未選択</span></button><button class="slot" data-slot="9"><small>10</small><span>未選択</span></button><button class="slot" data-slot="10"><small>11</small><span>未選択</span></button><button class="slot" data-slot="11"><small>12</small><span>未選択</span></button></div><details class="source-details"><summary>⚙ 音源の詳細設定 <span class="source-caption">タップして開く</span></summary><div class="source-details-content"><div class="reorderbar"><span>選択中の音源を並び替え</span><button id="moveUp" type="button">◀ 1つ前へ</button><button id="moveDown" type="button">1つ後へ ▶</button></div><div class="fileactions"><label class="pick">📁 MP3を選択（最大12個一括）<input id="file" type="file" multiple accept=".mp3,.m4a,audio/mpeg,audio/mp4,audio/*" aria-label="MP3ファイルを選択"></label><button id="clearAll" type="button" class="clearall">全解除</button></div><div class="lesson-import">
+</style><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><meta name="apple-mobile-web-app-title" content="English MP3"><meta name="mobile-web-app-capable" content="yes"><link rel="manifest" href="manifest.webmanifest"><link rel="apple-touch-icon" href="app-icon-180.png"></head><body><main><h1>🎧 English Listening Player</h1><section class="section"><h2>音源の切り替え（最大12個）</h2><p id="selectedLessonLabel" class="selected-lesson-label" hidden aria-live="polite"></p><div class="slots" id="slots"><button class="slot active" data-slot="0"><small>1</small><span>未選択</span></button><button class="slot" data-slot="1"><small>2</small><span>未選択</span></button><button class="slot" data-slot="2"><small>3</small><span>未選択</span></button><button class="slot" data-slot="3"><small>4</small><span>未選択</span></button><button class="slot" data-slot="4"><small>5</small><span>未選択</span></button><button class="slot" data-slot="5"><small>6</small><span>未選択</span></button><button class="slot" data-slot="6"><small>7</small><span>未選択</span></button><button class="slot" data-slot="7"><small>8</small><span>未選択</span></button><button class="slot" data-slot="8"><small>9</small><span>未選択</span></button><button class="slot" data-slot="9"><small>10</small><span>未選択</span></button><button class="slot" data-slot="10"><small>11</small><span>未選択</span></button><button class="slot" data-slot="11"><small>12</small><span>未選択</span></button></div><details class="source-details"><summary>⚙ 音源の詳細設定 <span class="source-caption">タップして開く</span></summary><div class="source-details-content"><div class="reorderbar"><span>選択中の音源を並び替え（教材内は自動記憶）</span><button id="moveUp" type="button">◀ 1つ前へ</button><button id="moveDown" type="button">1つ後へ ▶</button></div><div class="fileactions"><label class="pick">📁 MP3を選択（最大12個一括）<input id="file" type="file" multiple accept=".mp3,.m4a,audio/mpeg,audio/mp4,audio/*" aria-label="MP3ファイルを選択"></label><button id="clearAll" type="button" class="clearall">全解除</button></div><div class="lesson-import">
   <label class="folder-pick">📂 English MP3／教材フォルダを選択
     <input id="lessonFolder" type="file" webkitdirectory directory multiple aria-label="教材フォルダを選択">
   </label>
@@ -267,7 +267,7 @@ body.dark-mode .study-help{color:#bfd0e3}
 <section class="section studysettings" aria-label="英会話のポーズ付き反復練習">
   <div class="studyhead"><strong>🎙 ポーズ付きリピート学習</strong><label class="study-switch"><input id="studyEnabled" type="checkbox"> ON</label></div>
   <div class="study-controls">
-    <label>1文の再生回数 <select id="studyRepetitions" aria-label="1文の繰り返し回数"><option value="2">2回</option><option value="3" selected>3回</option><option value="5">5回</option><option value="10">10回</option><option value="0">無制限</option></select></label>
+    <label>1文の再生回数 <select id="studyRepetitions" aria-label="1文の繰り返し回数"><option value="2" selected>2回</option><option value="3">3回</option><option value="5">5回</option><option value="10">10回</option><option value="0">無制限</option></select></label>
     <label>発話ポーズ <select id="studyPause" aria-label="英文の後の無音時間"><option value="0">なし</option><option value="1">1秒</option><option value="2">2秒</option><option value="3" selected>3秒</option><option value="5">5秒</option><option value="10">10秒</option></select></label>
   </div>
   <p id="studyStatus" class="study-status" aria-live="polite">OFF：通常の再生・リピートを使用します。</p>
@@ -282,7 +282,7 @@ body.dark-mode .study-help{color:#bfd0e3}
 </div><section class="section framed-setting"><h2>細かい巻き戻し・早送り</h2><div class="grid"><button data-jump="-0.5" disabled>−0.5秒</button><button data-jump="-1" disabled>−1秒</button><button data-jump="-2" disabled>−2秒</button><button data-jump="-3" disabled>−3秒</button><button data-jump="-5" disabled>−5秒</button><button data-jump="1" disabled>＋1秒</button></div></section>
 <details class="advanced-settings"><summary>⚙ 詳細設定 <span class="advanced-caption">タップして開く</span></summary><div class="advanced-content"><section class="section lesson-memory-settings settings-card">
 <h2>音源の記憶管理</h2>
-<p class="lesson-help">教材ごとの音源名・並び順だけを端末に記憶します。MP3本体やiCloud上のファイルは変更しません。</p>
+<p class="lesson-help">教材ごとの音源名・配置順を端末に記憶します。同じ教材内の1ファイル入れ替えも自動保存します。MP3本体やiCloud上のファイルは変更しません。</p>
 <div class="memory-reset-row"><button type="button" id="resetCurrentLesson">現在の教材の記憶をリセット</button><button type="button" id="resetAllLessons" class="reset-all">全教材の記憶をリセット</button></div>
 <p class="lesson-help">確認後に記憶情報を削除します。現在読み込んでいる音声は再生を継続できます。</p>
 </section><section class="section chaptersettings settings-card"><div class="chapteropts"><strong>チャプター</strong><label>無音判定 <select id="silence"><option value="0.35">0.35秒</option><option value="0.5" selected>0.5秒</option><option value="0.8">0.8秒</option><option value="1.2">1.2秒</option></select></label><button id="analyze" type="button">再解析</button></div></section>
@@ -988,7 +988,60 @@ function storePosition(){const t=currentTrack();if(t&&ready&&Number.isFinite(aud
 }
 $('#moveUp').onclick=()=>moveTrack(-1);
 $('#moveDown').onclick=()=>moveTrack(1);
-slots.forEach((b,i)=>b.onclick=()=>loadSlot(i,false,false));fileInput.addEventListener('change',()=>{const files=[...(fileInput.files||[])];fileInput.value='';if(selectedLesson){rememberCurrentLesson();selectedLesson=null;$('#lessonChoice').value='';updateSelectedLessonLabel();}if(!files.length)return;const valid=files.filter(f=>f.type.startsWith('audio/')||/\.(mp3|m4a|aac|wav|ogg)$/i.test(f.name));if(!valid.length){msg('対応する音声ファイルを選択してください。',true);return}const empty=tracks.map((t,i)=>t?null:i).filter(i=>i!==null);const targets=empty.length?empty:tracks.map((_,i)=>(active+i)%tracks.length);let added=0;for(const f of valid.slice(0,Math.min(tracks.length,targets.length))){const i=targets[added];if(tracks[i])URL.revokeObjectURL(tracks[i].url);tracks[i]={name:f.name,url:URL.createObjectURL(f),position:0,A:null,B:null,repeat:false,chapterRepeat:false,selectedChapter:0,chapters:null,chapterEnds:[],file:f};added++}if(added){const target=targets[0];loadSlot(target,true);msg(`${added}件読み込みました。音源をタップすると一時停止で切り替わります。`)}if(valid.length>added)msg(`${added}件読み込みました。空き枠が不足したため残り${valid.length-added}件は読み込んでいません。`)});
+// Keep same-lesson file replacements linked to the lesson so their slot order
+// survives reselecting the folder. A file picker cannot expose a reliable full
+// path on iOS: match the already-imported lesson's name, size and modified time.
+function fileMatchesLesson(file, lessonFile){
+ return file.name===lessonFile.name&&file.size===lessonFile.size&&file.lastModified===lessonFile.lastModified;
+}
+function makeLessonTrack(f, lesson){
+ return {name:f.name,url:URL.createObjectURL(f),position:0,A:null,B:null,repeat:false,chapterRepeat:false,selectedChapter:0,chapters:null,chapterEnds:[],file:f,lesson,fileKey:lessonFileKey(f)};
+}
+slots.forEach((b,i)=>b.onclick=()=>loadSlot(i,false,false));
+fileInput.addEventListener('change',()=>{
+ const files=[...(fileInput.files||[])];fileInput.value='';
+ if(!files.length)return;
+ const valid=files.filter(f=>f.type.startsWith('audio/')||/\.(mp3|m4a|aac|wav|ogg)$/i.test(f.name));
+ if(!valid.length){msg('対応する音声ファイルを選択してください。',true);return}
+ const available=selectedLesson?lessonFiles.get(selectedLesson):null;
+ // Same-lesson replacements: place the first selected file at the currently
+ // selected slot, and swap if that file is already loaded in another slot.
+ // This makes swaps meaningful even when all 12 slots are occupied.
+ if(available&&valid.length===1){
+  const chosen=valid[0];
+  const matches=available.filter(f=>fileMatchesLesson(chosen,f));
+  if(matches.length===1){
+   const f=matches[0],key=lessonFileKey(f);
+   const existing=tracks.findIndex(t=>t?.lesson===selectedLesson&&t.fileKey===key);
+   if(existing===active){msg('この音源はすでに選択中です。');return}
+   storePosition();
+   if(existing>=0){
+    // Exchange slot positions; no new file object URL is necessary.
+    [tracks[active],tracks[existing]]=[tracks[existing],tracks[active]];
+   }else{
+    if(tracks[active])URL.revokeObjectURL(tracks[active].url);
+    tracks[active]=makeLessonTrack(f,selectedLesson);
+   }
+   const target=active;
+   rememberCurrentLesson();
+   loadSlot(target,true,false);
+   msg(`${f.name} を音源${target+1}に${existing>=0?'入れ替え':'登録'}しました。教材「${selectedLesson}」の配置を記憶しました。`);
+   return;
+  }
+ }
+ // Files from outside this lesson have no confirmed folder association.
+ // Keep their playback behavior, but avoid incorrectly recording the lesson.
+ if(selectedLesson){rememberCurrentLesson();selectedLesson=null;$('#lessonChoice').value='';updateSelectedLessonLabel()}
+ const empty=tracks.map((t,i)=>t?null:i).filter(i=>i!==null);
+ const targets=empty.length?empty:tracks.map((_,i)=>(active+i)%tracks.length);
+ let added=0;
+ for(const f of valid.slice(0,Math.min(tracks.length,targets.length))){
+  const i=targets[added];if(tracks[i])URL.revokeObjectURL(tracks[i].url);
+  tracks[i]={name:f.name,url:URL.createObjectURL(f),position:0,A:null,B:null,repeat:false,chapterRepeat:false,selectedChapter:0,chapters:null,chapterEnds:[],file:f};added++;
+ }
+ if(added){const target=targets[0];loadSlot(target,true);msg(`${added}件読み込みました。別フォルダ（または確認できない音源）のため教材の配置記憶には反映していません。`)}
+ if(valid.length>added)msg(`${added}件読み込みました。空き枠が不足したため残り${valid.length-added}件は読み込んでいません。`)
+});;
 $('#clearAll').onclick=()=>{studyReset();audio.pause();analysisId++;loadId++;if(pendingLoaded)audio.removeEventListener('loadedmetadata',pendingLoaded);if(pendingError)audio.removeEventListener('error',pendingError);pendingLoaded=null;pendingError=null;audio.removeAttribute('src');audio.load();tracks.forEach((t,i)=>{if(t)URL.revokeObjectURL(t.url);tracks[i]=null});active=0;ready=false;chapterFollow=true;lastFollowedChapter=-1;lastChapterDraw=-1;draw();maybeDrawChapters(true);updateSelectedLessonLabel();msg('全12音源を解除しました。端末のMP3ファイルは削除していません。')};
 
 function jump(n){if(!ready)return;studyReset();try{const t=currentTrack();let next=Math.max(0,Math.min(Number.isFinite(audio.duration)?audio.duration:Infinity,audio.currentTime+n));if(t?.repeat&&t.A!==null&&t.B!==null&&next<t.A)next=t.A;audio.currentTime=next;draw()}catch(e){msg('移動できません: '+e.message,true)}}async function analyzeTrack(t,token){const task=++analysisId;const note=$('#chapterstatus');note.textContent='音声を解析中…（長い音源は時間がかかります）';try{const ctx=new (window.AudioContext||window.webkitAudioContext)();let buffer;try{const bytes=await t.file.arrayBuffer();buffer=await ctx.decodeAudioData(bytes)}finally{await ctx.close().catch(()=>{})}if(task!==analysisId||token!==loadId||currentTrack()!==t)return;const minSilence=Number($('#silence').value),rate=buffer.sampleRate,step=Math.max(1,Math.floor(rate*.01)),count=Math.ceil(buffer.length/step),channels=Math.min(buffer.numberOfChannels,2),levels=new Float32Array(count);
